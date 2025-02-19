@@ -16,7 +16,9 @@ body {
     font-size: 14px;
     font-family: 'oppo-sans', sans-serif;
 }
-
+.container {
+    max-width: none !important;
+}
 a {
     text-decoration: none;
     color: #666;

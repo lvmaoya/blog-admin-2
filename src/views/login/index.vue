@@ -40,16 +40,18 @@
               </div>
             </div>
           </form>
-          <Button>Click me</Button>
-          <div class="button-group">
-            
 
-            <button type="submit" @click="submitForm">Log in</button>
-            <!-- <button type="submit">Log in with Wechat</button> -->
+          <div class="w-full">
+            <Button class="w-full" @click="submitForm" :disabled="loading">
+              <Loader2 v-if="loading" class="w-4 h-4 mr-2 animate-spin" />
+              Log in
+            </Button>
           </div>
           <div class="visitor">
             <span>Don't have an account? </span>
-            <span>Visitor</span>
+            <Button class="px-0" variant="link">
+              visitor
+            </Button>
           </div>
         </div>
       </div>
@@ -57,18 +59,19 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { login, type UserLoginParams } from "@/service/login";
+<script setup>
+import { login } from "@/service/login";
 import { onMounted, reactive, ref } from "vue";
 import { getCache, setCache } from '@/utils/cache';
 import { useRouter, useRoute } from "vue-router";
 import { BASE_URL } from "@/service/common/axiosInstance.js";
 import axios from 'axios';
 import { Button } from '@/components/ui/button'
+import { Loader2 } from 'lucide-vue-next'
 
 const router = useRouter();
 const route = useRoute();
-let formData = reactive<UserLoginParams>({
+let formData = reactive({
   username: "",
   password: "",
   captcha: "",
@@ -106,7 +109,7 @@ const submitForm = async () => {
     router.replace({
       path: loginSuccessUrl,
     });
-  } catch (error: any) {
+  } catch (error) {
     console.error(error);
   } finally {
     loading.value = false;
@@ -236,14 +239,14 @@ onMounted(() => {
 
               &:focus {
                 border: none;
-                border-bottom: 1px solid var(--primary-color);
+                border-bottom: 1px solid #333;
                 outline: none;
               }
             }
 
             input:focus+.placeholder::before {
               transform: scale(0.75) translateY(-30px);
-              color: var(--primary-color);
+              color: #333;
             }
 
             input:not(:placeholder-shown)+.placeholder::before {
@@ -294,28 +297,6 @@ onMounted(() => {
                 height: 30px;
                 display: block;
               }
-            }
-          }
-        }
-
-        .button-group {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-          gap: 10px;
-
-          button {
-            border: none;
-            height: 40px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s;
-            background-color: black;
-            color: white;
-
-            &:active {
-              transform: scale(0.98);
             }
           }
         }

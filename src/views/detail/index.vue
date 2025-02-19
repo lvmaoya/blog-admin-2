@@ -37,7 +37,7 @@ const navList = ["Home", "Work", "Blog", "About"];
 const articleId = route.query.id?.toString();
 let detailArticle = ref("");
 
-const getArticleDetailData = async (params: string) => {
+const getArticleDetailData = async (params) => {
   const detailArticleData = await getArticleDetail({ id: params });
   detailArticle.value = detailArticleData.data.content;
   console.log(detailArticle.value);
