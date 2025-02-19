@@ -34,7 +34,7 @@ import { ref } from "vue";
 
 const route = useRoute();
 const navList = ["Home", "Work", "Blog", "About"];
-const articleId = route.query.id?.toString() as string;
+const articleId = route.query.id?.toString();
 let detailArticle = ref("");
 
 const getArticleDetailData = async (params: string) => {

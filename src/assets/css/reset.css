@@ -1,13 +1,3 @@
-:root {
-    --primary-color: #0b57d0;
-    --secondary-color: #d3e3fd;
-    --tertiary-color: #c7c7c7;
-    --primary-bg-color: #f0f4f9;
-
-    --primary-font-color: #333;
-    --secondary-font-color: #666;
-    --tertiary-font-color: #999;
-}
 @font-face {
 	font-family: "oppo-sans";
 	src: url(../fonts/oppo-sans-4.0.ttf);
@@ -25,7 +15,6 @@ body {
     padding: 0;
     font-size: 14px;
     font-family: 'oppo-sans', sans-serif;
-    /* background-color: #eceff7; */
 }
 
 a {
@@ -72,15 +61,6 @@ ul li {
 html {
     overflow: auto;
     overflow-y: overlay;
-}
-
-/* element plus */
-:root {
-    --el-menu-hover-bg-color: var(--light_blue);
-    --el-menu-active-color: rgb(84, 112, 198);
-    --el-button-text-color: rgb(84, 112, 198);
-    --el-color-primary: rgb(84, 112, 198);
-
 }
 
 /*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/

@@ -40,7 +40,10 @@
               </div>
             </div>
           </form>
+          <Button>Click me</Button>
           <div class="button-group">
+            
+
             <button type="submit" @click="submitForm">Log in</button>
             <!-- <button type="submit">Log in with Wechat</button> -->
           </div>
@@ -61,6 +64,7 @@ import { getCache, setCache } from '@/utils/cache';
 import { useRouter, useRoute } from "vue-router";
 import { BASE_URL } from "@/service/common/axiosInstance.js";
 import axios from 'axios';
+import { Button } from '@/components/ui/button'
 
 const router = useRouter();
 const route = useRoute();
@@ -98,7 +102,7 @@ const submitForm = async () => {
     const token = loginRes.token;
     setCache("token", token);
     setCache("user", loginRes.user);
-    let loginSuccessUrl = (route.query.redirect as string) || "/console/home";
+    let loginSuccessUrl = route.query.redirect || "/console/home";
     router.replace({
       path: loginSuccessUrl,
     });
