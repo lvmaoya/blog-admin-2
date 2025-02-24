@@ -11,6 +11,7 @@ module.exports = {
 	],
   corePlugins: {
     container: false,
+    preflight: false,
   },
   prefix: "",
   theme: {

@@ -140,7 +140,7 @@ window.onbeforeunload = (e) => {
     align-items: center;
     justify-content: center;
     position: relative;
-
+    display: none;
     .logo {
       position: absolute;
       top: 0px;
@@ -167,8 +167,9 @@ window.onbeforeunload = (e) => {
       li {
         width: 100%;
         height: 60px;
-        text-align: center;
-        line-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         user-select: none;
         cursor: pointer;
         transition: all 0.3s;

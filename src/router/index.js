@@ -81,7 +81,6 @@ router.beforeEach((to, from, next) => {
   if (to.path !== "/login") {
     const token = getCache("token");
     if (!token) {
-      
       next({
         path: "/login",
         replace: true
