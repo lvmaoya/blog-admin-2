@@ -1,6 +1,6 @@
 <script setup>
-import { cn } from '@/utils/shadcn/utils';
-import { Primitive } from 'radix-vue';
+import { cn } from '@/lib/utils';
+import { Primitive } from 'reka-ui';
 import { buttonVariants } from '.';
 
 const props = defineProps({
