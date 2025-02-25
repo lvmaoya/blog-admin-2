@@ -45,6 +45,9 @@ instance.interceptors.response.use(
     },
     (error) => {
         // 可以在这里对响应错误做统一处理
+        if (error.response && error.response.status === 401) {
+            router.replace("/login");
+        }
         return Promise.reject(error);
     }
 );
