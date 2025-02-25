@@ -17,8 +17,8 @@
             <div class="editor-container__editor-wrapper">
               <div class="editor-container__editor">
                 <div ref="editorElement">
-                  <ckeditor v-if="editor && config" :editor="editor" :config="config"
-                    @ready="onReady" v-model="data" @input="onEditorInput" />
+                  <ckeditor v-if="editor && config" :editor="editor" :config="config" @ready="onReady" v-model="data"
+                    @input="onEditorInput" />
                 </div>
               </div>
             </div>
@@ -26,7 +26,6 @@
               <div ref="editorMinimapElement"></div>
             </div>
           </div>
-          <div class="editor_container__word-count" ref="editorWordCountElement"></div>
         </div>
       </div>
       <div class="submitBtn">
@@ -84,7 +83,6 @@ import {
   LinkImage,
   List,
   ListProperties,
-  Markdown,
   MediaEmbed,
   Mention,
   Minimap,
@@ -116,8 +114,7 @@ import {
   TextTransformation,
   Title,
   TodoList,
-  Underline,
-  WordCount
+  Underline
 } from 'ckeditor5';
 
 import translations from 'ckeditor5/translations/zh-cn.js';
@@ -131,7 +128,6 @@ const LICENSE_KEY =
 const editorToolbar = useTemplateRef('editorToolbarElement');
 const editorMenuBar = useTemplateRef('editorMenuBarElement');
 const editorMinimap = useTemplateRef('editorMinimapElement');
-const editorWordCount = useTemplateRef('editorWordCountElement');
 
 const isLayoutReady = ref(false);
 
@@ -218,7 +214,6 @@ const config = computed(() => {
       LinkImage,
       List,
       ListProperties,
-      Markdown,
       MediaEmbed,
       Mention,
       Minimap,
@@ -251,8 +246,6 @@ const config = computed(() => {
       Title,
       TodoList,
       Underline,
-      WordCount,
-      SubmitPlugin
     ],
     fontFamily: {
       supportAllValues: true
@@ -363,7 +356,36 @@ const config = computed(() => {
       ]
     },
     menuBar: {
-      isVisible: true
+      isVisible: true,
+      addItems: [
+        {
+          menu: {
+            menuId: 'my-menu',
+            label: 'My menu',
+            groups: [
+              {
+                groupId: 'my-buttons',
+                items: [
+                  'menuBar:bold',
+                  // 'menuBar:italic',
+                  // 'menuBar:underline'
+                ]
+              }
+            ]
+          },
+          position: 'end'
+        },
+        {
+					group: {
+						groupId: 'my-buttons',
+						items: [
+							'myButton1',
+							'myButton2',
+						]
+					},
+					position: 'after:basicStyles'
+				}
+      ]
     },
     minimap: {
       container: editorMinimap.value,
@@ -426,26 +448,22 @@ const config = computed(() => {
   };
 });
 
+
 onMounted(() => {
   isLayoutReady.value = true;
 });
 
 function onReady(editor) {
-  [...editorWordCount.value.children].forEach(child => child.remove());
   [...editorToolbar.value.children].forEach(child => child.remove());
   [...editorMenuBar.value.children].forEach(child => child.remove());
 
-  const wordCount = editor.plugins.get('WordCount');
-  editorWordCount.value.appendChild(wordCount.wordCountContainer);
   editorToolbar.value.appendChild(editor.ui.view.toolbar.element);
   editorMenuBar.value.appendChild(editor.ui.view.menuBarView.element);
 }
-onMounted(() => {
-  // new MyCustomPlugin(Ckeditor).init();
-});
+
 const data = ref('');
 const onEditorInput = (editorData) => {
-  console.log(data.value);
+  console.log(editorData);
 };
 const handleSubmit = async () => {
   await postArticle(data.value);
@@ -463,7 +481,8 @@ const handleSubmit = async () => {
   .middle {
     flex: 1;
   }
-  .submitBtn{
+
+  .submitBtn {
     position: absolute;
     top: 0;
     right: 0;

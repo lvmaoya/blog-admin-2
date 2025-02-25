@@ -10,8 +10,11 @@
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
+	--ck-icon-size: 16px;
 }
-
+.ck.ck-icon.ck-icon_inherit-color *:not([fill]) {
+	fill: #666 !important;
+}
 .ck-content {
 	/* font-family: 'Lato'; */
 	line-height: 1.6;
