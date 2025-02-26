@@ -20,17 +20,17 @@ export default defineConfig({
     port: 3001,
     open: true,
     cors: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8080',
-        changeOrigin: true,
-        rewrite: (path) => {
-          console.log('Original path:', path);
-          const newPath = path.replace(/^\/api/, '');
-          console.log('Rewritten path:', newPath);
-          return newPath;
-        },
-      },
-    },
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:8080',
+    //     changeOrigin: true,
+    //     rewrite: (path) => {
+    //       console.log('Original path:', path);
+    //       const newPath = path.replace(/^\/api/, '');
+    //       console.log('Rewritten path:', newPath);
+    //       return newPath;
+    //     },
+    //   },
+    // },
   }
 })

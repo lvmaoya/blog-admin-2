@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.3.0",
+    "@unovis/ts": "^1.5.1",
+    "@unovis/vue": "^1.5.1",
+    "@vueuse/core": "^12.7.0",
     "axios": "^1.7.9",
     "ckeditor5": "^44.2.0",
     "class-variance-authority": "^0.7.1",

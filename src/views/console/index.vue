@@ -140,7 +140,6 @@ window.onbeforeunload = (e) => {
     align-items: center;
     justify-content: center;
     position: relative;
-    display: none;
     .logo {
       position: absolute;
       top: 0px;
