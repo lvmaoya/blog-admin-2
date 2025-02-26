@@ -1,4 +1,4 @@
-import {getCache} from "@/utils/cache";
+import { getCache } from "@/utils/cache";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({

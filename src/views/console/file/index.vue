@@ -5,9 +5,9 @@
  * @Description: Do not edit
 -->
 <template>
-<div>
-   文件管理 施工中...
-</div>
+    <div>
+        文件管理 施工中...
+    </div>
 </template>
 
 <script setup>
@@ -15,12 +15,12 @@
 </script>
 
 <style scoped lang="scss">
-    div{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        background-color: #eceff7;
-        font-weight: 600;
-    }
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    background-color: #eceff7;
+    font-weight: 600;
+}
 </style>

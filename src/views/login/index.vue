@@ -68,6 +68,7 @@ import { BASE_URL } from "@/service/common/axiosInstance.js";
 import axios from 'axios';
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-vue-next'
+import { useToast } from '@/components/ui/toast/use-toast'
 
 const router = useRouter();
 const route = useRoute();
@@ -96,6 +97,8 @@ const getCodeData = async () => {
   authCodeUrl.value = `data:image/png;base64,${base64}`;
 };
 const loading = ref(false)
+const { toast } = useToast()
+
 // 提交登录
 const submitForm = async () => {
   loading.value = true;
@@ -105,11 +108,20 @@ const submitForm = async () => {
     const token = loginRes.token;
     setCache("token", token);
     setCache("user", loginRes.user);
+    toast({
+      title: 'Uh! Login Success!',
+      description: 'Welcome back! You have successfully logged into your account.',
+    });
     let loginSuccessUrl = route.query.redirect || "/console/article/edit";
     router.replace({
       path: loginSuccessUrl,
     });
-  } catch (error) {
+  } catch (error) {    
+    toast({
+      title: 'Uh oh! Something went wrong.',
+      description: error.response.data,
+      variant: 'destructive',
+    });
     console.error(error);
   } finally {
     loading.value = false;

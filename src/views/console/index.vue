@@ -8,13 +8,27 @@
         <li class="add-btn" @click="handleAddClick">
           +
         </li>
-        <li v-for="(item, index) in menuList" :key="index" :class="{ active: item.active }"
-          @click="setActive(index)">
+        <li v-for="(item, index) in menuList" :key="index" :class="{ active: item.active }" @click="setActive(index)">
           <img class="icon" :src="item.active ? item.activeIconPath : item.iconPath" alt="">
         </li>
       </ul>
-      <div class="logout" @click="handleLogoutClick">
-        <img src="@/assets/icon/logout.svg" alt="logout">
+      <div class="logout">
+        <Dialog>
+          <DialogTrigger>
+            <Button variant="outline" size="icon">
+              <LogOut class="w-4 h-4" />
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>退出登录？</DialogTitle>
+            </DialogHeader>
+            <DialogFooter>
+              <Button @click="handleLogoutClick">确定</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
       </div>
     </div>
 
@@ -29,6 +43,15 @@
 </template>
 
 <script setup>
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog'
 import homeIcon from "@/assets/icon/tab/home.svg";
 import todoIcon from "@/assets/icon/tab/todo.svg";
 import articleIcon from "@/assets/icon/tab/article.svg";
@@ -37,11 +60,13 @@ import activeHomeIcon from "@/assets/icon/tab-active/home.svg";
 import activeTodoIcon from "@/assets/icon/tab-active/todo.svg";
 import activeArticleIcon from "@/assets/icon/tab-active/article.svg";
 import activeFileIcon from "@/assets/icon/tab-active/file.svg";
+import { Button } from '@/components/ui/button'
+import { LogOut } from 'lucide-vue-next'
 
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { logout } from "@/service/login";
-import {deleteCache} from "@/utils/cache";
+import { deleteCache } from "@/utils/cache";
 const router = useRouter();
 const route = useRoute();
 
@@ -105,7 +130,7 @@ watch(route, (newRoute) => {
     menuList.value[activeItem.index].active = true
   }
 }, { immediate: true });
-const handleLogoutClick = async()=>{
+const handleLogoutClick = async () => {
   await logout();
   deleteCache("token")
   router.push("/login");
@@ -140,6 +165,7 @@ window.onbeforeunload = (e) => {
     align-items: center;
     justify-content: center;
     position: relative;
+
     .logo {
       position: absolute;
       top: 0px;
@@ -174,7 +200,7 @@ window.onbeforeunload = (e) => {
         transition: all 0.3s;
 
 
-        &:active{
+        &:active {
           transform: scale(0.95);
         }
       }
@@ -217,11 +243,6 @@ window.onbeforeunload = (e) => {
       display: flex;
       justify-content: center;
       align-items: center;
-      
-      img {
-        width: 18px;
-        height: 18px;
-      }
     }
   }
 
