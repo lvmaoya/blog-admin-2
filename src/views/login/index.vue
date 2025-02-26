@@ -105,7 +105,7 @@ const submitForm = async () => {
     const token = loginRes.token;
     setCache("token", token);
     setCache("user", loginRes.user);
-    let loginSuccessUrl = route.query.redirect || "/console/home";
+    let loginSuccessUrl = route.query.redirect || "/console/article/edit";
     router.replace({
       path: loginSuccessUrl,
     });

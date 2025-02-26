@@ -1,5 +1,5 @@
 import router from '@/router';
-import {getCache} from '@/utils/cache';
+import {deleteCache, getCache} from '@/utils/cache';
 import axios from 'axios';
 
 export let BASE_URL;
@@ -41,11 +41,16 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         // 可以在这里对响应数据做统一处理，如错误码判断等
+        console.log(response);
+        
         return response;
     },
     (error) => {
         // 可以在这里对响应错误做统一处理
-        if (error.response && error.response.status === 401) {
+        console.log(error);
+        
+        if (error.response && error.response.status === 401 || error.response && error.response.status === 403) {
+            deleteCache('token');
             router.replace("/login");
         }
         return Promise.reject(error);
