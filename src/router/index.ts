@@ -40,6 +40,13 @@ const router = createRouter({
           component: () => import("@/views/console/todo/index.vue"),
         },
         {
+          path: "todo-statistic",
+          name: "todoStatistic",
+          meta: { name: "待办统计" },
+
+          component: () => import("@/views/console/todo/index.vue"),
+        },
+        {
           path: "article",
           name: "article",
           children: [
@@ -54,9 +61,36 @@ const router = createRouter({
               path: "edit",
               name: "editArticle",
               meta: { name: "文章编辑" },
-
               component: () =>
                 import("@/views/console/article/editArticle/index.vue"),
+            },
+            {
+              path: "comment",
+              name: "articleComment",
+              meta: { name: "文章评论" },
+              component: () =>
+                import("@/views/console/article/articleList/index.vue"),
+            },
+            {
+              path: "category",
+              name: "articleCategory",
+              meta: { name: "文章分类" },
+              component: () =>
+                import("@/views/console/article/articleList/index.vue"),
+            },
+            {
+              path: "recycle-bin",
+              name: "articleRecycleBin",
+              meta: { name: "暂存箱" },
+              component: () =>
+                import("@/views/console/article/articleList/index.vue"),
+            },
+            {
+              path: "temporary-storage",
+              name: "articleTemporaryStorage",
+              meta: { name: "回收站" },
+              component: () =>
+                import("@/views/console/article/articleList/index.vue"),
             },
           ]
         },

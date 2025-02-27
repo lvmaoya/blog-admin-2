@@ -5,8 +5,15 @@
  * @Description: Do not edit
 -->
 <template>
-    <div>
-        文件管理 施工中...
+    <div class="flex flex-1 flex-col gap-4 p-4">
+        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div class="aspect-video rounded-xl bg-[#F9F9FA]">
+                file dashboard
+            </div>
+            <div class="aspect-video rounded-xl bg-[#F9F9FA]" />
+            <div class="aspect-video rounded-xl bg-[#F9F9FA]" />
+        </div>
+        <div class="min-h-[100vh] flex-1 rounded-xl bg-[#F9F9FA] md:min-h-min" />
     </div>
 </template>
 
@@ -15,12 +22,5 @@
 </script>
 
 <style scoped lang="scss">
-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background-color: #eceff7;
-    font-weight: 600;
-}
+
 </style>

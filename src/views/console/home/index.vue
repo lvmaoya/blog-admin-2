@@ -5,8 +5,15 @@
  * @Description: Do not edit
 -->
 <template>
-    <div class="h-screen border-[#e5e7eb] border-solid border-l-[0.5px]">
-      
+    <div class="flex flex-1 flex-col gap-4 p-4">
+        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
+            <div class="aspect-video rounded-xl bg-[#F9F9FA]" >
+                dashboard
+            </div>
+            <div class="aspect-video rounded-xl bg-[#F9F9FA]" />
+            <div class="aspect-video rounded-xl bg-[#F9F9FA]" />
+        </div>
+        <div class="min-h-[100vh] flex-1 rounded-xl bg-[#F9F9FA] md:min-h-min" />
     </div>
 </template>
 

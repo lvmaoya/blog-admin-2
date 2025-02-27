@@ -1,48 +1,49 @@
 <template>
-  <div class="common-layout">
-    <div class="aside">
-      <div class="logo" @click="handleLogoClick">
-        <span>SX</span>
-      </div>
-      <ul>
-        <li class="add-btn" @click="handleAddClick">
-          +
-        </li>
-        <li v-for="(item, index) in menuList" :key="index" :class="{ active: item.active }" @click="setActive(index)">
-          <img class="icon" :src="item.active ? item.activeIconPath : item.iconPath" alt="">
-        </li>
-      </ul>
-      <div class="logout">
-        <Dialog>
-          <DialogTrigger>
-            <Button variant="outline" size="icon">
-              <LogOut class="w-4 h-4" />
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>退出登录？</DialogTitle>
-            </DialogHeader>
-            <DialogFooter>
-              <Button @click="handleLogoutClick">确定</Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-      </div>
-    </div>
-
-    <div class="console">
+  <SidebarProvider>
+    <AppSidebar />
+    <SidebarInset>
+      <header class="flex sticky top-0 bg-background h-16 shrink-0 items-center gap-2 border-b px-4">
+        <SidebarTrigger class="-ml-1" />
+        <Separator orientation="vertical" class="mr-2 h-4" />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem class="hidden md:block">
+              <BreadcrumbLink href="#">
+                Building Your Application
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator class="hidden md:block" />
+            <BreadcrumbItem>
+              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </header>
       <router-view v-slot="{ Component }">
         <KeepAlive exclude="EditArticle">
           <Component :is="Component" :key="route.name"></Component>
         </KeepAlive>
       </router-view>
-    </div>
-  </div>
+    </SidebarInset>
+  </SidebarProvider>
 </template>
 
 <script setup>
+import AppSidebar from "./components/AppSidebar.vue";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
+import { Separator } from '@/components/ui/separator'
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from '@/components/ui/sidebar'
 import {
   Dialog,
   DialogContent,
