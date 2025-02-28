@@ -5,19 +5,7 @@
       <header class="flex sticky top-0 bg-background h-16 shrink-0 items-center gap-2 border-b px-4">
         <SidebarTrigger class="-ml-1" />
         <Separator orientation="vertical" class="mr-2 h-4" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem class="hidden md:block">
-              <BreadcrumbLink href="#">
-                Building Your Application
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator class="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <AppBreadcrumb />
       </header>
       <router-view v-slot="{ Component }">
         <KeepAlive exclude="EditArticle">
@@ -30,14 +18,7 @@
 
 <script setup>
 import AppSidebar from "./components/AppSidebar.vue";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb'
+import AppBreadcrumb from "./components/AppBreadcrumb.vue";
 import { Separator } from '@/components/ui/separator'
 import {
   SidebarInset,

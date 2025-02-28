@@ -65,7 +65,7 @@ const groupList = [{
     items: [
         {
             title: "Todo List",
-            url: "todo"
+            url: "todoList"
         },
         {
             title: "Statistic Data",
@@ -78,7 +78,7 @@ const groupList = [{
     items: [
         {
             title: "File Dashboard",
-            url: "file"
+            url: "fileList"
         }
     ]
 }

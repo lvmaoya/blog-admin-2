@@ -35,16 +35,22 @@ const router = createRouter({
         {
           path: "todo",
           name: "todo",
-          meta: { name: "待办" },
-
-          component: () => import("@/views/console/todo/index.vue"),
-        },
-        {
-          path: "todo-statistic",
-          name: "todoStatistic",
-          meta: { name: "待办统计" },
-
-          component: () => import("@/views/console/todo/index.vue"),
+          children:[
+            {
+              path: "list",
+              name: "todoList",
+              meta: { name: "待办" },
+    
+              component: () => import("@/views/console/todo/index.vue"),
+            },
+            {
+              path: "statistic",
+              name: "todoStatistic",
+              meta: { name: "待办统计" },
+    
+              component: () => import("@/views/console/todo/index.vue"),
+            },
+          ]
         },
         {
           path: "article",
@@ -97,9 +103,14 @@ const router = createRouter({
         {
           path: "file",
           name: "file",
-          meta: { name: "文件" },
-
-          component: () => import("@/views/console/file/index.vue"),
+          children: [
+            {
+              path: "list",
+              name: "fileList",
+              meta: { name: "文件" },
+              component: () => import("@/views/console/file/index.vue"),
+            },
+          ]
         },
 
       ],
