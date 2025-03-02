@@ -1,12 +1,6 @@
+import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon, CheckCircledIcon, CircleIcon, CrossCircledIcon, QuestionMarkCircledIcon, StopwatchIcon } from '@radix-icons/vue'
 import { h } from 'vue'
-import ArrowDownIcon from 'lucide-vue-next'
-import ArrowRightIcon from 'lucide-vue-next'
-import ArrowUpIcon from 'lucide-vue-next'
-import CheckCircledIcon from 'lucide-vue-next'
-import CircleIcon from 'lucide-vue-next'
-import CrossCircledIcon from 'lucide-vue-next'
-import QuestionMarkCircledIcon from 'lucide-vue-next'
-import StopwatchIcon from 'lucide-vue-next'
+
 
 export const labels = [
   {

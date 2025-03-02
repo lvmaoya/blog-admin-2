@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 import { computed } from 'vue'
-import MixerHorizontalIcon from 'lucide-vue-next'
+import {MixerHorizontalIcon} from '@radix-icons/vue'
 
 interface DataTableViewOptionsProps {
   table: Table<Task>

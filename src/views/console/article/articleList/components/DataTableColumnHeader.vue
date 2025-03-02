@@ -10,11 +10,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import ArrowDownIcon from 'lucide-vue-next'
+import {ArrowDownIcon} from '@radix-icons/vue'
 
-import ArrowUpIcon from 'lucide-vue-next'
-import CaretSortIcon from 'lucide-vue-next'
-import EyeNoneIcon from 'lucide-vue-next'
+import {ArrowUpIcon} from '@radix-icons/vue'
+import {CaretSortIcon} from '@radix-icons/vue'
+import {EyeNoneIcon} from '@radix-icons/vue'
 
 interface DataTableColumnHeaderProps {
   column: Column<Task, any>

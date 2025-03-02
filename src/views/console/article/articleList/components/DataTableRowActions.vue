@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { computed } from 'vue'
-import DotsHorizontalIcon from 'lucide-vue-next'
+import {DotsHorizontalIcon} from '@radix-icons/vue'
 
 import { labels } from '../data/data'
 import { taskSchema } from '../data/schema'

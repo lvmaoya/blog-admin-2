@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 
 import { Input } from '@/components/ui/input'
 import { computed } from 'vue'
-import Cross2Icon from 'lucide-vue-next'
+import {Cross2Icon} from '@radix-icons/vue'
 
 import { priorities, statuses } from '../data/data'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'

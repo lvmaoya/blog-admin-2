@@ -9,11 +9,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import ChevronLeftIcon from 'lucide-vue-next'
-import ChevronRightIcon from 'lucide-vue-next'
+import {ChevronLeftIcon} from '@radix-icons/vue'
+import {ChevronRightIcon} from '@radix-icons/vue'
 
-import DoubleArrowLeftIcon from 'lucide-vue-next'
-import DoubleArrowRightIcon from 'lucide-vue-next'
+import {DoubleArrowLeftIcon} from '@radix-icons/vue'
+import {DoubleArrowRightIcon} from '@radix-icons/vue'
 
 interface DataTablePaginationProps {
   table: Table<Task>

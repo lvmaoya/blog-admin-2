@@ -15,8 +15,8 @@ import {
 import { Separator } from '@/components/ui/separator'
 
 import { computed } from 'vue'
-import CheckIcon from 'lucide-vue-next'
-import PlusCircledIcon from 'lucide-vue-next'
+import {CheckIcon} from '@radix-icons/vue'
+import {PlusCircledIcon} from '@radix-icons/vue'
 
 interface DataTableFacetedFilter {
   column?: Column<Task, any>
