@@ -12,7 +12,6 @@
         "useDefineForClassFields": true,
         "sourceMap": true,
         "baseUrl": ".",
-        
         "types": [
             "vite/client",
             "jest"

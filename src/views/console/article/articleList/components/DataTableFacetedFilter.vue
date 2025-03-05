@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import type { Column } from '@tanstack/vue-table'
 import type { Component } from 'vue'
-import type { Task } from '../data/schema'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -14,24 +12,18 @@ import {
 } from '@/components/ui/popover'
 import { Separator } from '@/components/ui/separator'
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import {CheckIcon} from '@radix-icons/vue'
 import {PlusCircledIcon} from '@radix-icons/vue'
 
-interface DataTableFacetedFilter {
-  column?: Column<Task, any>
-  title?: string
-  options: {
-    label: string
-    value: string
-    icon?: Component
-  }[]
-}
-
-const props = defineProps<DataTableFacetedFilter>()
-
-const facets = computed(() => props.column?.getFacetedUniqueValues())
-const selectedValues = computed(() => new Set(props.column?.getFilterValue() as string[]))
+const props = defineProps()
+const title = "Status"
+const selectedValues = ref([])
+const options = [
+  { label: 'Draft', value: 'draft', icon: CheckIcon, count: 10 },
+  { label: 'Published', value: 'published', icon: CheckIcon, count: 20 },
+  { label: 'Archived', value: 'archived', icon: CheckIcon, count: 5 },
+]
 </script>
 
 <template>
@@ -40,27 +32,27 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
       <Button variant="outline" size="sm" class="h-8 border-dashed">
         <PlusCircledIcon class="mr-2 h-4 w-4" />
         {{ title }}
-        <template v-if="selectedValues.size > 0">
+        <template v-if="selectedValues.length > 0">
           <Separator orientation="vertical" class="mx-2 h-4" />
           <Badge
             variant="secondary"
             class="rounded-sm px-1 font-normal lg:hidden"
           >
-            {{ selectedValues.size }}
+            {{ selectedValues.length }}
           </Badge>
           <div class="hidden space-x-1 lg:flex">
             <Badge
-              v-if="selectedValues.size > 2"
+              v-if="selectedValues.length > 2"
               variant="secondary"
               class="rounded-sm px-1 font-normal"
             >
-              {{ selectedValues.size }} selected
+              {{ selectedValues.length }} selected
             </Badge>
 
             <template v-else>
               <Badge
                 v-for="option in options
-                  .filter((option) => selectedValues.has(option.value))"
+                  .filter((option) => selectedValues.includes(option.value))"
                 :key="option.value"
                 variant="secondary"
                 class="rounded-sm px-1 font-normal"
@@ -84,23 +76,21 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
               :value="option"
               @select="(e) => {
                 console.log(e.detail.value)
-                const isSelected = selectedValues.has(option.value)
+                const isSelected = selectedValues.includes(option.value)
                 if (isSelected) {
-                  selectedValues.delete(option.value)
+                  selectedValues = selectedValues.filter(
+                    (value) => value !== option.value,
+                  )
                 }
                 else {
-                  selectedValues.add(option.value)
+                  selectedValues.push(option.value)
                 }
-                const filterValues = Array.from(selectedValues)
-                column?.setFilterValue(
-                  filterValues.length ? filterValues : undefined,
-                )
               }"
             >
               <div
                 :class="cn(
                   'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-                  selectedValues.has(option.value)
+                  selectedValues.includes(option.value)
                     ? 'bg-primary text-primary-foreground'
                     : 'opacity-50 [&_svg]:invisible',
                 )"
@@ -109,19 +99,19 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
               </div>
               <component :is="option.icon" v-if="option.icon" class="mr-2 h-4 w-4 text-muted-foreground" />
               <span>{{ option.label }}</span>
-              <span v-if="facets?.get(option.value)" class="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
-                {{ facets.get(option.value) }}
+              <span v-if="option.count" class="ml-auto flex h-4 w-4 items-center justify-center font-mono text-xs">
+                {{ option.count }}
               </span>
             </CommandItem>
           </CommandGroup>
 
-          <template v-if="selectedValues.size > 0">
+          <template v-if="selectedValues.length > 0">
             <CommandSeparator />
             <CommandGroup>
               <CommandItem
                 :value="{ label: 'Clear filters' }"
                 class="justify-center text-center"
-                @select="column?.setFilterValue(undefined)"
+                @select="selectedValues = []"
               >
                 Clear filters
               </CommandItem>

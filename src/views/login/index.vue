@@ -36,7 +36,7 @@
               <input type="text" placeholder="" maxlength="4" v-model="formData.captcha" @keypress.enter="submitForm">
               <div class="placeholder" data-placeholder="Captcha"></div>
               <div>
-                <img :src="authCodeUrl" @click="getCodeData">
+                <img v-if="authCodeUrl" :src="authCodeUrl" @click="getCodeData">
               </div>
             </div>
           </form>

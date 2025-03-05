@@ -6,4 +6,4 @@ declare module '*.vue' {
 declare module '@/utils/cache' {
     const cache: any;
     export default cache;
-  }
+}

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Table } from '@tanstack/vue-table'
-import type { Task } from '../data/schema'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -14,17 +12,14 @@ import {
 import { computed } from 'vue'
 import {MixerHorizontalIcon} from '@radix-icons/vue'
 
-interface DataTableViewOptionsProps {
-  table: Table<Task>
-}
 
-const props = defineProps<DataTableViewOptionsProps>()
+const columns = [
+  { id: 'title', isVisible: true },
+  { id: 'author', isVisible: true },
+  { id: 'date', isVisible: true },
+  { id: 'status', isVisible: true },
+]
 
-const columns = computed(() => props.table.getAllColumns()
-  .filter(
-    column =>
-      typeof column.accessorFn !== 'undefined' && column.getCanHide(),
-  ))
 </script>
 
 <template>
@@ -47,8 +42,6 @@ const columns = computed(() => props.table.getAllColumns()
         v-for="column in columns"
         :key="column.id"
         class="capitalize"
-        :model-value="column.getIsVisible()"
-        @update:model-value="(value) => column.toggleVisibility(!!value)"
       >
         {{ column.id }}
       </DropdownMenuCheckboxItem>

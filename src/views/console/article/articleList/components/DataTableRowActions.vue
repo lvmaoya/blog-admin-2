@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import type { Row } from '@tanstack/vue-table'
-import type { Task } from '../data/schema'
+
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -18,15 +17,11 @@ import {
 import { computed } from 'vue'
 import {DotsHorizontalIcon} from '@radix-icons/vue'
 
-import { labels } from '../data/data'
-import { taskSchema } from '../data/schema'
-
-interface DataTableRowActionsProps {
-  row: Row<Task>
-}
-const props = defineProps<DataTableRowActionsProps>()
-
-const task = computed(() => taskSchema.parse(props.row.original))
+const labels = [
+  { label: 'Personal', value: "1" },
+  { label: 'Work',  value: "3"  },
+  { label: 'Urgent',  value: "2" },
+]
 </script>
 
 <template>
@@ -48,7 +43,7 @@ const task = computed(() => taskSchema.parse(props.row.original))
       <DropdownMenuSub>
         <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
         <DropdownMenuSubContent>
-          <DropdownMenuRadioGroup :value="task.label">
+          <DropdownMenuRadioGroup :value="1">
             <DropdownMenuRadioItem v-for="label in labels" :key="label.value" :value="label.value">
               {{ label.label }}
             </DropdownMenuRadioItem>
