@@ -25,7 +25,9 @@ import {
     ChevronsUpDown,
     CreditCard,
     LogOut,
+    Settings,
     Sparkles,
+    User,
 } from 'lucide-vue-next'
 const props = defineProps<{
     user: {
@@ -75,25 +77,19 @@ const { isMobile } = useSidebar()
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <DropdownMenuItem>
-                            <Sparkles />
-                            Upgrade to Pro
-                        </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                            <BadgeCheck />
-                            Account
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
                             <CreditCard />
-                            Billing
+                            Profile
                         </DropdownMenuItem>
                         <DropdownMenuItem>
                             <Bell />
                             Notifications
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                        <Settings />
+                        Setting
+                    </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                         <LogOut />
