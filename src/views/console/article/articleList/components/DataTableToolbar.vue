@@ -9,6 +9,8 @@ import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 
 
+
+
 </script>
 
 <template>
@@ -17,9 +19,10 @@ import DataTableViewOptions from './DataTableViewOptions.vue'
       <Input
         placeholder="Filter tasks..."
         class="h-8 w-[150px] lg:w-[250px]"
+        @update:modelValue="console.log($event)"
       />
-      <DataTableFacetedFilter/>
-      <DataTableFacetedFilter/>
+      <DataTableFacetedFilter />
+      <DataTableFacetedFilter />
 
       <Button
         variant="ghost"

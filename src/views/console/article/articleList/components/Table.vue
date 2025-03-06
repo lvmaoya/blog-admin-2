@@ -33,9 +33,6 @@ defineProps<TableData>()
             <Checkbox />
           </TableHead>
           <TableHead class="text-center">
-            ID
-          </TableHead>
-          <TableHead class="text-center">
             标题
           </TableHead>
           <TableHead class="text-center">
@@ -59,9 +56,6 @@ defineProps<TableData>()
         <TableRow v-for="item in tableData" :key="item.id">
           <TableCell class="text-center">
             <Checkbox />
-          </TableCell>
-          <TableCell class="text-center">
-            {{ item.id }}
           </TableCell>
           <TableCell class="text-center">
             {{ item.title }}
