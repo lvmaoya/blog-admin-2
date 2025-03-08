@@ -34,8 +34,15 @@ export const columns: ColumnDef<Article>[] = [
     accessorKey: 'fatherCategoryId',
     header: () => h('div', 'Category'),
     cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('fatherCategoryId')),
+      const category = categories.find(
+        category => category.value == row.getValue('fatherCategoryId'),
+      )
+
+      if (!category)
+        return null
+
+      return h('div', { class: 'flex w-[100px] items-center' }, [
+        h('span', category.label),
       ])
     },
   },
@@ -70,6 +77,15 @@ export const columns: ColumnDef<Article>[] = [
     },
   },
   {
+    accessorKey: 'description',
+    header: () => h('div', 'Description'),
+    cell: ({ row }) => {
+      return h('div', { class: 'flex space-x-2' }, [
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('description')),
+      ])
+    },
+  },
+  {
     accessorKey: 'publishedTime',
     header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Published Time' }),
     cell: ({ row }) => {
@@ -78,6 +94,7 @@ export const columns: ColumnDef<Article>[] = [
       ])
     },
   },
+  
   {
     id: 'actions',
     cell: ({ row }) => h(DataTableRowActions, { row }),

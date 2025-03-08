@@ -1,8 +1,4 @@
-import CheckCircledIcon from '@radix-icons/vue/CheckCircledIcon'
-import CrossCircledIcon from '@radix-icons/vue/CrossCircledIcon'
-import QuestionMarkCircledIcon from '@radix-icons/vue/QuestionMarkCircledIcon'
-import StopwatchIcon from '@radix-icons/vue/StopwatchIcon'
-import { ArrowDownIcon, ArrowRightIcon, ArrowUpIcon, CircleIcon } from 'lucide-vue-next'
+import { FolderRoot, BookOpenText, NotebookPen, AlarmClockCheck, GitPullRequestDraft, Trash2, CheckCheck } from 'lucide-vue-next'
 import { h } from 'vue'
 
 export const labels = [
@@ -23,40 +19,40 @@ export const labels = [
 export const statuses = [
   {
     value: "0",
-    label: 'Todo',
-    icon: h(CircleIcon),
+    label: 'TODO',
+    icon: h(AlarmClockCheck),
   },
   {
     value: "1",
-    label: 'In Progress',
-    icon: h(StopwatchIcon),
+    label: 'DRAFT',
+    icon: h(GitPullRequestDraft),
   },
   {
     value: "2",
-    label: 'Done',
-    icon: h(CheckCircledIcon),
+    label: 'PUBLISHED',
+    icon: h(CheckCheck),
   },
   {
     value: "3",
-    label: 'Deleted',
-    icon: h(CrossCircledIcon),
+    label: 'DELETED',
+    icon: h(Trash2),
   },
 ]
 
 export const categories = [
   {
     value: "1",
-    label: 'Project',
-    icon: h(ArrowDownIcon),
+    label: 'PROJECT',
+    icon: h(FolderRoot),
   },
   {
     value: "2",
-    label: 'Study',
-    icon: h(ArrowRightIcon),
+    label: 'STUDY',
+    icon: h(BookOpenText),
   },
   {
     value: "3",
-    label: 'Blog',
-    icon: h(ArrowUpIcon),
+    label: 'BLOG',
+    icon: h(NotebookPen),
   },
 ]

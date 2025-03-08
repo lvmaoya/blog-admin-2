@@ -9,6 +9,8 @@ import { computed } from 'vue'
 import { categories, statuses } from '../data/data'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
+import Cross2Icon from '@radix-icons/vue/Cross2Icon'
+import {Trash2} from 'lucide-vue-next'
 
 interface DataTableToolbarProps {
   table: Table<Article>
@@ -17,6 +19,7 @@ interface DataTableToolbarProps {
 const props = defineProps<DataTableToolbarProps>()
 
 const isFiltered = computed(() => props.table.getState().columnFilters.length > 0)
+const isSomeRowsSelected = computed(() => props.table.getIsSomeRowsSelected())
 </script>
 
 <template>
@@ -49,6 +52,15 @@ const isFiltered = computed(() => props.table.getState().columnFilters.length > 
       >
         Reset
         <Cross2Icon class="ml-2 h-4 w-4" />
+      </Button>
+      <Button
+        v-if="isSomeRowsSelected"
+        variant="ghost"
+        class="h-8 px-2 lg:px-3"
+        @click=""
+      >
+        Delete
+        <Trash2 class="ml-2 h-4 w-4" />
       </Button>
     </div>
     <DataTableViewOptions :table="table" />
