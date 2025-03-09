@@ -7,6 +7,7 @@ export async function articleListData(data) {
 export async function articleDetailData(id) {
   return await get(`/blog/${id}`);
 }
+
 export async function postArticle(data) {
   return await post("/blog", data);
 }
