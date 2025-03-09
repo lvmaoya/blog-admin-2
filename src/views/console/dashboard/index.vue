@@ -32,12 +32,12 @@ import UserNav from './components/UserNav.vue'
         </h2>
         <div class="flex items-center space-x-2">
           <DateRangePicker />
-          <Button>Download</Button>
+          <Button>Search</Button>
         </div>
       </div>
       <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
-          <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2 text-muted-foreground">
             <CardTitle class="text-sm font-medium">
               Total Revenue
             </CardTitle>
