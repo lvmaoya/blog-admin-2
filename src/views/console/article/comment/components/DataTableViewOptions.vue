@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Table } from '@tanstack/vue-table'
-import type { Article } from '../data/schema'
+import type { CommentInfo } from '../data/schema'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -15,7 +15,7 @@ import { computed } from 'vue'
 import MixerHorizontalIcon from '@radix-icons/vue/MixerHorizontalIcon'
 
 interface DataTableViewOptionsProps {
-  table: Table<Article>
+  table: Table<CommentInfo>
 }
 
 const props = defineProps<DataTableViewOptionsProps>()

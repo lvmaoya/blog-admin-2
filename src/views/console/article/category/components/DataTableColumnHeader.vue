@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Column } from '@tanstack/vue-table'
-import type { Article } from '../data/schema'
+import type { Category } from '../data/schema'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import {
@@ -16,7 +16,7 @@ import CaretSortIcon from '@radix-icons/vue/CaretSortIcon'
 import EyeNoneIcon from '@radix-icons/vue/EyeNoneIcon'
 
 interface DataTableColumnHeaderProps {
-  column: Column<Article, any>
+  column: Column<Category, any>
   title: string
 }
 

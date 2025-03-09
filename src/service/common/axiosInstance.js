@@ -41,13 +41,13 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
     (response) => {
         // 可以在这里对响应数据做统一处理，如错误码判断等
-        console.log(response);
+        // console.log(response);
         
         return response;
     },
     (error) => {
         // 可以在这里对响应错误做统一处理
-        console.log(error);
+        // console.log(error);
         
         if (error.response && error.response.status === 401 || error.response && error.response.status === 403) {
             deleteCache('token');

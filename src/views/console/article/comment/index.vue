@@ -8,7 +8,7 @@
     <div class="flex flex-1 flex-col gap-4 p-4">
         <div class="space-y-4">
             <!-- <Table :tableData="articleList"/> -->
-            <DataTable :data="articleList" :columns="columns" />
+            <DataTable :data="commentList" :columns="columns" />
         </div>
     </div>
 </template>
@@ -17,18 +17,19 @@
 import { onMounted, ref } from "vue";
 import { articleListData } from "@/service/article";
 import Table from "./components/Table.vue";
-import { Article } from "./Data";
+import { commentListData } from "@/service/comment";
 import { columns } from './components/columns'
 import DataTable from './components/DataTable.vue'
+import { CommentInfo } from "./data/schema";
 
 
-const articleList = ref<Array<Article>>([]);
-const getArticleList = async () => {
-    let res = await articleListData({ page: 1, size: 9999 });
-    articleList.value = res.records
+const commentList = ref<Array<CommentInfo>>([]);
+const getCommentList = async () => {
+    let res = await commentListData({ page: 1, size: 9999 });
+    commentList.value = res.records
 }
 onMounted(() => {
-    getArticleList()
+    getCommentList()
 })
 </script>
 <style lang="scss" scoped></style>

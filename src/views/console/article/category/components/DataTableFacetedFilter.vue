@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Column } from '@tanstack/vue-table'
 import type { Component } from 'vue'
-import type { Article } from '../data/schema'
+import type { Category } from '../data/schema'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -19,7 +19,7 @@ import CheckIcon from '@radix-icons/vue/CheckIcon'
 import PlusCircledIcon from '@radix-icons/vue/PlusCircledIcon'
 
 interface DataTableFacetedFilter {
-  column?: Column<Article, any>
+  column?: Column<Category, any>
   title?: string
   options: {
     label: string

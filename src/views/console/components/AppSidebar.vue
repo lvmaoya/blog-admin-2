@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/sidebar"
 import NavUser from "./NavUser.vue"
 import { useRouter } from "vue-router";
+import dayjs from 'dayjs'
+
 const data = {
     user: {
         name: 'lvmaoya',
@@ -49,14 +51,6 @@ const groupList = [{
         {
             title: "Comment",
             url: "articleComment"
-        },
-        {
-            title: "Recycle Bin",
-            url: "articleRecycleBin"
-        },
-        {
-            title: "Temporary Storage",
-            url: "articleTemporaryStorage"
         },
     ],
 },
@@ -97,12 +91,12 @@ const navigate = (url: string) => {
                     <SidebarMenuButton size="lg" as-child>
                         <a href="#">
                             <div
-                                class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                                <Command class="size-4" />
+                                class="flex aspect-square size-6 items-center justify-center rounded-lg">
+                                <img src="https://lvmaoya.cn/favicon.ico" alt="logo"/>
                             </div>
                             <div class="grid flex-1 text-left text-sm leading-tight">
                                 <span class="truncate font-semibold">Blog Admin</span>
-                                <span class="truncate text-xs">2025-2-27</span>
+                                <span class="truncate text-xs">{{dayjs().format('YYYY-MM-DD HH:mm:ss')}}</span>
                             </div>
                         </a>
                     </SidebarMenuButton>

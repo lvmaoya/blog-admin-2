@@ -75,29 +75,15 @@ const router = createRouter({
               name: "articleComment",
               meta: { name: "文章评论" },
               component: () =>
-                import("@/views/console/article/articleList/index.vue"),
+                import("@/views/console/article/comment/index.vue"),
             },
             {
               path: "category",
               name: "articleCategory",
               meta: { name: "文章分类" },
               component: () =>
-                import("@/views/console/article/articleList/index.vue"),
-            },
-            {
-              path: "recycle-bin",
-              name: "articleRecycleBin",
-              meta: { name: "暂存箱" },
-              component: () =>
-                import("@/views/console/article/articleList/index.vue"),
-            },
-            {
-              path: "temporary-storage",
-              name: "articleTemporaryStorage",
-              meta: { name: "回收站" },
-              component: () =>
-                import("@/views/console/article/articleList/index.vue"),
-            },
+                import("@/views/console/article/category/index.vue"),
+            }
           ]
         },
         {
