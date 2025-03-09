@@ -29,7 +29,7 @@ const groupList = [{
     items: [
         {
             title: "Dashboard",
-            url: "home"
+            url: "dashboard"
         },
         {
             title: "Writing",

@@ -26,11 +26,11 @@ const router = createRouter({
 
       children: [
         {
-          path: "home",
-          name: "home",
+          path: "dashboard",
+          name: "dashboard",
           meta: { name: "首页" },
 
-          component: () => import("@/views/console/home/index.vue"),
+          component: () => import("@/views/console/dashboard/index.vue"),
         },
         {
           path: "todo",
@@ -120,7 +120,7 @@ router.beforeEach((to, from, next) => {
     } else {
       if (to.path === "/console" || to.path === "/console/") {
         next({
-          name: "home",
+          name: "dashboard",
         });
       } else {
         next();

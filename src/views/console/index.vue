@@ -58,7 +58,7 @@ const menuList = ref([
     iconPath: homeIcon,
     activeIconPath: activeHomeIcon,
     index: 0,
-    url: '/console/home',
+    url: '/console/dashboard',
     active: true
   },
   {
@@ -98,7 +98,7 @@ const handleAddClick = () => {
   // menuList.value[].active = true
 }
 const handleLogoClick = () => {
-  router.push("/console/home");
+  router.push("/console/dashboard");
   menuList.value.forEach(item => item.active = false)
   menuList.value[0].active = true
 }

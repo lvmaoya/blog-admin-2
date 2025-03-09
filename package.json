@@ -15,7 +15,7 @@
     "@types/jest": "^29.5.14",
     "@unovis/ts": "^1.5.1",
     "@unovis/vue": "^1.5.1",
-    "@vueuse/core": "^12.7.0",
+    "@vueuse/core": "^12.8.2",
     "axios": "^1.7.9",
     "ckeditor5": "^44.2.0",
     "class-variance-authority": "^0.7.1",
