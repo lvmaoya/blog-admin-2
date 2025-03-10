@@ -6,21 +6,38 @@
 -->
 <template>
     <div class="flex flex-1 flex-col gap-4 p-4">
-        <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div class="aspect-video rounded-xl bg-[#F9F9FA]">
-                file dashboard
-            </div>
-            <div class="aspect-video rounded-xl bg-[#F9F9FA]" />
-            <div class="aspect-video rounded-xl bg-[#F9F9FA]" />
-        </div>
-        <div class="min-h-[100vh] flex-1 rounded-xl bg-[#F9F9FA] md:min-h-min" />
+        施工中...
+        <AlertDialog>
+            <AlertDialogTrigger>Open</AlertDialogTrigger>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        This action cannot be undone. This will permanently delete your account
+                        and remove your data from our servers.
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction>Continue</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     </div>
 </template>
 
 <script setup>
-
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>
