@@ -75,7 +75,7 @@ const selectorsBar = computed(() => props.type === 'grouped' ? GroupedBar.select
         :y="categories.map(category => (d: Data) => d[category]) "
         :color="colors"
         :rounded-corners="roundedCorners"
-        :bar-padding="0.05"
+        :bar-padding="0.2"
         :attributes="{
           [selectorsBar]: {
             opacity: (d: Data, i:number) => {
