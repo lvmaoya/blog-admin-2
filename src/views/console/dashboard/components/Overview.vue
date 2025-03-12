@@ -1,5 +1,6 @@
 <template>
   <BarChart
+    class="h-full"
     index="month"
     :data="articleData"
     :categories="['articleType1', 'articleType2', 'articleType3']"

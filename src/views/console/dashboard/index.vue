@@ -25,16 +25,7 @@ import LineChart from './components/LineChart.vue'
 </script>
 
 <template>
-  <div class="flex-1 space-y-4 p-4 overflow-hidden">
-    <!-- <div class="flex items-center justify-between space-y-2">
-      <h2 class="text-3xl font-bold tracking-tight">
-        Dashboard
-      </h2>
-      <div class="flex items-center space-x-2">
-        <DateRangePicker />
-        <Button>Search</Button>
-      </div>
-    </div> -->
+  <div class="flex-1 p-4 overflow-hidden max-lg:overflow-y-scroll flex flex-col space-y-4">
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2 text-muted-foreground">
@@ -116,47 +107,49 @@ import LineChart from './components/LineChart.vue'
         </CardContent>
       </Card>
     </div>
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-      <Card class="col-span-4">
-        <CardHeader>
-          <CardTitle>Overview</CardTitle>
-        </CardHeader>
-        <CardContent class="pl-2">
-          <LineChart />
-        </CardContent>
-      </Card>
-      <Card class="col-span-3">
-        <CardHeader>
-          <CardTitle>Recent Sales</CardTitle>
-          <CardDescription>
-            You made 265 sales this month.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <RecentSales />
-        </CardContent>
-      </Card>
-    </div>
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
-      <Card class="col-span-4">
-        <CardHeader>
-          <CardTitle>Overview</CardTitle>
-        </CardHeader>
-        <CardContent class="pl-2">
-          <Overview />
-        </CardContent>
-      </Card>
-      <Card class="col-span-3">
-        <CardHeader>
-          <CardTitle>Recent Sales</CardTitle>
-          <CardDescription>
-            You made 265 sales this month.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <RecentSales />
-        </CardContent>
-      </Card>
+    <div class="flex-1 overflow-hidden max-lg:overflow-visible">
+      <div style="height: calc(50% - 0.5rem);" class="max-lg:!h-[800px] grid gap-4 max-lg:gap-x-0 max-lg:grid-cols-2 lg:grid-cols-7 overflow-hidden">
+        <Card class="col-span-4 flex flex-col h-full overflow-hidden">
+          <CardHeader>
+            <CardTitle>Overview</CardTitle>
+          </CardHeader>
+          <CardContent class="pl-2 flex-1 overflow-hidden">
+            <LineChart />
+          </CardContent>
+        </Card>
+        <Card class="col-span-3 h-full overflow-hidden flex flex-col">
+          <CardHeader>
+            <CardTitle>Recent Sales</CardTitle>
+            <CardDescription>
+              You made 265 sales this month.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="flex-1 overflow-y-scroll">
+            <RecentSales />
+          </CardContent>
+        </Card>
+      </div>
+      <div style="height: calc(50% - 0.5rem);" class="max-lg:!h-[800px] grid gap-4 max-lg:gap-x-0 max-lg:grid-cols-2 lg:grid-cols-7 mt-4 overflow-hidden">
+        <Card class="col-span-4 flex flex-col h-full overflow-hidden">
+          <CardHeader>
+            <CardTitle>Overview</CardTitle>
+          </CardHeader>
+          <CardContent class="pl-2 flex-1 overflow-hidden">
+            <Overview />
+          </CardContent>
+        </Card>
+        <Card class="col-span-3 h-full overflow-hidden flex flex-col">
+          <CardHeader>
+            <CardTitle>Recent Sales</CardTitle>
+            <CardDescription>
+              You made 265 sales this month.
+            </CardDescription>
+          </CardHeader>
+          <CardContent class="flex-1 overflow-y-scroll">
+            <RecentSales />
+          </CardContent>
+        </Card>
+      </div>
     </div>
   </div>
 </template>

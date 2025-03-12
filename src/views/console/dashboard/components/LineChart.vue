@@ -267,7 +267,7 @@ const data = [
 
 <template>
   <LineChart
-    style="height: 300px"
+    class="h-full"
     :data="data"
     index="year"
     :categories="['Export Growth Rate', 'Import Growth Rate']"
