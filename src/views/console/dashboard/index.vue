@@ -22,6 +22,8 @@ import Search from './components/Search.vue'
 import TeamSwitcher from './components/TeamSwitcher.vue'
 import UserNav from './components/UserNav.vue'
 import LineChart from './components/LineChart.vue'
+import Category from './components/Category.vue'
+import SignIn from './components/SignIn.vue'
 </script>
 
 <template>
@@ -111,7 +113,7 @@ import LineChart from './components/LineChart.vue'
       <div style="height: calc(50% - 0.5rem);" class="max-lg:!h-[800px] grid gap-4 max-lg:gap-x-0 max-lg:grid-cols-2 lg:grid-cols-7 overflow-hidden">
         <Card class="col-span-4 flex flex-col h-full overflow-hidden">
           <CardHeader>
-            <CardTitle>Overview</CardTitle>
+            <CardTitle>文章数量增长量、阅读量、访客数量</CardTitle>
           </CardHeader>
           <CardContent class="pl-2 flex-1 overflow-hidden">
             <LineChart />
@@ -119,10 +121,7 @@ import LineChart from './components/LineChart.vue'
         </Card>
         <Card class="col-span-3 h-full overflow-hidden flex flex-col">
           <CardHeader>
-            <CardTitle>Recent Sales</CardTitle>
-            <CardDescription>
-              You made 265 sales this month.
-            </CardDescription>
+            <CardTitle>Recent Updated</CardTitle>
           </CardHeader>
           <CardContent class="flex-1 overflow-y-scroll">
             <RecentSales />
@@ -130,25 +129,16 @@ import LineChart from './components/LineChart.vue'
         </Card>
       </div>
       <div style="height: calc(50% - 0.5rem);" class="max-lg:!h-[800px] grid gap-4 max-lg:gap-x-0 max-lg:grid-cols-2 lg:grid-cols-7 mt-4 overflow-hidden">
-        <Card class="col-span-4 flex flex-col h-full overflow-hidden">
+        <Card class="col-span-3 flex flex-col h-full overflow-hidden">
           <CardHeader>
-            <CardTitle>Overview</CardTitle>
+            <CardTitle>产出字数、代码量</CardTitle>
           </CardHeader>
           <CardContent class="pl-2 flex-1 overflow-hidden">
             <Overview />
           </CardContent>
         </Card>
-        <Card class="col-span-3 h-full overflow-hidden flex flex-col">
-          <CardHeader>
-            <CardTitle>Recent Sales</CardTitle>
-            <CardDescription>
-              You made 265 sales this month.
-            </CardDescription>
-          </CardHeader>
-          <CardContent class="flex-1 overflow-y-scroll">
-            <RecentSales />
-          </CardContent>
-        </Card>
+        <Category></Category>
+        <SignIn></SignIn>
       </div>
     </div>
   </div>

@@ -10,7 +10,6 @@ import {
   <div class="space-y-8">
     <div class="flex items-center">
       <Avatar class="h-9 w-9">
-        <AvatarImage src="/avatars/01.png" alt="Avatar" />
         <AvatarFallback>OM</AvatarFallback>
       </Avatar>
       <div class="ml-4 space-y-1">
