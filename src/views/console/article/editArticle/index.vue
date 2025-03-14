@@ -5,143 +5,142 @@
  * @Description: Do not edit
 -->
 <template>
-  <div class="container">
-    <div class="middle">
-      <div class="main-container">
+  <div class="flex-1 overflow-hidden">
+      <div class="main-container prose max-w-full !h-full">
         <div
-          class="editor-container editor-container_document-editor editor-container_include-minimap editor-container_include-style editor-container_include-word-count"
+          class="editor-container editor-container_document-editor editor-container_include-style editor-container_include-word-count"
           ref="editorContainerElement">
           <div class="editor-container__menu-bar" ref="editorMenuBarElement"></div>
           <div class="editor-container__toolbar" ref="editorToolbarElement"></div>
-          <div class="editor-container__minimap-wrapper">
-            <div class="editor-container__editor-wrapper">
-              <div class="editor-container__editor">
-                <div ref="editorElement">
-                  <ckeditor v-if="editor && config" :editor="editor" :config="config" @ready="onReady" v-model="data"
-                    @input="onEditorInput" />
-                </div>
+          <div class="editor-container__editor-wrapper">
+            <div class="editor-container__editor">
+              <div ref="editorElement">
+                <ckeditor v-if="editor && config" :modelValue="config.initialData" :editor="editor" :config="config"
+                  @ready="onReady" />
               </div>
             </div>
-            <div class="editor-container__sidebar editor-container__sidebar_minimap">
-              <div ref="editorMinimapElement"></div>
-            </div>
           </div>
+          <div class="editor_container__word-count" ref="editorWordCountElement"></div>
         </div>
       </div>
-      <div class="submitBtn">
-        <button @click="handleSubmit">提交</button>
-      </div>
-    </div>
   </div>
 </template>
 
 <script setup>
 import "./assets/style.css"
 import { computed, ref, onMounted, useTemplateRef } from 'vue';
-import { Ckeditor } from '@ckeditor/ckeditor5-vue';
-
-import {
-  DecoupledEditor,
-  Alignment,
-  Autoformat,
-  AutoImage,
-  AutoLink,
-  Autosave,
-  BlockQuote,
-  Bold,
-  Bookmark,
-  Code,
-  CodeBlock,
-  Emoji,
-  Essentials,
-  FindAndReplace,
-  FontBackgroundColor,
-  FontColor,
-  FontFamily,
-  FontSize,
-  GeneralHtmlSupport,
-  Heading,
-  HorizontalLine,
-  HtmlComment,
-  HtmlEmbed,
-  ImageBlock,
-  ImageCaption,
-  ImageEditing,
-  ImageInline,
-  ImageInsert,
-  ImageInsertViaUrl,
-  ImageResize,
-  ImageStyle,
-  ImageTextAlternative,
-  ImageToolbar,
-  ImageUpload,
-  ImageUtils,
-  Indent,
-  IndentBlock,
-  Italic,
-  Link,
-  LinkImage,
-  List,
-  ListProperties,
-  MediaEmbed,
-  Mention,
-  Minimap,
-  PageBreak,
-  Paragraph,
-  PasteFromMarkdownExperimental,
-  PasteFromOffice,
-  RemoveFormat,
-  ShowBlocks,
-  SimpleUploadAdapter,
-  SpecialCharacters,
-  SpecialCharactersArrows,
-  SpecialCharactersCurrency,
-  SpecialCharactersEssentials,
-  SpecialCharactersLatin,
-  SpecialCharactersMathematical,
-  SpecialCharactersText,
-  Strikethrough,
-  Style,
-  Subscript,
-  Superscript,
-  Table,
-  TableCaption,
-  TableCellProperties,
-  TableColumnResize,
-  TableProperties,
-  TableToolbar,
-  TextPartLanguage,
-  TextTransformation,
-  Title,
-  TodoList,
-  Underline
-} from 'ckeditor5';
-
-import translations from 'ckeditor5/translations/zh-cn.js';
-import 'ckeditor5/ckeditor5.css';
-import { postArticle } from "@/service/article";
-import SubmitPlugin from './assets/SubmitPlugin'; // 引入自定义插件
+import { Ckeditor, useCKEditorCloud } from '@ckeditor/ckeditor5-vue';
 
 const LICENSE_KEY =
-  'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDA2MTQzOTksImp0aSI6ImJmMGI4MzQwLWEyNmUtNDI2Yi1iZjgwLTRlY2UzMGU4YjJiZiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjA3M2E0ODMyIn0.09qvzuvOIxHfmwh6aEY8b3hPzj4mJW_qPL5yf6lu1Yzzex_WT7Gd9yBmf9J3V9Et7GxhtMv3NnUfzbckplsVuw';
+  'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzA5NDA3OTksImp0aSI6IjJmYTM3ODg5LWUyNDAtNGViYi1hNzNlLTg4YWFlMDFkMmZiYSIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIl0sInZjIjoiMTJkOGJjODYifQ.XRlQdBnH0huT1L0EpkJdscsev3LI0XV19T26a9dTOuJZsBwGNnEs4ajVjGNLHx5q0RUl5XLwnfltJxwd43f-JQ';
 
 const editorToolbar = useTemplateRef('editorToolbarElement');
 const editorMenuBar = useTemplateRef('editorMenuBarElement');
-const editorMinimap = useTemplateRef('editorMinimapElement');
+const editorWordCount = useTemplateRef('editorWordCountElement');
+
+const cloud = useCKEditorCloud({ version: '44.3.0' });
 
 const isLayoutReady = ref(false);
 
-const editor = DecoupledEditor;
+const editor = computed(() => {
+  if (!cloud.data.value) {
+    return null;
+  }
+
+  return cloud.data.value.CKEditor.DecoupledEditor;
+});
 
 const config = computed(() => {
   if (!isLayoutReady.value) {
     return null;
   }
 
+  if (!cloud.data.value) {
+    return null;
+  }
+
+  const {
+    Alignment,
+    Autoformat,
+    AutoImage,
+    AutoLink,
+    Autosave,
+    BalloonToolbar,
+    BlockQuote,
+    Bold,
+    Bookmark,
+    Code,
+    CodeBlock,
+    Emoji,
+    Essentials,
+    FindAndReplace,
+    FontBackgroundColor,
+    FontColor,
+    FontFamily,
+    FontSize,
+    GeneralHtmlSupport,
+    Heading,
+    Highlight,
+    HorizontalLine,
+    HtmlComment,
+    HtmlEmbed,
+    ImageBlock,
+    ImageCaption,
+    ImageEditing,
+    ImageInline,
+    ImageInsert,
+    ImageInsertViaUrl,
+    ImageResize,
+    ImageStyle,
+    ImageTextAlternative,
+    ImageToolbar,
+    ImageUpload,
+    ImageUtils,
+    Indent,
+    IndentBlock,
+    Italic,
+    Link,
+    LinkImage,
+    List,
+    ListProperties,
+    Markdown,
+    MediaEmbed,
+    Mention,
+    PageBreak,
+    Paragraph,
+    PasteFromMarkdownExperimental,
+    PasteFromOffice,
+    RemoveFormat,
+    ShowBlocks,
+    SimpleUploadAdapter,
+    SpecialCharacters,
+    SpecialCharactersArrows,
+    SpecialCharactersCurrency,
+    SpecialCharactersEssentials,
+    SpecialCharactersLatin,
+    SpecialCharactersMathematical,
+    SpecialCharactersText,
+    Strikethrough,
+    Style,
+    Subscript,
+    Superscript,
+    Table,
+    TableCaption,
+    TableCellProperties,
+    TableColumnResize,
+    TableProperties,
+    TableToolbar,
+    TextPartLanguage,
+    TextTransformation,
+    Title,
+    TodoList,
+    Underline,
+    WordCount
+  } = cloud.data.value.CKEditor;
+
   return {
     toolbar: {
       items: [
-        'SubmitPlugin',
         'showBlocks',
         '|',
         'heading',
@@ -159,6 +158,7 @@ const config = computed(() => {
         'link',
         'insertImage',
         'insertTable',
+        'highlight',
         'blockQuote',
         'codeBlock',
         '|',
@@ -178,6 +178,7 @@ const config = computed(() => {
       AutoImage,
       AutoLink,
       Autosave,
+      BalloonToolbar,
       BlockQuote,
       Bold,
       Bookmark,
@@ -192,6 +193,7 @@ const config = computed(() => {
       FontSize,
       GeneralHtmlSupport,
       Heading,
+      Highlight,
       HorizontalLine,
       HtmlComment,
       HtmlEmbed,
@@ -214,9 +216,9 @@ const config = computed(() => {
       LinkImage,
       List,
       ListProperties,
+      Markdown,
       MediaEmbed,
       Mention,
-      Minimap,
       PageBreak,
       Paragraph,
       PasteFromMarkdownExperimental,
@@ -246,7 +248,9 @@ const config = computed(() => {
       Title,
       TodoList,
       Underline,
+      WordCount
     ],
+    balloonToolbar: ['bold', 'italic', '|', 'link', 'insertImage', '|', 'bulletedList', 'numberedList'],
     fontFamily: {
       supportAllValues: true
     },
@@ -322,12 +326,11 @@ const config = computed(() => {
       ]
     },
     initialData:
-      '',
-    language: 'zh-cn',
+      '<h2>Congratulations on setting up CKEditor 5! 🎉</h2>\n<p>\n\tYou\'ve successfully created a CKEditor 5 project. This powerful text editor\n\twill enhance your application, enabling rich text editing capabilities that\n\tare customizable and easy to use.\n</p>\n<h3>What\'s next?</h3>\n<ol>\n\t<li>\n\t\t<strong>Integrate into your app</strong>: time to bring the editing into\n\t\tyour application. Take the code you created and add to your application.\n\t</li>\n\t<li>\n\t\t<strong>Explore features:</strong> Experiment with different plugins and\n\t\ttoolbar options to discover what works best for your needs.\n\t</li>\n\t<li>\n\t\t<strong>Customize your editor:</strong> Tailor the editor\'s\n\t\tconfiguration to match your application\'s style and requirements. Or\n\t\teven write your plugin!\n\t</li>\n</ol>\n<p>\n\tKeep experimenting, and don\'t hesitate to push the boundaries of what you\n\tcan achieve with CKEditor 5. Your feedback is invaluable to us as we strive\n\tto improve and evolve. Happy editing!\n</p>\n<h3>Helpful resources</h3>\n<ul>\n\t<li>📝 <a href="https://portal.ckeditor.com/checkout?plan=free">Trial sign up</a>,</li>\n\t<li>📕 <a href="https://ckeditor.com/docs/ckeditor5/latest/installation/index.html">Documentation</a>,</li>\n\t<li>⭐️ <a href="https://github.com/ckeditor/ckeditor5">GitHub</a> (star us if you can!),</li>\n\t<li>🏠 <a href="https://ckeditor.com">CKEditor Homepage</a>,</li>\n\t<li>🧑‍💻 <a href="https://ckeditor.com/ckeditor-5/demo/">CKEditor 5 Demos</a>,</li>\n</ul>\n<h3>Need help?</h3>\n<p>\n\tSee this text, but the editor is not starting up? Check the browser\'s\n\tconsole for clues and guidance. It may be related to an incorrect license\n\tkey if you use premium features or another feature-related requirement. If\n\tyou cannot make it work, file a GitHub issue, and we will help as soon as\n\tpossible!\n</p>\n',
     licenseKey: LICENSE_KEY,
     link: {
       addTargetToExternalLinks: true,
-      // defaultProtocol: 'https://',
+      defaultProtocol: 'https://',
       decorators: {
         toggleDownloadable: {
           mode: 'manual',
@@ -356,40 +359,7 @@ const config = computed(() => {
       ]
     },
     menuBar: {
-      isVisible: true,
-      addItems: [
-        {
-          menu: {
-            menuId: 'my-menu',
-            label: 'My menu',
-            groups: [
-              {
-                groupId: 'my-buttons',
-                items: [
-                  'menuBar:bold',
-                  // 'menuBar:italic',
-                  // 'menuBar:underline'
-                ]
-              }
-            ]
-          },
-          position: 'end'
-        },
-        {
-					group: {
-						groupId: 'my-buttons',
-						items: [
-							'myButton1',
-							'myButton2',
-						]
-					},
-					position: 'after:basicStyles'
-				}
-      ]
-    },
-    minimap: {
-      container: editorMinimap.value,
-      extraClasses: 'editor-container_include-minimap ck-minimap__iframe-content'
+      isVisible: true
     },
     placeholder: 'Type or paste your content here!',
     style: {
@@ -443,20 +413,21 @@ const config = computed(() => {
     },
     table: {
       contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
-    },
-    translations: [translations]
+    }
   };
 });
-
 
 onMounted(() => {
   isLayoutReady.value = true;
 });
 
 function onReady(editor) {
+  [...editorWordCount.value.children].forEach(child => child.remove());
   [...editorToolbar.value.children].forEach(child => child.remove());
   [...editorMenuBar.value.children].forEach(child => child.remove());
 
+  const wordCount = editor.plugins.get('WordCount');
+  editorWordCount.value.appendChild(wordCount.wordCountContainer);
   editorToolbar.value.appendChild(editor.ui.view.toolbar.element);
   editorMenuBar.value.appendChild(editor.ui.view.menuBarView.element);
 }

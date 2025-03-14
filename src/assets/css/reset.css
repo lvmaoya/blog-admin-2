@@ -1,12 +1,14 @@
 @font-face {
-	font-family: "oppo-sans";
-	src: url(../fonts/oppo-sans-4.0.ttf);
+    font-family: "oppo-sans";
+    src: url(../fonts/oppo-sans-4.0.ttf);
 }
+
 @font-face {
-	font-family: "josefin-sans";
-	src: url(../fonts/JosefinSans-Regular.ttf);
+    font-family: "josefin-sans";
+    src: url(../fonts/JosefinSans-Regular.ttf);
 }
-*{
+
+* {
     box-sizing: border-box;
 }
 
@@ -16,23 +18,16 @@ body {
     font-size: 14px;
     font-family: 'oppo-sans', sans-serif;
 }
+
 .container {
-    max-width: none !important;
+    /* tailwind.css container */
+    max-width: none !important; 
 }
+
 a {
     text-decoration: none;
     color: #666;
-
 }
-ul{
-    padding: 0;
-    margin: 0;
-}
-
-ul li {
-    list-style: none;
-}
-
 
 html {
     overflow: auto;
