@@ -6,23 +6,28 @@
 -->
 <template>
   <div class="flex-1 overflow-hidden">
-      <div class="main-container prose max-w-full !h-full">
-        <div
-          class="editor-container editor-container_document-editor editor-container_include-style editor-container_include-word-count"
-          ref="editorContainerElement">
+    <div class="main-container prose max-w-full !h-full">
+      <div
+        class="editor-container editor-container_document-editor editor-container_include-style editor-container_include-word-count"
+        ref="editorContainerElement">
+        <div class="relative">
           <div class="editor-container__menu-bar" ref="editorMenuBarElement"></div>
-          <div class="editor-container__toolbar" ref="editorToolbarElement"></div>
-          <div class="editor-container__editor-wrapper">
-            <div class="editor-container__editor">
-              <div ref="editorElement">
-                <ckeditor v-if="editor && config" :modelValue="config.initialData" :editor="editor" :config="config"
-                  @ready="onReady" />
-              </div>
+          <div class="absolute top-0 bottom-0 right-4 text-[13px] btn-wrapper">
+            <SubmitForm></SubmitForm>
+          </div>
+        </div>
+        <div class="editor-container__toolbar" ref="editorToolbarElement"></div>
+        <div class="editor-container__editor-wrapper">
+          <div class="editor-container__editor">
+            <div ref="editorElement">
+              <ckeditor v-if="editor && config" :modelValue="config.initialData" :editor="editor" :config="config"
+                @ready="onReady" />
             </div>
           </div>
-          <div class="editor_container__word-count" ref="editorWordCountElement"></div>
         </div>
+        <div class="editor_container__word-count" ref="editorWordCountElement"></div>
       </div>
+    </div>
   </div>
 </template>
 
@@ -30,6 +35,7 @@
 import "./assets/style.css"
 import { computed, ref, onMounted, useTemplateRef } from 'vue';
 import { Ckeditor, useCKEditorCloud } from '@ckeditor/ckeditor5-vue';
+import SubmitForm from "./SubmitForm.vue";
 
 const LICENSE_KEY =
   'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzA5NDA3OTksImp0aSI6IjJmYTM3ODg5LWUyNDAtNGViYi1hNzNlLTg4YWFlMDFkMmZiYSIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIl0sInZjIjoiMTJkOGJjODYifQ.XRlQdBnH0huT1L0EpkJdscsev3LI0XV19T26a9dTOuJZsBwGNnEs4ajVjGNLHx5q0RUl5XLwnfltJxwd43f-JQ';
@@ -437,7 +443,7 @@ const onEditorInput = (editorData) => {
   console.log(editorData);
 };
 const handleSubmit = async () => {
-  await postArticle(data.value);
+  // await postArticle(data.value);
 };
 </script>
 
@@ -452,11 +458,8 @@ const handleSubmit = async () => {
   .middle {
     flex: 1;
   }
-
-  .submitBtn {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
+}
+.btn-wrapper{
+  padding: var(--ck-spacing-small);
 }
 </style>
