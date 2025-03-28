@@ -19,21 +19,59 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 
+import { Textarea } from '@/components/ui/textarea'
+
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/toast'
 import { toTypedSchema } from '@vee-validate/zod'
-import { h } from 'vue'
+import { h, ref } from 'vue'
 import * as z from 'zod'
+import FileUpload from '@/components/upload/index.vue'
+import CategorySelect from '@/components/category-select/index.vue'
+import { useField } from 'vee-validate'
+import { uploadFile } from '@/service/upload'
 
+const { value: categoryValue, handleChange } = useField('category')
 const formSchema = toTypedSchema(z.object({
-    username: z.string().min(2).max(50),
+    title: z.string().min(1, 'Title cannot be empty!'),
+    keywords: z.string().optional(),
+    category: z.string().optional(),
+    description: z.string().optional(),
+    cover: z.any().optional()
 }))
+const files = ref([])
 
-function onSubmit(values: any) {
-    toast({
-        title: 'You submitted the following values:',
-        description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
+async function onSubmit(values) {
+    let formData = { ...values }
+    // toast({
+    //     title: 'You submitted the following values:',
+    //     description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
+    // })
+    formData.category = categoryValue.value
+    let res = await uploadFiles()
+    formData.cover = res
+    console.log(formData);
+}
+
+// 上传文件的方法
+const uploadFiles = async () => {
+    if (files.value.length === 0) {
+        return
+    }
+    const formData = new FormData()
+
+    // 将文件添加到FormData
+    files.value.forEach(file => {
+        formData.append('files', file)
     })
+
+    try {
+        const response = await uploadFile(formData)
+        if (!response) throw new Error('上传失败')
+        console.log('上传成功:', response)
+    } catch (error) {
+        console.error('上传出错:', error)
+    }
 }
 </script>
 
@@ -43,29 +81,60 @@ function onSubmit(values: any) {
             <DialogTrigger as-child>
                 <button class="submitBtn">Submit</button>
             </DialogTrigger>
-            <DialogContent class="sm:max-w-[425px]">
+            <DialogContent class="sm:max-w-[625px]">
                 <DialogHeader>
-                    <DialogTitle>Edit profile</DialogTitle>
+                    <DialogTitle>Article detail</DialogTitle>
                     <DialogDescription>
-                        Make changes to your profile here. Click save when you're done.
+                        Fill in article details here. Click submit when you're done.
                     </DialogDescription>
                 </DialogHeader>
 
                 <form id="dialogForm" @submit="handleSubmit($event, onSubmit)">
-                    <FormField v-slot="{ componentField }" name="username">
+                    <FormField v-slot="{ componentField }" name="title">
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Title</FormLabel>
                             <FormControl>
-                                <Input type="text" placeholder="shadcn" v-bind="componentField" />
+                                <Input type="text" placeholder="title" v-bind="componentField" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     </FormField>
-                    <FormField v-slot="{ componentField }" name="username">
+                    <div class="h-4"></div>
+                    <FormField v-slot="{ componentField }" name="keywords">
                         <FormItem>
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Keywords</FormLabel>
                             <FormControl>
-                                <Input type="text" placeholder="shadcn" v-bind="componentField" />
+                                <Input type="text" placeholder="keywords: aaa,bbb,ccc..." v-bind="componentField" />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    </FormField>
+                    <div class="h-4"></div>
+                    <FormField v-slot="{ componentField }" name="category">
+                        <FormItem>
+                            <FormLabel>Category</FormLabel>
+                            <FormControl>
+                                <CategorySelect :modelValue="categoryValue" @update:modelValue="handleChange" />
+                            </FormControl>
+
+                        </FormItem>
+                    </FormField>
+                    <div class="h-4"></div>
+                    <FormField v-slot="{ componentField }" name="description">
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <Textarea v-bind="componentField" placeholder="fill in article description" />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    </FormField>
+                    <div class="h-4"></div>
+                    <FormField v-slot="{ componentField }" name="cover">
+                        <FormItem>
+                            <FormLabel>Cover</FormLabel>
+                            <FormControl>
+                                <FileUpload v-model="files" accept="image/*,.pdf" :max-size="5" multiple />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -73,8 +142,11 @@ function onSubmit(values: any) {
                 </form>
 
                 <DialogFooter>
+                    <Button type="submit" form="dialogForm" variant="secondary">
+                        Hold on
+                    </Button>
                     <Button type="submit" form="dialogForm">
-                        Save changes
+                        Sumbit
                     </Button>
                 </DialogFooter>
             </DialogContent>
