@@ -18,6 +18,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form'
+import { Loader2 } from 'lucide-vue-next'
 
 import { Textarea } from '@/components/ui/textarea'
 
@@ -40,19 +41,19 @@ const formSchema = toTypedSchema(z.object({
     cover: z.any().optional()
 }))
 const files = ref([])
-
+const loading = ref(false)
 async function onSubmit(values) {
+    loading.value = true
     let formData = { ...values }
-    // toast({
-    //     title: 'You submitted the following values:',
-    //     description: h('pre', { class: 'mt-2 w-[340px] rounded-md bg-slate-950 p-4' }, h('code', { class: 'text-white' }, JSON.stringify(values, null, 2))),
-    // })
     formData.category = categoryValue.value
     let res = await uploadFiles()
     formData.cover = res
     console.log(formData);
+    loading.value = false
 }
-
+const handleError = (error: string) => {
+    console.error('上传错误:', error)
+}
 // 上传文件的方法
 const uploadFiles = async () => {
     if (files.value.length === 0) {
@@ -62,15 +63,21 @@ const uploadFiles = async () => {
 
     // 将文件添加到FormData
     files.value.forEach(file => {
-        formData.append('files', file)
+        formData.append('file', file)
     })
 
     try {
         const response = await uploadFile(formData)
-        if (!response) throw new Error('上传失败')
-        console.log('上传成功:', response)
+        toast({
+            title: '图片上传成功'
+        });
+        return response.url
     } catch (error) {
         console.error('上传出错:', error)
+        toast({
+            title: '上传出错',
+            variant: 'destructive',
+        });
     }
 }
 </script>
@@ -134,7 +141,8 @@ const uploadFiles = async () => {
                         <FormItem>
                             <FormLabel>Cover</FormLabel>
                             <FormControl>
-                                <FileUpload v-model="files" accept="image/*,.pdf" :max-size="5" multiple />
+                                <FileUpload v-model="files" accept="image/*,.pdf,.doc,.docx" :max-size="5"
+                                    :max-files="1" @error="handleError" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -145,7 +153,8 @@ const uploadFiles = async () => {
                     <Button type="submit" form="dialogForm" variant="secondary">
                         Hold on
                     </Button>
-                    <Button type="submit" form="dialogForm">
+                    <Button type="submit" form="dialogForm" :disabled="loading">
+                        <Loader2 class="w-4 h-4 mr-2 animate-spin" v-if="loading" />
                         Sumbit
                     </Button>
                 </DialogFooter>

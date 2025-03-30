@@ -5,11 +5,8 @@
  * @Description: Do not edit
 -->
 <template>
-    <div class="flex flex-1 flex-col gap-4 p-4">
-        <div class="space-y-4">
-            <!-- <Table :tableData="articleList"/> -->
-            <DataTable :data="articleList" :columns="columns" />
-        </div>
+    <div class="p-4" v-loading="loading">
+        <DataTable :data="articleList" :columns="columns" />
     </div>
 </template>
 
@@ -17,15 +14,17 @@
 import { onMounted, ref } from "vue";
 import { articleListData } from "@/service/article";
 import Table from "./components/Table.vue";
-import { Article } from "./Data";
+import { Article } from "./data/schema";
 import { columns } from './components/columns'
 import DataTable from './components/DataTable.vue'
 
-
+const loading = ref(true)
 const articleList = ref<Array<Article>>([]);
 const getArticleList = async () => {
+    loading.value = true
     let res = await articleListData({ page: 1, size: 9999 });
     articleList.value = res.records
+    loading.value = false
 }
 onMounted(() => {
     getArticleList()

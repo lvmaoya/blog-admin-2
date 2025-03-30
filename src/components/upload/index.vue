@@ -1,14 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, onBeforeUnmount, PropType, h } from 'vue'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { X } from 'lucide-vue-next'
+import { toast } from '../ui/toast/use-toast'
 
-interface FileWithPreview extends File {
+type FileWithPreview = File & {
   preview?: string
+  id: string // 添加唯一标识
 }
 
 const props = defineProps({
+  modelValue: {
+    type: Array as PropType<FileWithPreview[]>,
+    default: () => []
+  },
   multiple: {
     type: Boolean,
     default: false
@@ -20,63 +26,145 @@ const props = defineProps({
   maxSize: {
     type: Number,
     default: 10 // MB
+  },
+  maxFiles: {
+    type: Number,
+    default: Infinity
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 })
 
-const emits = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'error'])
 
 const fileInputRef = ref<HTMLInputElement | null>(null)
 const files = ref<FileWithPreview[]>([])
 const isDragging = ref(false)
 
+// 生成唯一ID
+const generateId = () => Math.random().toString(36).substring(2, 11)
+
+// 同步外部modelValue变化
+watch(() => props.modelValue, (newVal) => {
+  if (JSON.stringify(newVal) !== JSON.stringify(files.value)) {
+    files.value = [...newVal]
+  }
+}, { deep: true })
+
+// 清理预览URL
+onBeforeUnmount(() => {
+  files.value.forEach(cleanupFilePreview)
+})
+
+const cleanupFilePreview = (file: FileWithPreview) => {
+  if (file.preview) {
+    URL.revokeObjectURL(file.preview)
+  }
+}
+
 const handleFileChange = (e: Event) => {
   const input = e.target as HTMLInputElement
   if (input.files && input.files.length > 0) {
     addFiles(Array.from(input.files))
+    input.value = '' // 重置input，允许重复选择相同文件
   }
+}
+
+const validateFile = (file: File): string | null => {
+  // 文件大小验证
+  if (file.size > props.maxSize * 1024 * 1024) {
+    return `文件 "${file.name}" 超过最大限制 ${props.maxSize}MB`
+  }
+
+  // 文件类型验证
+  if (props.accept !== '*') {
+    const acceptedTypes = props.accept.split(',')
+      .map(type => type.trim().toLowerCase())
+    
+    const fileType = file.type.toLowerCase()
+    const fileExtension = file.name.split('.').pop()?.toLowerCase() || ''
+    
+    const isTypeValid = acceptedTypes.some(type => {
+      if (type.startsWith('.')) {
+        return `.${fileExtension}` === type
+      }
+      if (type.endsWith('/*')) {
+        return fileType.startsWith(type.replace('/*', '/'))
+      }
+      return fileType === type
+    })
+    
+    if (!isTypeValid) {
+      return `文件 "${file.name}" 类型不符合要求 (${props.accept})`
+    }
+  }
+
+  return null
 }
 
 const addFiles = (newFiles: File[]) => {
-  // Check file size
-  const oversizedFiles = newFiles.filter(
-    file => file.size > props.maxSize * 1024 * 1024
-  )
+  console.log(newFiles);
   
-  if (oversizedFiles.length > 0) {
-    alert(`Some files exceed the maximum size of ${props.maxSize}MB`)
+  // 检查文件数量限制
+  if (files.value.length + newFiles.length > props.maxFiles) {
+    const errorMsg = `最多只能上传 ${props.maxFiles} 个文件`
+    emit('error', errorMsg)
+    toast({
+        title: errorMsg
+    })
     return
   }
 
-  // Add preview for images
-  const filesWithPreview = newFiles.map(file => {
-    if (file.type.startsWith('image/')) {
-      const fileWithPreview: FileWithPreview = file
-      fileWithPreview.preview = URL.createObjectURL(file)
-      return fileWithPreview
+  const validFiles: FileWithPreview[] = []
+  const errors: string[] = []
+
+  newFiles.forEach(file => {
+    const error = validateFile(file)
+    if (error) {
+      errors.push(error)
+    } else {
+      const fileWithPreview: FileWithPreview = Object.assign(file, {
+        id: generateId(),
+        preview: file.type.startsWith('image/') ? URL.createObjectURL(file) : undefined
+      })
+      validFiles.push(fileWithPreview)
     }
-    return file
   })
 
-  if (props.multiple) {
-    files.value = [...files.value, ...filesWithPreview]
-  } else {
-    files.value = filesWithPreview.slice(0, 1)
+  if (errors.length > 0) {
+    emit('error', errors.join('\n'))
+    alert(errors.join('\n'))
   }
-  
-  emits('update:modelValue', files.value)
+
+  if (validFiles.length > 0) {
+    if (props.multiple) {
+      files.value = [...files.value, ...validFiles]
+    } else {
+      // 清理之前的文件预览
+      files.value.forEach(cleanupFilePreview)
+      files.value = validFiles.slice(0, 1)
+    }
+    emit('update:modelValue', files.value)
+  }
 }
 
 const removeFile = (index: number) => {
-  // Revoke object URL if it's an image
-  if (files.value[index].preview) {
-    URL.revokeObjectURL(files.value[index].preview!)
-  }
+  cleanupFilePreview(files.value[index])
   files.value.splice(index, 1)
-  emits('update:modelValue', files.value)
+  emit('update:modelValue', files.value)
+}
+
+const clearFiles = () => {
+  files.value.forEach(cleanupFilePreview)
+  files.value = []
+  emit('update:modelValue', files.value)
 }
 
 const handleDragOver = (e: DragEvent) => {
   e.preventDefault()
+  if (props.disabled) return
   isDragging.value = true
 }
 
@@ -87,6 +175,7 @@ const handleDragLeave = () => {
 const handleDrop = (e: DragEvent) => {
   e.preventDefault()
   isDragging.value = false
+  if (props.disabled) return
   
   if (e.dataTransfer?.files) {
     addFiles(Array.from(e.dataTransfer.files))
@@ -94,10 +183,16 @@ const handleDrop = (e: DragEvent) => {
 }
 
 const triggerFileInput = () => {
-  if (fileInputRef.value) {
+  if (!props.disabled && fileInputRef.value) {
     fileInputRef.value.click()
   }
 }
+
+// 暴露方法给父组件
+defineExpose({
+  clearFiles,
+  triggerFileInput
+})
 </script>
 
 <template>
@@ -110,14 +205,17 @@ const triggerFileInput = () => {
       :multiple="multiple"
       :accept="accept"
       @change="handleFileChange"
+      :disabled="disabled"
     />
 
     <!-- Drop zone -->
     <div
-      class="border-2 border-dashed rounded-lg p-6 text-center transition-colors cursor-pointer"
+      class="border-2 border-dashed rounded-lg p-6 text-center transition-colors"
       :class="{
-        'border-primary bg-primary/10': isDragging,
-        'border-border': !isDragging
+        'border-primary bg-primary/10': isDragging && !disabled,
+        'border-border': !isDragging || disabled,
+        'cursor-pointer': !disabled,
+        'cursor-not-allowed opacity-50': disabled
       }"
       @dragover="handleDragOver"
       @dragleave="handleDragLeave"
@@ -146,32 +244,46 @@ const triggerFileInput = () => {
           </svg>
         </div>
         <div class="text-sm text-muted-foreground">
-          <span class="font-medium text-primary">Click to upload</span> or drag and drop
+          <span class="font-medium" :class="{
+            'text-primary': !disabled,
+            'text-muted-foreground': disabled
+          }">点击上传</span> 或拖放文件到此处
         </div>
         <div class="text-xs text-muted-foreground">
-          {{ accept === '*' ? 'Any file type' : accept }} (max. {{ maxSize }}MB)
+          {{ accept === '*' ? '支持所有文件类型' : `支持: ${accept}` }} (最大 {{ maxSize }}MB)
+          <span v-if="maxFiles < Infinity">, 最多 {{ maxFiles }} 个文件</span>
         </div>
       </div>
     </div>
 
     <!-- Selected files preview -->
     <div v-if="files.length > 0" class="space-y-2">
-      <Label>Selected files</Label>
+      <div class="flex items-center justify-between">
+        <Label>已选择文件 ({{ files.length }})</Label>
+        <button
+          type="button"
+          class="text-sm text-primary hover:underline"
+          @click="clearFiles"
+          :disabled="disabled"
+        >
+          清空所有
+        </button>
+      </div>
       <div class="space-y-2">
         <div
           v-for="(file, index) in files"
-          :key="index"
+          :key="file.id"
           class="flex items-center justify-between rounded-md border p-3"
         >
-          <div class="flex items-center space-x-3">
-            <div v-if="file.preview" class="h-10 w-10 overflow-hidden rounded-md">
+          <div class="flex items-center space-x-3 min-w-0">
+            <div v-if="file.preview" class="h-10 w-10 overflow-hidden rounded-md flex-shrink-0">
               <img
                 :src="file.preview"
                 :alt="file.name"
                 class="h-full w-full object-cover"
               />
             </div>
-            <div v-else class="flex h-10 w-10 items-center justify-center rounded-md bg-muted">
+            <div v-else class="flex h-10 w-10 items-center justify-center rounded-md bg-muted flex-shrink-0">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -191,7 +303,7 @@ const triggerFileInput = () => {
             <div class="min-w-0">
               <p class="truncate text-sm font-medium">{{ file.name }}</p>
               <p class="text-xs text-muted-foreground">
-                {{ (file.size / 1024 / 1024).toFixed(2) }} MB
+                {{ (file.size / 1024 / 1024).toFixed(2) }} MB · {{ file.type || '未知类型' }}
               </p>
             </div>
           </div>
@@ -199,6 +311,7 @@ const triggerFileInput = () => {
             type="button"
             class="rounded-sm p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             @click.stop="removeFile(index)"
+            :disabled="disabled"
           >
             <X class="h-4 w-4" />
           </button>

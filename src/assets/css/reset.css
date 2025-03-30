@@ -18,7 +18,9 @@ body {
     font-size: 14px;
     font-family: 'oppo-sans', sans-serif;
 }
-
+main{
+    overflow-x: hidden;
+}
 .container {
     /* tailwind.css container */
     max-width: none !important; 

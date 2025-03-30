@@ -22,10 +22,6 @@ const props = defineProps({
         type: Object,
         default: () => ({})
     },
-    apiUrl: {
-        type: String,
-        default: '/api/categories' // 默认分类接口地址
-    },
     placeholder: {
         type: String,
         default: 'select article category'

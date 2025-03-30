@@ -25,7 +25,7 @@ instance.interceptors.request.use(
         // 可以在这里添加 token 等请求头信息
         const token = getCache('token');
         if (!token) {
-            router.replace("/login")
+            // router.replace("/login")
         }
         if (token && config.headers) {
             config.headers.Authorization = token;
@@ -50,8 +50,8 @@ instance.interceptors.response.use(
         // console.log(error);
         
         if (error.response && error.response.status === 401 || error.response && error.response.status === 403) {
-            deleteCache('token');
-            router.replace("/login");
+            // deleteCache('token');
+            // router.replace("/login");
         }
         return Promise.reject(error);
     }

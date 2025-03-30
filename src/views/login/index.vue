@@ -62,14 +62,13 @@
 <script setup>
 import { login } from "@/service/login";
 import { onMounted, reactive, ref } from "vue";
-import { getCache, setCache } from '@/utils/cache';
+import { getCache, setCache, deleteCache } from '@/utils/cache';
 import { useRouter, useRoute } from "vue-router";
 import { BASE_URL } from "@/service/common/axiosInstance.js";
 import axios from 'axios';
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
-
 const router = useRouter();
 const route = useRoute();
 let formData = reactive({
@@ -137,6 +136,7 @@ const visitorLogin = () => {
 
 onMounted(() => {
   getCodeData();
+  deleteCache('token');
 });
 
 </script>
