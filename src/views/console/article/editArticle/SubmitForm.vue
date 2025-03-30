@@ -31,26 +31,34 @@ import FileUpload from '@/components/upload/index.vue'
 import CategorySelect from '@/components/category-select/index.vue'
 import { useField } from 'vee-validate'
 import { uploadFile } from '@/service/upload'
-
-const { value: categoryValue, handleChange } = useField('category')
+import { postArticle } from "@/service/article"
+const { value: categoryValue, handleChange } = useField('categoryValue')
 const formSchema = toTypedSchema(z.object({
     title: z.string().min(1, 'Title cannot be empty!'),
     keywords: z.string().optional(),
-    category: z.string().optional(),
+    categoryValue: z.string().optional(),
     description: z.string().optional(),
-    cover: z.any().optional()
+    coverImage: z.any().optional()
 }))
 const files = ref([])
 const loading = ref(false)
 async function onSubmit(values) {
     loading.value = true
     let formData = { ...values }
-    formData.category = categoryValue.value
+    delete formData.categoryValue
+    if (categoryValue.value) {
+        formData.fatherCategoryId = categoryValue.value[0]
+        formData.categoryId = categoryValue.value[1]
+    }
     let res = await uploadFiles()
-    formData.cover = res
+    formData.coverImage = res
     formData.content = prop.content
-    console.log(formData);
+    await postArticle(formData)
     loading.value = false
+
+    toast({
+        title: '文章上传成功'
+    });
 }
 const handleError = (error: string) => {
     console.error('上传错误:', error)
@@ -118,7 +126,7 @@ const prop = defineProps({
                         </FormItem>
                     </FormField>
                     <div class="h-4"></div>
-                    <FormField v-slot="{ componentField }" name="category">
+                    <FormField v-slot="{ componentField }" name="categoryValue">
                         <FormItem>
                             <FormLabel>Category</FormLabel>
                             <FormControl>
@@ -138,7 +146,7 @@ const prop = defineProps({
                         </FormItem>
                     </FormField>
                     <div class="h-4"></div>
-                    <FormField v-slot="{ componentField }" name="cover">
+                    <FormField v-slot="{ componentField }" name="coverImage">
                         <FormItem>
                             <FormLabel>Cover</FormLabel>
                             <FormControl>

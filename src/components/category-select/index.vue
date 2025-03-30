@@ -61,7 +61,8 @@ onMounted(() => {
 
 // 处理选择变化
 const handleValueChange = (value: string) => {
-    emit('update:modelValue', value)
+    const selected = categories.value.find(item => item.id == value)
+    emit('update:modelValue', [selected.fatherCategoryName, selected.id])
 }
 </script>
 
