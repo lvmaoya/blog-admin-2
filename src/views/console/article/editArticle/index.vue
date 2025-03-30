@@ -12,16 +12,15 @@
         ref="editorContainerElement">
         <div class="relative">
           <div class="editor-container__menu-bar" ref="editorMenuBarElement"></div>
-          <div class="absolute top-0 bottom-0 right-4 text-[13px] btn-wrapper">
-            <SubmitForm></SubmitForm>
+          <div class="absolute top-0 bottom-0 right-4 text-[13px] btn-wrapper" v-if="cloud.data">
+            <SubmitForm :content="content"></SubmitForm>
           </div>
         </div>
         <div class="editor-container__toolbar" ref="editorToolbarElement"></div>
         <div class="editor-container__editor-wrapper">
           <div class="editor-container__editor">
             <div ref="editorElement">
-              <ckeditor v-if="editor && config" :modelValue="config.initialData" :editor="editor" :config="config"
-                @ready="onReady" />
+              <ckeditor v-if="editor && config" :editor="editor" :config="config" @ready="onReady" v-model="content" />
             </div>
           </div>
         </div>
@@ -37,8 +36,8 @@ import { computed, ref, onMounted, useTemplateRef } from 'vue';
 import { Ckeditor, useCKEditorCloud } from '@ckeditor/ckeditor5-vue';
 import SubmitForm from "./SubmitForm.vue";
 
-const LICENSE_KEY = ''
-  // 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzA5NDA3OTksImp0aSI6IjJmYTM3ODg5LWUyNDAtNGViYi1hNzNlLTg4YWFlMDFkMmZiYSIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIl0sInZjIjoiMTJkOGJjODYifQ.XRlQdBnH0huT1L0EpkJdscsev3LI0XV19T26a9dTOuJZsBwGNnEs4ajVjGNLHx5q0RUl5XLwnfltJxwd43f-JQ';
+const LICENSE_KEY =
+  'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NzA5NDA3OTksImp0aSI6IjJmYTM3ODg5LWUyNDAtNGViYi1hNzNlLTg4YWFlMDFkMmZiYSIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIl0sInZjIjoiMTJkOGJjODYifQ.XRlQdBnH0huT1L0EpkJdscsev3LI0XV19T26a9dTOuJZsBwGNnEs4ajVjGNLHx5q0RUl5XLwnfltJxwd43f-JQ';
 
 const editorToolbar = useTemplateRef('editorToolbarElement');
 const editorMenuBar = useTemplateRef('editorMenuBarElement');
@@ -47,6 +46,7 @@ const editorWordCount = useTemplateRef('editorWordCountElement');
 const cloud = useCKEditorCloud({ version: '44.3.0' });
 
 const isLayoutReady = ref(false);
+const isEditorReady = ref(false);
 
 const editor = computed(() => {
   if (!cloud.data.value) {
@@ -109,7 +109,6 @@ const config = computed(() => {
     LinkImage,
     List,
     ListProperties,
-    Markdown,
     MediaEmbed,
     Mention,
     PageBreak,
@@ -138,7 +137,6 @@ const config = computed(() => {
     TableToolbar,
     TextPartLanguage,
     TextTransformation,
-    Title,
     TodoList,
     Underline,
     WordCount
@@ -222,7 +220,6 @@ const config = computed(() => {
       LinkImage,
       List,
       ListProperties,
-      Markdown,
       MediaEmbed,
       Mention,
       PageBreak,
@@ -251,7 +248,6 @@ const config = computed(() => {
       TableToolbar,
       TextPartLanguage,
       TextTransformation,
-      Title,
       TodoList,
       Underline,
       WordCount
@@ -331,8 +327,7 @@ const config = computed(() => {
         'resizeImage'
       ]
     },
-    initialData:
-      '<h2>Congratulations on setting up CKEditor 5! 🎉</h2>\n<p>\n\tYou\'ve successfully created a CKEditor 5 project. This powerful text editor\n\twill enhance your application, enabling rich text editing capabilities that\n\tare customizable and easy to use.\n</p>\n<h3>What\'s next?</h3>\n<ol>\n\t<li>\n\t\t<strong>Integrate into your app</strong>: time to bring the editing into\n\t\tyour application. Take the code you created and add to your application.\n\t</li>\n\t<li>\n\t\t<strong>Explore features:</strong> Experiment with different plugins and\n\t\ttoolbar options to discover what works best for your needs.\n\t</li>\n\t<li>\n\t\t<strong>Customize your editor:</strong> Tailor the editor\'s\n\t\tconfiguration to match your application\'s style and requirements. Or\n\t\teven write your plugin!\n\t</li>\n</ol>\n<p>\n\tKeep experimenting, and don\'t hesitate to push the boundaries of what you\n\tcan achieve with CKEditor 5. Your feedback is invaluable to us as we strive\n\tto improve and evolve. Happy editing!\n</p>\n<h3>Helpful resources</h3>\n<ul>\n\t<li>📝 <a href="https://portal.ckeditor.com/checkout?plan=free">Trial sign up</a>,</li>\n\t<li>📕 <a href="https://ckeditor.com/docs/ckeditor5/latest/installation/index.html">Documentation</a>,</li>\n\t<li>⭐️ <a href="https://github.com/ckeditor/ckeditor5">GitHub</a> (star us if you can!),</li>\n\t<li>🏠 <a href="https://ckeditor.com">CKEditor Homepage</a>,</li>\n\t<li>🧑‍💻 <a href="https://ckeditor.com/ckeditor-5/demo/">CKEditor 5 Demos</a>,</li>\n</ul>\n<h3>Need help?</h3>\n<p>\n\tSee this text, but the editor is not starting up? Check the browser\'s\n\tconsole for clues and guidance. It may be related to an incorrect license\n\tkey if you use premium features or another feature-related requirement. If\n\tyou cannot make it work, file a GitHub issue, and we will help as soon as\n\tpossible!\n</p>\n',
+    initialData: '',
     licenseKey: LICENSE_KEY,
     link: {
       addTargetToExternalLinks: true,
@@ -436,15 +431,10 @@ function onReady(editor) {
   editorWordCount.value.appendChild(wordCount.wordCountContainer);
   editorToolbar.value.appendChild(editor.ui.view.toolbar.element);
   editorMenuBar.value.appendChild(editor.ui.view.menuBarView.element);
+  isEditorReady.value = true
 }
 
-const data = ref('');
-const onEditorInput = (editorData) => {
-  console.log(editorData);
-};
-const handleSubmit = async () => {
-  // await postArticle(data.value);
-};
+const content = ref('');
 </script>
 
 <style scoped lang="scss">
@@ -459,7 +449,8 @@ const handleSubmit = async () => {
     flex: 1;
   }
 }
-.btn-wrapper{
+
+.btn-wrapper {
   padding: var(--ck-spacing-small);
 }
 </style>

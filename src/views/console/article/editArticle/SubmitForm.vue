@@ -48,6 +48,7 @@ async function onSubmit(values) {
     formData.category = categoryValue.value
     let res = await uploadFiles()
     formData.cover = res
+    formData.content = prop.content
     console.log(formData);
     loading.value = false
 }
@@ -60,12 +61,9 @@ const uploadFiles = async () => {
         return
     }
     const formData = new FormData()
-
-    // 将文件添加到FormData
     files.value.forEach(file => {
         formData.append('file', file)
     })
-
     try {
         const response = await uploadFile(formData)
         toast({
@@ -80,6 +78,9 @@ const uploadFiles = async () => {
         });
     }
 }
+const prop = defineProps({
+    content: String
+})
 </script>
 
 <template>
