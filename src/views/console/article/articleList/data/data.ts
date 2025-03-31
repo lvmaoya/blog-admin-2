@@ -18,22 +18,22 @@ export const labels = [
 
 export const statuses = [
   {
-    value: "0",
+    value: 0,
     label: 'TODO',
     icon: h(AlarmClockCheck),
   },
   {
-    value: "1",
+    value: 1,
     label: 'DRAFT',
     icon: h(BookDashed),
   },
   {
-    value: "2",
+    value: 2,
     label: 'PUBLISHED',
     icon: h(CheckCheck),
   },
   {
-    value: "3",
+    value: 3,
     label: 'DELETED',
     icon: h(X),
   },

@@ -13,11 +13,16 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import { articleListData } from "@/service/article";
-import Table from "./components/Table.vue";
 import { Article } from "./data/schema";
 import { columns } from './components/columns'
 import DataTable from './components/DataTable.vue'
+import { useEventBus } from '@vueuse/core'
+const bus = useEventBus<string>('refresh-table')
 
+// 接收事件 - 自动推断类型
+bus.on((payload) => {
+    getArticleList()  
+})
 const loading = ref(true)
 const articleList = ref<Array<Article>>([]);
 const getArticleList = async () => {

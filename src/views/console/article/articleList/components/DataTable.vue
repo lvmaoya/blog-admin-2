@@ -49,7 +49,6 @@ const table = useVueTable({
     get columnFilters() { return columnFilters.value },
     get columnVisibility() { return columnVisibility.value },
     get rowSelection() { return rowSelection.value },
-    get pagination() { return { pageSize: 20, pageIndex: 0 } },
   },
   enableRowSelection: true,
   onSortingChange: updaterOrValue => valueUpdater(updaterOrValue, sorting),
@@ -63,6 +62,7 @@ const table = useVueTable({
   getFacetedRowModel: getFacetedRowModel(),
   getFacetedUniqueValues: getFacetedUniqueValues(),
 })
+
 </script>
 
 <template>
