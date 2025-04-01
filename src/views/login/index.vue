@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="login-content" v-loading="loading">
+    <div class="login-content">
       <div class="picture">
         <img src="@/assets/img/work.png" alt="login">
       </div>

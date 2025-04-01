@@ -43,7 +43,7 @@ instance.interceptors.response.use(
         // 可以在这里对响应数据做统一处理，如错误码判断等
         // console.log(response);
         
-        return response;
+        return response.data;
     },
     (error) => {
         // 可以在这里对响应错误做统一处理
