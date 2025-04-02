@@ -7,7 +7,6 @@
 <template>
     <div class="flex flex-1 flex-col gap-4 p-4">
         <div class="space-y-4">
-            <!-- <Table :tableData="articleList"/> -->
             <DataTable :data="categoryList" :columns="columns" />
         </div>
     </div>
@@ -15,17 +14,24 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { articleListData } from "@/service/article";
-import Table from "./components/Table.vue";
 import { categoryListData } from "@/service/category";
 import { columns } from './components/columns'
 import DataTable from './components/DataTable.vue'
 import { Category } from "./data/schema";
+import { useEventBus } from '@vueuse/core'
+const bus = useEventBus<string>('refresh-table')
 
+// 接收事件 - 自动推断类型
+bus.on((payload) => {
+    getCategoryList()  
+})
 
 const categoryList = ref<Array<Category>>([]);
+const loading = ref(false)
 const getCategoryList = async () => {
+    loading.value = true;
     let res = await categoryListData({ page: 1, size: 9999 });
+    loading.value = false;
     categoryList.value = res
 }
 onMounted(() => {

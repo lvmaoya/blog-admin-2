@@ -4,7 +4,7 @@ import { z } from 'zod';
 const categorySchema = z.object({
   id: z.string(),
   categoryName: z.string(),
-  fatherCategoryName: z.string(),
+  fatherCategoryId: z.string(),
   deleted: z.number(),
   createdTime: z.string(),
   updatedTime: z.string(),

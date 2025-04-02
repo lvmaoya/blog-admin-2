@@ -14,11 +14,15 @@ import ChevronRightIcon from '@radix-icons/vue/ChevronRightIcon'
 
 import DoubleArrowLeftIcon from '@radix-icons/vue/DoubleArrowLeftIcon'
 import DoubleArrowRightIcon from '@radix-icons/vue/DoubleArrowRightIcon'
+import { onMounted } from 'vue'
 
 interface DataTablePaginationProps {
   table: Table<Category>
 }
-defineProps<DataTablePaginationProps>()
+const prop = defineProps<DataTablePaginationProps>()
+onMounted(()=>{
+  prop.table.getState().pagination.pageSize=20
+})
 </script>
 
 <template>

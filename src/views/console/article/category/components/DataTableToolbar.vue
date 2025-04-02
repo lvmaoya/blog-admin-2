@@ -10,7 +10,7 @@ import { categories, statuses } from '../data/data'
 import DataTableFacetedFilter from './DataTableFacetedFilter.vue'
 import DataTableViewOptions from './DataTableViewOptions.vue'
 import Cross2Icon from '@radix-icons/vue/Cross2Icon'
-import {Plus} from 'lucide-vue-next'
+import AddCategory from './AddCategory.vue'
 
 interface DataTableToolbarProps {
   table: Table<Category>
@@ -33,13 +33,6 @@ const isSomeRowsSelected = computed(() => props.table.getIsSomeRowsSelected())
       />
     </div>
     <DataTableViewOptions :table="table" />
-    <Button
-        variant="outline"
-        size="sm"
-        class="ml-auto hidden h-8 lg:flex ml-2"
-      >
-        <Plus class="mr-2 h-4 w-4" />
-        Add
-      </Button>
+    <AddCategory></AddCategory>
   </div>
 </template>

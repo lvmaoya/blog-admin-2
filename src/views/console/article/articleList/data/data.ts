@@ -19,24 +19,14 @@ export const labels = [
 export const statuses = [
   {
     value: 0,
-    label: 'TODO',
-    icon: h(AlarmClockCheck),
-  },
-  {
-    value: 1,
     label: 'DRAFT',
     icon: h(BookDashed),
   },
   {
-    value: 2,
+    value: 1,
     label: 'PUBLISHED',
     icon: h(CheckCheck),
-  },
-  {
-    value: 3,
-    label: 'DELETED',
-    icon: h(X),
-  },
+  }
 ]
 
 export const categories = [

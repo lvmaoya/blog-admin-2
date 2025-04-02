@@ -38,7 +38,6 @@ const isSomeRowsSelected = computed(() => props.table.getIsSomeRowsSelected())
         :options="statuses"
       />
       <DataTableFacetedFilter
-        v-if="table.getColumn('fatherCategoryId')"
         :column="table.getColumn('fatherCategoryId')"
         title="Category"
         :options="categories"

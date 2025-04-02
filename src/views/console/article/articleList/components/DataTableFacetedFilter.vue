@@ -31,6 +31,7 @@ interface DataTableFacetedFilter {
 const props = defineProps<DataTableFacetedFilter>()
 
 const facets = computed(() => props.column?.getFacetedUniqueValues())
+
 const selectedValues = computed(() => new Set(props.column?.getFilterValue() as string[]))
 </script>
 
@@ -92,6 +93,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
                   selectedValues.add(option.value)
                 }
                 const filterValues = Array.from(selectedValues)
+                
                 column?.setFilterValue(
                   filterValues.length ? filterValues : undefined,
                 )

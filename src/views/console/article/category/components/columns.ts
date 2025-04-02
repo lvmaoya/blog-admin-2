@@ -1,5 +1,5 @@
 import type { ColumnDef } from '@tanstack/vue-table'
-import type { Category } from '../data/schema'
+import { getFatherCategoryName, type Category } from '../data/schema'
 
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -28,20 +28,11 @@ export const columns: ColumnDef<Category>[] = [
     },
   },
   {
-    accessorKey: 'fatherCategoryName',
+    accessorKey: 'fatherCategoryId',
     header: () => h('div', 'Father Category Name'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('fatherCategoryName')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'deleted',
-    header: () => h('div', 'Deleted'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('deleted')),
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, getFatherCategoryName(row.getValue('fatherCategoryId')) ),
       ])
     },
   },
