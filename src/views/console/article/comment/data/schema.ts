@@ -1,9 +1,9 @@
 export type CommentInfo = {
-  id: string;
-  articleId: string;
+  id: number;
+  articleId: number;
   type: number;
-  rootId: string | null;
-  toUserId: string;
+  rootId: number | null;
+  toUserId: number;
   toUserName: string;
   avatar: string;
   userName: string;

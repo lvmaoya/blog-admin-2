@@ -9,90 +9,18 @@ import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'
 
 export const columns: ColumnDef<CommentInfo>[] = [
-  {
-    accessorKey: 'id',
-    header: () => h('div', 'ID'),
-    cell: ({ row }) => {      
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('id')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'articleId',
-    header: () => h('div', 'Article Id'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('articleId')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'type',
-    header: () => h('div', 'type'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('type')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'rootId',
-    header: () => h('div', 'rootId'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('rootId')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'toUserId',
-    header: () => h('div', 'toUserId'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('toUserId')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'toUserName',
-    header: () => h('div', 'toUserName'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('toUserName')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'avatar',
-    header: () => h('div', 'avatar'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('avatar')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'userName',
-    header: () => h('div', 'userName'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('userName')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'email',
-    header: () => h('div', 'email'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('email')),
-      ])
-    },
-  },
+  // {
+  //   accessorKey: 'id',
+  //   header: () => h('div', 'ID'),
+  //   cell: ({ row }) => {      
+  //     return h('div', { class: 'flex space-x-2' }, [
+  //       h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('id')),
+  //     ])
+  //   },
+  // },
   {
     accessorKey: 'content',
-    header: () => h('div', 'content'),
+    header: () => h('div', 'Content'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('content')),
@@ -100,29 +28,58 @@ export const columns: ColumnDef<CommentInfo>[] = [
     },
   },
   {
+    accessorKey: 'articleTitle',
+    header: () => h('div', 'Article Title'),
+    cell: ({ row }) => {
+      return h('div', { class: '' }, [
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('articleTitle')),
+      ])
+    },
+  },
+  {
+    accessorKey: 'type',
+    header: () => h('div', 'Type'),
+    cell: ({ row }) => {
+      return h('div', { class: 'flex space-x-2' }, [
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('type') == 0 ? '评论' : '回复'),
+      ])
+    },
+  },
+
+  {
+    accessorKey: 'userName',
+    header: () => h('div', 'Name'),
+    cell: ({ row }) => {
+      return h('div', { class: 'flex space-x-2' }, [
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('userName')),
+      ])
+    },
+  },
+  {
+    accessorKey: 'toUserName',
+    header: () => h('div', 'To'),
+    cell: ({ row }) => {
+      return h('div', { class: 'flex space-x-2' }, [
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('toUserName') ?? '--'),
+      ])
+    },
+  },
+  {
+    accessorKey: 'email',
+    header: () => h('div', 'Email'),
+    cell: ({ row }) => {
+      return h('div', { class: 'flex space-x-2' }, [
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('email')),
+      ])
+    },
+  },
+
+  {
     accessorKey: 'status',
     header: () => h('div', 'status'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('status')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'preferNumber',
-    header: () => h('div', 'preferNumber'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('preferNumber')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'deleted',
-    header: () => h('div', 'Deleted'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('deleted')),
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('status') ? '正常' : '不可见'),
       ])
     },
   },
@@ -135,7 +92,6 @@ export const columns: ColumnDef<CommentInfo>[] = [
       ])
     },
   },
-  
   {
     id: 'actions',
     cell: ({ row }) => h(DataTableRowActions, { row }),
