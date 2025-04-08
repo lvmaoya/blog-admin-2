@@ -32,7 +32,7 @@ const row = computed(() => props.row.original)
 
 const handleDisable = async () => {
   let form = {
-    ...row.value, status: Number(!Boolean(row.value.status))
+    commentId: row.value.id, status: Number(!Boolean(row.value.status))
   }
   try {
     await disableComment(form)

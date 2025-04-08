@@ -4,5 +4,5 @@ export async function commentListData(data) {
   return await post("/comment/list", data);
 }
 export async function disableComment(data) {
-  return await post("/comment", data);
+  return await post("/comment/updateStatus", data);
 }

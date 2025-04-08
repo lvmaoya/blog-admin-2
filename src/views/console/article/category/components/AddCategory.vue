@@ -87,7 +87,7 @@ const submitCategory = async () => {
             <div class="grid gap-4 py-4">
                 <div class="grid grid-cols-4 items-center gap-4">
                     <Label for="categoryName" class="text-right">
-                        Category Name
+                        Name
                     </Label>
                     <Input id="categoryName" v-model="categoryName" placeholder="Enter category name" class="col-span-3"
                         :disabled="isLoading" @keyup.enter="submitCategory" />

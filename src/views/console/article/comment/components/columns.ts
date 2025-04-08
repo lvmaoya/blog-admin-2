@@ -47,20 +47,11 @@ export const columns: ColumnDef<CommentInfo>[] = [
   },
 
   {
-    accessorKey: 'userName',
+    accessorKey: 'username',
     header: () => h('div', 'Name'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('userName')),
-      ])
-    },
-  },
-  {
-    accessorKey: 'toUserName',
-    header: () => h('div', 'To'),
-    cell: ({ row }) => {
-      return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('toUserName') ?? '--'),
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('username')),
       ])
     },
   },
