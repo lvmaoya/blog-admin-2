@@ -151,7 +151,7 @@ const handleDelete = async () => {
         <div class="grid gap-4 py-4">
           <div class="grid grid-cols-4 items-center gap-4">
             <Label for="name" class="text-right">
-              Category Name
+              Name
             </Label>
             <Input id="name" v-model="editName" class="col-span-3" :disabled="isEditing" @keyup.enter="handleEdit" />
           </div>
