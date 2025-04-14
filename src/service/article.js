@@ -17,3 +17,7 @@ export async function postArticle(data) {
 export async function putTopArticle(id) {
   return await put("/blog/" + id + "/top");
 }
+
+export async function articleStatsData(startTime, endTime) {
+  return await get(`/blog/stats?startTime=${startTime}&endTime=${endTime}`);
+}

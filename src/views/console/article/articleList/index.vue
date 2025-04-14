@@ -27,7 +27,7 @@ const loading = ref(true)
 const articleList = ref<Array<Article>>([]);
 const getArticleList = async () => {
     loading.value = true
-    let res = await articleListData({ page: 1, size: 9999 });
+    let res = await articleListData({ page: 1, size: 10 });
     articleList.value = res.records
     loading.value = false
 }

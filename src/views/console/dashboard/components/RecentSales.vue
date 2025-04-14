@@ -4,93 +4,38 @@ import {
   AvatarFallback,
   AvatarImage,
 } from '@/components/ui/avatar'
+import { Article } from '..';
+import EyeOpenIcon from '@radix-icons/vue/EyeOpenIcon'
+
+const props = defineProps<{data: Array<Article>}>()
 </script>
 
 <template>
   <div class="space-y-8">
-    <div class="flex items-center">
+    <div class="flex items-center w-full" v-for="(item, index) in props.data" :key="index">
       <Avatar class="h-9 w-9">
-        <AvatarFallback>OM</AvatarFallback>
+        <AvatarFallback>{{ item.title.substr(0, 1) }}</AvatarFallback>
       </Avatar>
-      <div class="ml-4 space-y-1">
+      <div class="ml-4 space-y-1 flex-1 w-0">
         <p class="text-sm font-medium leading-none">
-          Olivia Martin
+          {{ item.title }}
         </p>
-        <p class="text-sm text-muted-foreground">
-          olivia.martin@email.com
-        </p>
-      </div>
-      <div class="ml-auto font-medium">
-        +$1,999.00
-      </div>
-    </div>
-    <div class="flex items-center">
-      <Avatar class="flex h-9 w-9 items-center justify-center space-y-0 border">
-        <AvatarImage src="/avatars/02.png" alt="Avatar" />
-        <AvatarFallback>JL</AvatarFallback>
-      </Avatar>
-      <div class="ml-4 space-y-1">
-        <p class="text-sm font-medium leading-none">
-          Jackson Lee
-        </p>
-        <p class="text-sm text-muted-foreground">
-          jackson.lee@email.com
+        <p class="text-sm text-muted-foreground maxline-1">
+          {{ item.description }}
         </p>
       </div>
-      <div class="ml-auto font-medium">
-        +$39.00
-      </div>
-    </div>
-    <div class="flex items-center">
-      <Avatar class="h-9 w-9">
-        <AvatarImage src="/avatars/03.png" alt="Avatar" />
-        <AvatarFallback>IN</AvatarFallback>
-      </Avatar>
-      <div class="ml-4 space-y-1">
-        <p class="text-sm font-medium leading-none">
-          Isabella Nguyen
-        </p>
-        <p class="text-sm text-muted-foreground">
-          isabella.nguyen@email.com
-        </p>
-      </div>
-      <div class="ml-auto font-medium">
-        +$299.00
-      </div>
-    </div>
-    <div class="flex items-center">
-      <Avatar class="h-9 w-9">
-        <AvatarImage src="/avatars/04.png" alt="Avatar" />
-        <AvatarFallback>WK</AvatarFallback>
-      </Avatar>
-      <div class="ml-4 space-y-1">
-        <p class="text-sm font-medium leading-none">
-          William Kim
-        </p>
-        <p class="text-sm text-muted-foreground">
-          will@email.com
-        </p>
-      </div>
-      <div class="ml-auto font-medium">
-        +$99.00
-      </div>
-    </div>
-    <div class="flex items-center">
-      <Avatar class="h-9 w-9">
-        <AvatarImage src="/avatars/05.png" alt="Avatar" />
-        <AvatarFallback>SD</AvatarFallback>
-      </Avatar>
-      <div class="ml-4 space-y-1">
-        <p class="text-sm font-medium leading-none">
-          Sofia Davis
-        </p>
-        <p class="text-sm text-muted-foreground">
-          sofia.davis@email.com
-        </p>
-      </div>
-      <div class="ml-auto font-medium">
-        +$39.00
+      <div class="ml-8 font-medium flex-shrink-0 flex items-center text-sm text-muted-foreground gap-2">
+        <EyeOpenIcon class="h-4 w-4 text-muted-foreground" />
+        {{ item.pageView }}
       </div>
     </div>
   </div>
 </template>
+<style lang="scss" scoped>
+.maxline-1 {
+  white-space: nowrap; /* 禁止文本换行 */
+  overflow: hidden; /* 超出部分隐藏 */
+  text-overflow: ellipsis; /* 超出部分显示省略号 */
+  max-width: 100%; /* 设置最大宽度 */
+}
+</style>

@@ -1,29 +1,33 @@
 <script setup lang="ts">
-import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs'
-import DateRangePicker from './components/DateRangePicker.vue'
-import MainNav from './components/MainNav.vue'
+import { articleStatsData, articleListData} from "@/service/article";
+
 import Overview from './components/Overview.vue'
 import RecentSales from './components/RecentSales.vue'
-
-import Search from './components/Search.vue'
-import TeamSwitcher from './components/TeamSwitcher.vue'
-import UserNav from './components/UserNav.vue'
 import LineChart from './components/LineChart.vue'
 import Category from './components/Category.vue'
 import SignIn from './components/SignIn.vue'
+import { onMounted, ref } from 'vue';
+import dayjs from 'dayjs';
+import { Article } from '.';
+
+let chartData = ref<{ timeRange: Array<string>, articleCount: Array<number>, pageView: Array<number>, charCount: Array<number>, preferNum: Array<number> }>()
+let recentUpdate = ref<Array<Article>>()
+const getData = async () => {
+  chartData.value = await articleStatsData(dayjs().subtract(1, 'year').format('YYYY-MM-DD'), dayjs().format("YYYY-MM-DD"))
+}
+const getRecentUpdata = async () => {
+  recentUpdate.value = (await articleListData({ page: 1, size: 10 })).records
+}
+onMounted(() => {
+  getData()
+  getRecentUpdata()
+})
 </script>
 
 <template>
@@ -110,13 +114,14 @@ import SignIn from './components/SignIn.vue'
       </Card>
     </div>
     <div class="flex-1 overflow-hidden max-lg:overflow-visible">
-      <div style="height: calc(50% - 0.5rem);" class="max-lg:!h-[800px] grid gap-4 max-lg:gap-x-0 max-lg:grid-cols-2 lg:grid-cols-7 overflow-hidden">
+      <div style="height: calc(50% - 0.5rem);"
+        class="max-lg:!h-[800px] grid gap-4 max-lg:gap-x-0 max-lg:grid-cols-2 lg:grid-cols-7 overflow-hidden">
         <Card class="col-span-4 flex flex-col h-full overflow-hidden">
           <CardHeader>
             <CardTitle>文章数量增长量、阅读量、访客数量</CardTitle>
           </CardHeader>
           <CardContent class="pl-2 flex-1 overflow-hidden">
-            <LineChart />
+            <LineChart :data="chartData" />
           </CardContent>
         </Card>
         <Card class="col-span-3 h-full overflow-hidden flex flex-col">
@@ -124,17 +129,18 @@ import SignIn from './components/SignIn.vue'
             <CardTitle>Recent Updated</CardTitle>
           </CardHeader>
           <CardContent class="flex-1 overflow-y-scroll">
-            <RecentSales />
+            <RecentSales :data="recentUpdate"/>
           </CardContent>
         </Card>
       </div>
-      <div style="height: calc(50% - 0.5rem);" class="max-lg:!h-[800px] grid gap-4 max-lg:gap-x-0 max-lg:grid-cols-2 lg:grid-cols-7 mt-4 overflow-hidden">
+      <div style="height: calc(50% - 0.5rem);"
+        class="max-lg:!h-[800px] grid gap-4 max-lg:gap-x-0 max-lg:grid-cols-2 lg:grid-cols-7 mt-4 overflow-hidden">
         <Card class="col-span-3 flex flex-col h-full overflow-hidden">
           <CardHeader>
             <CardTitle>产出字数、代码量</CardTitle>
           </CardHeader>
           <CardContent class="pl-2 flex-1 overflow-hidden">
-            <Overview />
+            <Overview :data="chartData" />
           </CardContent>
         </Card>
         <Category></Category>

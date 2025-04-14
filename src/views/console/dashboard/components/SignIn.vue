@@ -92,7 +92,6 @@ for (let month = 1; month <= 12; month++) {
         dateArray.value.push(item);
     }
 }
-console.log(dateArray.value);
 
 </script>
 
