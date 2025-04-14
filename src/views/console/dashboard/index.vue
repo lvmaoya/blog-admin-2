@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { articleStatsData, articleListData} from "@/service/article";
+import { articleStatsData, articleListData, blogStatisticsData} from "@/service/article";
 
 import Overview from './components/Overview.vue'
 import RecentSales from './components/RecentSales.vue'
@@ -14,19 +14,24 @@ import Category from './components/Category.vue'
 import SignIn from './components/SignIn.vue'
 import { onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
-import { Article } from '.';
+import { Article, BlogStatistics } from '.';
 
 let chartData = ref<{ timeRange: Array<string>, articleCount: Array<number>, pageView: Array<number>, charCount: Array<number>, preferNum: Array<number> }>()
 let recentUpdate = ref<Array<Article>>()
+const articleStatisticsData = ref<BlogStatistics>()
 const getData = async () => {
   chartData.value = await articleStatsData(dayjs().subtract(1, 'year').format('YYYY-MM-DD'), dayjs().format("YYYY-MM-DD"))
 }
 const getRecentUpdata = async () => {
   recentUpdate.value = (await articleListData({ page: 1, size: 10 })).records
 }
+const getStatisticsNumber = async () => {
+  articleStatisticsData.value = await blogStatisticsData()
+}
 onMounted(() => {
   getData()
   getRecentUpdata()
+  getStatisticsNumber()
 })
 </script>
 

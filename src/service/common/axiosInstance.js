@@ -50,8 +50,8 @@ instance.interceptors.response.use(
         // console.log(error);
         
         if (error.response && error.response.status === 401 || error.response && error.response.status === 403) {
-            // deleteCache('token');
-            // router.replace("/login");
+            deleteCache('token');
+            router.replace("/login");
         }
         return Promise.reject(error);
     }

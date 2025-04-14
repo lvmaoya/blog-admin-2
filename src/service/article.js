@@ -21,3 +21,6 @@ export async function putTopArticle(id) {
 export async function articleStatsData(startTime, endTime) {
   return await get(`/blog/stats?startTime=${startTime}&endTime=${endTime}`);
 }
+export async function blogStatisticsData() {
+  return await get(`/blog/stats/statistics`);
+}
