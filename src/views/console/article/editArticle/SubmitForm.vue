@@ -32,6 +32,7 @@ import CategorySelect from '@/components/category-select/index.vue'
 import { useField } from 'vee-validate'
 import { uploadFile } from '@/service/upload'
 import { postArticle } from "@/service/article"
+
 const { value: categoryValue, handleChange } = useField('categoryValue')
 const formSchema = toTypedSchema(z.object({
     title: z.string().min(1, 'Title cannot be empty!'),
@@ -40,8 +41,11 @@ const formSchema = toTypedSchema(z.object({
     description: z.string().optional(),
     coverImage: z.any().optional()
 }))
+
 const files = ref([])
 const loading = ref(false)
+const dialogOpen = ref(false) // 控制 Dialog 的显示状态
+
 async function onSubmit(values) {
     loading.value = true
     let formData = { ...values }
@@ -53,16 +57,21 @@ async function onSubmit(values) {
     let res = await uploadFiles()
     formData.coverImage = res
     formData.content = prop.content
+    formData.charCount = prop.count
     await postArticle(formData)
     loading.value = false
 
     toast({
         title: '文章上传成功'
     });
+
+    dialogOpen.value = false // 隐藏弹窗
 }
+
 const handleError = (error: string) => {
     console.error('上传错误:', error)
 }
+
 // 上传文件的方法
 const uploadFiles = async () => {
     if (files.value.length === 0) {
@@ -86,16 +95,18 @@ const uploadFiles = async () => {
         });
     }
 }
+
 const prop = defineProps({
-    content: String
+    content: String,
+    count: Number,
 })
 </script>
 
 <template>
     <Form v-slot="{ handleSubmit }" as="" keep-values :validation-schema="formSchema">
-        <Dialog>
+        <Dialog v-model:open="dialogOpen">
             <DialogTrigger as-child>
-                <button class="submitBtn">Submit</button>
+                <button class="submitBtn" @click="dialogOpen = true">submit</button>
             </DialogTrigger>
             <DialogContent class="sm:max-w-[625px]">
                 <DialogHeader>
@@ -132,7 +143,6 @@ const prop = defineProps({
                             <FormControl>
                                 <CategorySelect :modelValue="categoryValue" @update:modelValue="handleChange" />
                             </FormControl>
-
                         </FormItem>
                     </FormField>
                     <div class="h-4"></div>
@@ -164,7 +174,7 @@ const prop = defineProps({
                     </Button>
                     <Button type="submit" form="dialogForm" :disabled="loading">
                         <Loader2 class="w-4 h-4 mr-2 animate-spin" v-if="loading" />
-                        Sumbit
+                        Submit
                     </Button>
                 </DialogFooter>
             </DialogContent>
@@ -174,11 +184,15 @@ const prop = defineProps({
 
 <style scoped lang="scss">
 .submitBtn {
-    padding: 0 var(--ck-spacing-medium);
-    border-radius: var(--ck-border-radius);
-
+    position: fixed;
+    right: 0;
+    bottom: 24px;
+    z-index: 49;
+    padding: 0 4px;
+    border-radius: 4px;
+    color: #ccc;
     &:hover {
-        background: var(--ck-color-list-button-hover-background);
+        background: #f2f2f2;
     }
 }
 </style>

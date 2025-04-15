@@ -7,8 +7,10 @@
 <template>
   <div class="flex-1 overflow-hidden">
     <vue-ueditor-wrap v-model="content" editor-id="editor" :config="editorConfig"
-      :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:500px;" />
+      :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready"/>
+    
   </div>
+  <submit-form :content="content" :count="editorInst?.getContentTxt().length"/>
 </template>
 
 <script setup lang="ts">
@@ -18,6 +20,13 @@ import { computed, onMounted, ref } from "vue";
 import { articleDetailData } from "@/service/article";
 const route = useRoute()
 const id = computed(() => route.query.id)
+const editorInst = ref<any>(null)
+
+const ready = (editorInstance: any) => {
+   //获取编辑器实力
+  editorInst.value = editorInstance
+}
+
 onMounted(() => {
   getArticle()
 });
@@ -25,15 +34,12 @@ const getArticle = async () => {
   if (!id.value) return;
   const article = await articleDetailData(id.value)
   content.value = article.content
-
 }
 const content = ref("")
 let editorConfig = {
   loadConfigFromServer: false,
   // 图片限制最大3M
   imageMaxSize: 3145728,
-  // 富文本输入框高度
-  initialFrameHeight: 500,
   // 富文本输入框宽度
   initialFrameWidth: '100%',
 
@@ -54,25 +60,19 @@ let editorConfig = {
     disableOnline: true,
   }
 }
-
-// 弹窗逻辑
-const showSaveDialog = () => {
-  alert("保存功能尚未实现！");
-};
-
-// 监听 Cmd + S 快捷键
-const saveShortcutHandler = (event: KeyboardEvent) => {
-  if ((event.metaKey || event.ctrlKey) && event.key === "s") {
-    event.preventDefault(); // 阻止默认保存行为
-    showSaveDialog();
-  }
-};
-
-const setupSaveShortcut = () => {
-  window.addEventListener("keydown", saveShortcutHandler);
-};
-
-const removeSaveShortcut = () => {
-  window.removeEventListener("keydown", saveShortcutHandler);
-};
 </script>
+
+<style scoped lang="scss">
+:deep(#editor) {
+  height: 100%;
+  .edui-editor{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    z-index: 49 !important;
+    #edui1_iframeholder{
+      flex: 1;
+    }
+  }
+}
+</style>
