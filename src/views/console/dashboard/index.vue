@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { articleStatsData, articleListData, blogStatisticsData} from "@/service/article";
+import { articleStatsData, articleListData, blogStatisticsData, onlineUserCount } from "@/service/article";
 
 import Overview from './components/Overview.vue'
 import RecentSales from './components/RecentSales.vue'
@@ -19,6 +19,7 @@ import { Article, BlogStatistics } from '.';
 let chartData = ref<{ timeRange: Array<string>, articleCount: Array<number>, pageView: Array<number>, charCount: Array<number>, preferNum: Array<number> }>()
 let recentUpdate = ref<Array<Article>>()
 const articleStatisticsData = ref<BlogStatistics>()
+const onlineUserData = ref<BlogStatistics>()
 const getData = async () => {
   chartData.value = await articleStatsData(dayjs().subtract(1, 'year').format('YYYY-MM-DD'), dayjs().format("YYYY-MM-DD"))
 }
@@ -28,10 +29,14 @@ const getRecentUpdata = async () => {
 const getStatisticsNumber = async () => {
   articleStatisticsData.value = await blogStatisticsData()
 }
+const getOnlineNumber = async () => {
+  onlineUserData.value = await onlineUserCount()
+}
 onMounted(() => {
   getData()
   getRecentUpdata()
   getStatisticsNumber()
+  getOnlineNumber()
 })
 </script>
 
@@ -51,10 +56,10 @@ onMounted(() => {
         </CardHeader>
         <CardContent>
           <div class="text-2xl font-bold">
-            51
+            {{ articleStatisticsData?.totalBlogCount }}
           </div>
           <p class="text-xs text-muted-foreground">
-            +20 from last month
+            +{{ articleStatisticsData?.lastMonthBlogCount }} from last month
           </p>
         </CardContent>
       </Card>
@@ -71,10 +76,10 @@ onMounted(() => {
         </CardHeader>
         <CardContent>
           <div class="text-2xl font-bold">
-            2350
+            {{ articleStatisticsData?.totalPageView }}
           </div>
           <p class="text-xs text-muted-foreground">
-            +180 from last month
+            +{{ articleStatisticsData?.lastMonthPageView }} from last month
           </p>
         </CardContent>
       </Card>
@@ -91,10 +96,10 @@ onMounted(() => {
         </CardHeader>
         <CardContent>
           <div class="text-2xl font-bold">
-            12,234
+            {{ articleStatisticsData?.totalCharCount }}
           </div>
           <p class="text-xs text-muted-foreground">
-            +1.9w from last month
+            +{{ articleStatisticsData?.lastMonthCharCount }} from last month
           </p>
         </CardContent>
       </Card>
@@ -110,11 +115,11 @@ onMounted(() => {
         </CardHeader>
         <CardContent>
           <div class="text-2xl font-bold">
-            5
+            {{ onlineUserData }}
           </div>
-          <p class="text-xs text-muted-foreground">
+          <!-- <p class="text-xs text-muted-foreground">
             +201 since last hour
-          </p>
+          </p> -->
         </CardContent>
       </Card>
     </div>
@@ -134,7 +139,7 @@ onMounted(() => {
             <CardTitle>Recent Updated</CardTitle>
           </CardHeader>
           <CardContent class="flex-1 overflow-y-scroll">
-            <RecentSales :data="recentUpdate"/>
+            <RecentSales :data="recentUpdate" />
           </CardContent>
         </Card>
       </div>
@@ -148,7 +153,7 @@ onMounted(() => {
             <Overview :data="chartData" />
           </CardContent>
         </Card>
-        <Category></Category>
+        <Category :articleStatisticsData="articleStatisticsData"></Category>
         <SignIn></SignIn>
       </div>
     </div>

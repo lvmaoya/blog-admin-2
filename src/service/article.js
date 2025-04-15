@@ -24,3 +24,6 @@ export async function articleStatsData(startTime, endTime) {
 export async function blogStatisticsData() {
   return await get(`/blog/stats/statistics`);
 }
+export async function onlineUserCount() {
+  return await get(`/online/count`);
+}
