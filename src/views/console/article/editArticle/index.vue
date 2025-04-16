@@ -7,10 +7,10 @@
 <template>
   <div class="flex-1 overflow-hidden">
     <vue-ueditor-wrap v-model="content" editor-id="editor" :config="editorConfig"
-      :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready"/>
-    
+      :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
+
   </div>
-  <submit-form :content="content" :count="editorInst?.getContentTxt().length"/>
+  <submit-form :content="content" :count="editorInst?.getContentTxt().length" />
 </template>
 
 <script setup lang="ts">
@@ -23,7 +23,7 @@ const id = computed(() => route.query.id)
 const editorInst = ref<any>(null)
 
 const ready = (editorInstance: any) => {
-   //获取编辑器实力
+  //获取编辑器实力
   editorInst.value = editorInstance
 }
 
@@ -58,6 +58,26 @@ let editorConfig = {
   imageConfig: {
     // 禁止在线管理
     disableOnline: true,
+  },
+  uploadServiceEnable: true,
+  uploadServiceUpload: function (type, file, callback, option) {
+    console.log('uploadServiceUpload', type, file, callback, option);
+    var i = 0;
+    var call = function () {
+      i++;
+      if (i > 3) {
+        callback.success({
+          "state": "SUCCESS",
+          "url": "https://ms-assets.modstart.com/demo/modstart.jpg",
+        })
+        return;
+      }
+      setTimeout(function () {
+        callback.progress(0.3 * i);
+        call();
+      }, 500);
+    }
+    call();
   }
 }
 </script>
@@ -65,12 +85,14 @@ let editorConfig = {
 <style scoped lang="scss">
 :deep(#editor) {
   height: 100%;
-  .edui-editor{
+
+  .edui-editor {
     height: 100%;
     display: flex;
     flex-direction: column;
     z-index: 49 !important;
-    #edui1_iframeholder{
+
+    #edui1_iframeholder {
       flex: 1;
     }
   }

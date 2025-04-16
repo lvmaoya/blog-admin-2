@@ -49,7 +49,7 @@ instance.interceptors.response.use(
         // 可以在这里对响应错误做统一处理
         // console.log(error);
         
-        if (error.response && error.response.status === 401 || error.response && error.response.status === 403) {
+        if (error.response && error.response.status === 401) {
             deleteCache('token');
             router.replace("/login");
         }
