@@ -18,6 +18,7 @@ import { useRoute } from "vue-router";
 import SubmitForm from "./SubmitForm.vue";
 import { computed, onMounted, ref } from "vue";
 import { articleDetailData } from "@/service/article";
+import { BASE_URL } from "@/service/common/axiosInstance";
 const route = useRoute()
 const id = computed(() => route.query.id)
 const editorInst = ref<any>(null)
@@ -26,6 +27,7 @@ const ready = (editorInstance: any) => {
   //获取编辑器实力
   editorInst.value = editorInstance
 }
+console.log(localStorage.getItem('token'));
 
 onMounted(() => {
   getArticle()
@@ -37,48 +39,34 @@ const getArticle = async () => {
 }
 const content = ref("")
 let editorConfig = {
-  loadConfigFromServer: false,
   // 图片限制最大3M
   imageMaxSize: 3145728,
+  // 富文本输入框高度
+  // initialFrameHeight: 500,
   // 富文本输入框宽度
   initialFrameWidth: '100%',
-
+  // 初始化样式 编辑区自定义样式，如果自定义，最好给 p 标签如下的行高，要不输入中文时，会有跳动感
+  initialStyle: 'body p{line-height:1.8em; margin: 0 ;} h1,h2,h3,h4,blockquote{margin: 0 ;} body table{margin: 0 ;}',
+  autoFloatEnabled: false,
   // 获取上传配置路径
-  configUrl: import.meta.env.VITE_API_URL + '/info/uEditor/config',
+  configUrl: BASE_URL + '/sys/ueditor',
   // 上传服务路径
-  serverUrl: import.meta.env.VITE_API_URL + '/info/uEditor/upload',
+  serverUrl: BASE_URL + '/sys/ueditor',
   // 必须配置域名,否则发版后获取不到页面资源
   UEDITOR_HOME_URL: location.origin + '/UEditorPlus/',
-  UEDITOR_CORS_URL: location.origin + '/UEditorPlus/',
   // 配置请求头token
   serverHeaders: {
-    'Authorization': `bearer `
+    // 'Authorization': localStorage.getItem('token'),
   },
   // 上传图片配置
   imageConfig: {
     // 禁止在线管理
     disableOnline: true,
   },
-  uploadServiceEnable: true,
-  uploadServiceUpload: function (type, file, callback, option) {
-    console.log('uploadServiceUpload', type, file, callback, option);
-    var i = 0;
-    var call = function () {
-      i++;
-      if (i > 3) {
-        callback.success({
-          "state": "SUCCESS",
-          "url": "https://ms-assets.modstart.com/demo/modstart.jpg",
-        })
-        return;
-      }
-      setTimeout(function () {
-        callback.progress(0.3 * i);
-        call();
-      }, 500);
-    }
-    call();
-  }
+  toolbarShow: {
+     // 这样就控制即使在 toolbars 中配置了该功能，也不显示
+     "ai": false,
+   },
 }
 </script>
 

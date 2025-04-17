@@ -1,10 +1,10 @@
 export function setCache(key, value) {
-  window.localStorage.setItem(key, JSON.stringify(value));
+  window.localStorage.setItem(key, value.toString());
 }
 export function getCache(key) {
   const value = window.localStorage.getItem(key);
   if (value != null) {
-    return JSON.parse(value);
+    return value;
   }
 }
 export function deleteCache(key) {
