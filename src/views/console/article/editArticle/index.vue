@@ -56,7 +56,7 @@ let editorConfig = {
   UEDITOR_HOME_URL: location.origin + '/UEditorPlus/',
   // 配置请求头token
   serverHeaders: {
-    // 'Authorization': localStorage.getItem('token'),
+    'Authorization': localStorage.getItem('token'),
   },
   // 上传图片配置
   imageConfig: {
