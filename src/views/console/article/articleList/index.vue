@@ -5,8 +5,8 @@
  * @Description: Do not edit
 -->
 <template>
-    <div class="p-4" v-loading="loading">
-        <DataTable :data="articleList" :columns="columns" />
+    <div class="p-4">
+        <DataTable :data="articleList" :columns="columns" v-model:loading="loading"/>
     </div>
 </template>
 
@@ -27,7 +27,7 @@ const loading = ref(true)
 const articleList = ref<Array<Article>>([]);
 const getArticleList = async () => {
     loading.value = true
-    let res = await articleListData({ page: 1, size: 10 });
+    let res = await articleListData({ page: 1, size: 9999 });
     articleList.value = res.records
     loading.value = false
 }

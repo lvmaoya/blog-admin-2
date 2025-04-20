@@ -8,7 +8,7 @@
     <div class="flex flex-1 flex-col gap-4 p-4">
         <div class="space-y-4">
             <!-- <Table :tableData="articleList"/> -->
-            <DataTable :data="commentList" :columns="columns" />
+            <DataTable :data="commentList" :columns="columns"  v-model:loading="loading"/>
         </div>
     </div>
 </template>

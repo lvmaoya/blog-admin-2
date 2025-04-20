@@ -32,6 +32,7 @@ import DataTableToolbar from './DataTableToolbar.vue'
 interface DataTableProps {
   columns: ColumnDef<CommentInfo, any>[]
   data: CommentInfo[]
+  loading: boolean
 }
 const props = defineProps<DataTableProps>()
 
@@ -64,10 +65,10 @@ const table = useVueTable({
 </script>
 
 <template>
-  <div class="space-y-4">
+  <div class="space-y-4 relative" v-loading="props.loading">
     <DataTableToolbar :table="table" />
     <div class="rounded-md border">
-      <Table>
+      <Table class="min-h-[500px]">
         <TableHeader>
           <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
             <TableHead v-for="header in headerGroup.headers" :key="header.id">
@@ -88,7 +89,7 @@ const table = useVueTable({
             </TableRow>
           </template>
 
-          <TableRow v-else>
+          <TableRow v-else-if="!props.loading">
             <TableCell
               :colspan="columns.length"
               class="h-24 text-center"

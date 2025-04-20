@@ -7,7 +7,7 @@
 <template>
     <div class="flex flex-1 flex-col gap-4 p-4">
         <div class="space-y-4">
-            <DataTable :data="categoryList" :columns="columns" />
+            <DataTable :data="categoryList" :columns="columns"  v-model:loading="loading"/>
         </div>
     </div>
 </template>
