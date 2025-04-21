@@ -19,6 +19,7 @@ import {
     FormMessage,
 } from '@/components/ui/form'
 import { Loader2 } from 'lucide-vue-next'
+import { ArrowUp } from 'lucide-vue-next'
 
 import { Textarea } from '@/components/ui/textarea'
 
@@ -106,7 +107,9 @@ const prop = defineProps({
     <Form v-slot="{ handleSubmit }" as="" keep-values :validation-schema="formSchema">
         <Dialog v-model:open="dialogOpen">
             <DialogTrigger as-child>
-                <button class="submitBtn" @click="dialogOpen = true">submit</button>
+                <Button class="submitBtn" size="icon" @click="dialogOpen = true">
+                    <ArrowUp class="w-4 h-4" />
+                </Button>
             </DialogTrigger>
             <DialogContent class="sm:max-w-[625px]">
                 <DialogHeader>
@@ -185,14 +188,10 @@ const prop = defineProps({
 <style scoped lang="scss">
 .submitBtn {
     position: fixed;
-    right: 0;
-    bottom: 24px;
+    right: 20px;
+    bottom: 44px;
     z-index: 49;
     padding: 0 4px;
-    border-radius: 4px;
-    color: #ccc;
-    &:hover {
-        background: #f2f2f2;
-    }
+    border-radius: 50px;
 }
 </style>
