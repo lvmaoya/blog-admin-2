@@ -111,7 +111,7 @@ const submitForm = async () => {
       title: 'Uh! Login Success!',
       description: 'Welcome back! You have successfully logged into your account.',
     });
-    let loginSuccessUrl = route.query.redirect || "/console/article/edit";
+    let loginSuccessUrl = route.query.redirect || "/console/dashboard";
     router.replace({
       path: loginSuccessUrl,
     });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Calendar, Home, Inbox, Command, Search, Settings } from "lucide-vue-next"
+import { Calendar, Home, Inbox, Command, Search, Settings, Pencil, LibraryBig, ChartBarStacked, MessageSquareText, CalendarCheck, AlarmClockCheck, Paperclip } from "lucide-vue-next"
 import {
     Sidebar,
     SidebarContent,
@@ -29,11 +29,13 @@ const groupList = [{
     items: [
         {
             title: "Dashboard",
-            url: "dashboard"
+            url: "dashboard",
+            icon: Home,
         },
         {
             title: "Writing",
-            url: "editArticle"
+            url: "editArticle",
+            icon: Pencil,
         },
     ],
 },
@@ -42,15 +44,18 @@ const groupList = [{
     items: [
         {
             title: "Article List",
-            url: "articleList"
+            url: "articleList",
+            icon: LibraryBig,
         },
         {
             title: "Category",
-            url: "articleCategory"
+            url: "articleCategory",
+            icon: ChartBarStacked,
         },
         {
             title: "Comment",
-            url: "articleComment"
+            url: "articleComment",
+            icon: MessageSquareText,
         },
     ],
 },
@@ -59,11 +64,13 @@ const groupList = [{
     items: [
         {
             title: "Todo List",
-            url: "todoList"
+            url: "todoList",
+            icon: CalendarCheck,
         },
         {
             title: "Statistic Data",
-            url: "todoStatistic"
+            url: "todoStatistic",
+            icon: AlarmClockCheck,
         }
     ],
 },
@@ -72,7 +79,8 @@ const groupList = [{
     items: [
         {
             title: "File Dashboard",
-            url: "fileList"
+            url: "fileList",
+            icon: Paperclip,
         }
     ]
 }
@@ -81,22 +89,24 @@ const router = useRouter();
 const navigate = (url: string) => {
     router.push({ name: url });
 }
+const isActive = (url: string) => {
+    return router.currentRoute.value.name === url;
+}
 </script>
 
 <template>
     <Sidebar>
-        <SidebarHeader>
+        <SidebarHeader class="px-3 py-2">
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <a href="#">
-                            <div
-                                class="flex aspect-square size-6 items-center justify-center rounded-lg">
-                                <img src="https://lvmaoya.cn/favicon.ico" alt="logo"/>
+                            <div class="flex aspect-square size-6 items-center justify-center rounded-lg">
+                                <img src="https://lvmaoya.cn/favicon.ico" alt="logo" />
                             </div>
                             <div class="grid flex-1 text-left text-sm leading-tight">
                                 <span class="truncate font-semibold">Blog Admin</span>
-                                <span class="truncate text-xs">{{dayjs().format('YYYY-MM-DD HH:mm:ss')}}</span>
+                                <span class="truncate text-xs">{{ dayjs().format('YYYY-MM-DD HH:mm:ss') }}</span>
                             </div>
                         </a>
                     </SidebarMenuButton>
@@ -104,14 +114,18 @@ const navigate = (url: string) => {
             </SidebarMenu>
         </SidebarHeader>
         <SidebarContent>
-            <SidebarGroup v-for="group in groupList" :key="group.group">
-                <SidebarGroupLabel>{{ group.group }}</SidebarGroupLabel>
+            <SidebarGroup v-for="group in groupList" :key="group.group" class="px-3 py-2">
+                <SidebarGroupLabel>
+                    <h2>{{ group.group }}</h2>
+                </SidebarGroupLabel>
                 <SidebarGroupContent>
                     <SidebarMenu>
                         <SidebarMenuItem v-for="item in group.items" :key="item.title">
-                            <SidebarMenuButton asChild @click="navigate(item.url)" class="cursor-pointer user-select-none">
+                            <SidebarMenuButton asChild @click="navigate(item.url)"
+                                class="cursor-pointer user-select-none h-9 px-4" :class="{'active': isActive(item.url)}">
                                 <a>
-                                    <span>{{ item.title }}</span>
+                                    <component :is="item.icon" class="mr-1 " />
+                                    <span class="text-[#09090B]">{{ item.title }}</span>
                                 </a>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
@@ -125,3 +139,9 @@ const navigate = (url: string) => {
         <SidebarRail />
     </Sidebar>
 </template>
+<style lang="scss" scoped>
+.active {
+    background-color: hsl(var(--sidebar-accent));
+    color: #000000;
+}
+</style>

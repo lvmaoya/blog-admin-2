@@ -64,9 +64,9 @@ let editorConfig = {
     disableOnline: true,
   },
   toolbarShow: {
-     // 这样就控制即使在 toolbars 中配置了该功能，也不显示
-     "ai": false,
-   },
+    // 这样就控制即使在 toolbars 中配置了该功能，也不显示
+    "ai": false,
+  },
 }
 </script>
 
