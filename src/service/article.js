@@ -3,7 +3,9 @@ import { get, post, put, del } from "./common/apiService";
 export async function articleListData(data) {
   return await post("/blog/list", data);
 }
-
+export async function articleUpdate(data) {
+  return await put("/blog", data);
+}
 export async function articleDetailData(id) {
   return await get(`/blog/${id}`);
 }
@@ -16,6 +18,9 @@ export async function postArticle(data) {
 
 export async function putTopArticle(id) {
   return await put("/blog/" + id + "/top");
+}
+export async function putDisableArticle(id) {
+  return await put("/blog/" + id + "/disable");
 }
 
 export async function articleStatsData(startTime, endTime) {

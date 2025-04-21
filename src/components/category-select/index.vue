@@ -7,20 +7,20 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select'
-import { FormControl } from '@/components/ui/form'
-import { onMounted, ref } from 'vue'
+import { onMounted, PropType, ref, watch } from 'vue'
 import { categoryListData } from '@/service/category'
 
 interface Category {
-    id: string | number
-    name: string
+    id: number
+    categoryName: string
+    fatherCategoryId: number
     // 可以根据实际接口返回的字段进行调整
 }
 
 const props = defineProps({
-    componentField: {
-        type: Object,
-        default: () => ({})
+    modelValue: {
+        type: Array, // [fatherCategoryId, categoryId]
+        default: () => [null, null]
     },
     placeholder: {
         type: String,
@@ -60,14 +60,22 @@ onMounted(() => {
 })
 
 // 处理选择变化
-const handleValueChange = (value: string) => {
-    const selected = categories.value.find(item => item.id == value)
-    emit('update:modelValue', [selected.fatherCategoryName, selected.id])
+const handleValueChange = (value: number) => {
+    console.log(value);
+    const selected = categories.value.find(item => item.id === value)
+    if (selected) {
+        console.log([selected.fatherCategoryId, selected.id]);
+        selectedValue.value = selected.id
+        emit('update:modelValue', [selected.fatherCategoryId, selected.id])
+    }
 }
+
+// 获取当前选中的分类名称
+const selectedValue = ref(props.modelValue[1])
 </script>
 
 <template>
-    <Select v-bind="componentField" @update:modelValue="handleValueChange">
+    <Select :modelValue="selectedValue" @update:modelValue="handleValueChange">
         <SelectTrigger>
             <SelectValue :placeholder="placeholder" />
         </SelectTrigger>
@@ -91,8 +99,8 @@ const handleValueChange = (value: string) => {
                 </div>
 
                 <!-- 正常状态 -->
-                <SelectItem v-for="category in categories" :key="category.id" :value="category.id.toString()">
-                    {{ category?.fatherCategoryName == 2 ? '学习输出--' : '' }}{{ category?.categoryName }}
+                <SelectItem v-for="category in categories" :key="category.id" :value="category.id" :disabled="category.categoryName == 'Work'">
+                    {{ category.fatherCategoryId == 2 && category.id != 2 ? '学习输出--' : '' }}{{ category.categoryName }}
                 </SelectItem>
             </SelectGroup>
         </SelectContent>

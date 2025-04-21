@@ -6,11 +6,10 @@
 -->
 <template>
   <div class="flex-1 overflow-hidden">
-    <vue-ueditor-wrap v-model="content" editor-id="editor" :config="editorConfig"
+    <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
       :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
-
   </div>
-  <submit-form :content="content" :count="editorInst?.getContentTxt().length" />
+  <submit-form :article="articleDetail" :count="editorInst?.getContentTxt().length" />
 </template>
 
 <script setup lang="ts">
@@ -19,6 +18,7 @@ import SubmitForm from "./SubmitForm.vue";
 import { computed, onMounted, ref } from "vue";
 import { articleDetailData } from "@/service/article";
 import { BASE_URL } from "@/service/common/axiosInstance";
+import  type PostArticle  from "./type.ts";
 const route = useRoute()
 const id = computed(() => route.query.id)
 const editorInst = ref<any>(null)
@@ -35,9 +35,22 @@ onMounted(() => {
 const getArticle = async () => {
   if (!id.value) return;
   const article = await articleDetailData(id.value)
-  content.value = article.content
+  articleDetail.value = article
 }
-const content = ref("")
+const articleDetail = ref<PostArticle>({
+    id: null,
+    title: '',
+    description: '',
+    keywords: '',
+    categoryId: null,
+    charCount: 0,
+    fatherCategoryId: null,
+    coverImage: '',
+    status: 0,
+    authorId: null,
+    top: 0,
+    content: ''
+})
 let editorConfig = {
   // 图片限制最大3M
   imageMaxSize: 3145728,

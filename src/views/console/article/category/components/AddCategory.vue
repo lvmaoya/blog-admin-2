@@ -72,7 +72,7 @@ const submitCategory = async () => {
 <template>
     <Dialog v-model:open="isOpen">
         <DialogTrigger as-child>
-            <Button variant="outline" size="sm" class="ml-auto h-8 lg:flex ml-2">
+            <Button size="sm" class="ml-auto h-8 lg:flex ml-2">
                 <Plus class="mr-2 h-4 w-4" />
                 Add Category
             </Button>

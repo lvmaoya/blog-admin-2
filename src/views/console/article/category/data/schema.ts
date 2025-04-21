@@ -14,6 +14,8 @@ export function getFatherCategoryName(category): string {
       return '学习输出';
     case 3:
       return '日常随笔';
+    case 4:
+      return '图文分享';
     default:
       return '未知分类';
   }

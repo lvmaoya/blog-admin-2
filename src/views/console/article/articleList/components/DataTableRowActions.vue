@@ -2,7 +2,7 @@
 import type { Row } from '@tanstack/vue-table'
 import type { Article } from '../data/schema'
 import { Button } from '@/components/ui/button'
-import { putTopArticle, deleteArticleData } from "@/service/article";
+import { putTopArticle, deleteArticleData, putDisableArticle } from "@/service/article";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,6 +38,17 @@ const topArticle = async () => {
   try {
     topLoading.value = true
     await putTopArticle(row.value.id)
+    bus.emit('refresh-table')
+  } catch (error) {
+    console.error(error)
+  } finally {
+    topLoading.value = false
+  }
+}
+const disableArticle = async () => {
+  try {
+    topLoading.value = true
+    await putDisableArticle(row.value.id)
     bus.emit('refresh-table')
   } catch (error) {
     console.error(error)
@@ -91,6 +102,9 @@ const deleteArticle = async () => {
       <!-- 预览功能 -->
       <DropdownMenuItem @click="previewArticle">Preview</DropdownMenuItem>
       <DropdownMenuSeparator />
+      <DropdownMenuItem @click="disableArticle">
+        {{ !row.status ? 'Disable' : 'Enable' }}
+      </DropdownMenuItem>
       <!-- 删除功能 -->
       <DropdownMenuItem @click="deleteArticle">
         Delete

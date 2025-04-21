@@ -34,6 +34,10 @@ const props = defineProps({
   disabled: {
     type: Boolean,
     default: false
+  },
+  initUrl: {
+    type: String,
+    default: ''
   }
 })
 
@@ -315,6 +319,25 @@ defineExpose({
           >
             <X class="h-4 w-4" />
           </button>
+        </div>
+      </div>
+    </div>
+    <div v-if="props.initUrl" class="space-y-2">
+      <div class="flex items-center justify-between">
+        <Label>默认图片</Label>
+      </div>
+      <div class="space-y-2">
+        <div
+          class="flex items-center justify-between rounded-md border p-3"
+        >
+          <div class="flex items-center space-x-3 min-w-0">
+            <div class="h-10 w-10 overflow-hidden rounded-md flex-shrink-0">
+              <img
+                :src="props.initUrl"
+                class="h-full w-full object-cover"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

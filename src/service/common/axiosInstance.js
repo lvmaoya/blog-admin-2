@@ -40,10 +40,12 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
     (response) => {
-        // 可以在这里对响应数据做统一处理，如错误码判断等
-        // console.log(response);
+        if(response.data){
+          return response.data;  
+        }else{
+          return response;
+        }
         
-        return response.data;
     },
     (error) => {
         // 可以在这里对响应错误做统一处理

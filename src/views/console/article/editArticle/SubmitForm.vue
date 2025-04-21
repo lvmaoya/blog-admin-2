@@ -9,15 +9,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from '@/components/ui/dialog'
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from '@/components/ui/form'
+
 import { Loader2 } from 'lucide-vue-next'
 import { ArrowUp } from 'lucide-vue-next'
 
@@ -25,48 +17,47 @@ import { Textarea } from '@/components/ui/textarea'
 
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/toast'
-import { toTypedSchema } from '@vee-validate/zod'
-import { h, ref } from 'vue'
-import * as z from 'zod'
+import { onMounted, ref, watch } from 'vue'
 import FileUpload from '@/components/upload/index.vue'
 import CategorySelect from '@/components/category-select/index.vue'
 import { useField } from 'vee-validate'
 import { uploadFile } from '@/service/upload'
 import { postArticle } from "@/service/article"
+import type PostArticle from "./type.ts";
 
-const { value: categoryValue, handleChange } = useField('categoryValue')
-const formSchema = toTypedSchema(z.object({
-    title: z.string().min(1, 'Title cannot be empty!'),
-    keywords: z.string().optional(),
-    categoryValue: z.string().optional(),
-    description: z.string().optional(),
-    coverImage: z.any().optional()
-}))
 
 const files = ref([])
+const initUrl = ref()
 const loading = ref(false)
 const dialogOpen = ref(false) // 控制 Dialog 的显示状态
 
-async function onSubmit(values) {
+const formData = ref({
+    id: null,
+    title: '',
+    keywords: '',
+    description: '',
+    categoryValue: [null, null] as [number, number], // 替换原来的 categoryId 和 fatherCategoryId
+    coverImage: null,
+    content: '',
+    charCount: 0,
+})
+
+async function onSubmit() {
     loading.value = true
-    let formData = { ...values }
-    delete formData.categoryValue
-    if (categoryValue.value) {
-        formData.fatherCategoryId = categoryValue.value[0]
-        formData.categoryId = categoryValue.value[1]
+    let submitData = { ...formData.value, fatherCategoryId: null, categoryId: null, charCount: props.count }
+    console.log(formData.value.categoryValue);
+    // 处理分类数据
+    if (formData.value.categoryValue) {
+        submitData.fatherCategoryId = formData.value.categoryValue[0]
+        submitData.categoryId = formData.value.categoryValue[1]
     }
+    delete submitData.categoryValue
     let res = await uploadFiles()
-    formData.coverImage = res
-    formData.content = prop.content
-    formData.charCount = prop.count
-    await postArticle(formData)
+    submitData.coverImage = res
+    await postArticle(submitData)
     loading.value = false
-
-    toast({
-        title: '文章上传成功'
-    });
-
-    dialogOpen.value = false // 隐藏弹窗
+    toast({ title: submitData.id ? '文章更新成功' : '文章发布成功'  })
+    dialogOpen.value = false
 }
 
 const handleError = (error: string) => {
@@ -74,7 +65,9 @@ const handleError = (error: string) => {
 }
 
 // 上传文件的方法
-const uploadFiles = async () => {
+const uploadFiles = async () => {       
+    console.log(files.value);
+    
     if (files.value.length === 0) {
         return
     }
@@ -84,6 +77,7 @@ const uploadFiles = async () => {
     })
     try {
         const response = await uploadFile(formData)
+        console.log(response);
         toast({
             title: '图片上传成功'
         });
@@ -97,92 +91,84 @@ const uploadFiles = async () => {
     }
 }
 
-const prop = defineProps({
-    content: String,
-    count: Number,
-})
+const props = defineProps<{ article: PostArticle, count: number }>()
+watch(() => props.article, (newVal) => {
+    console.log(newVal);
+    if (props.article) {
+        formData.value = {
+            id: props.article.id,
+            title: props.article.title,
+            keywords: props.article.keywords,
+            description: props.article.description,
+            categoryValue: [props.article.fatherCategoryId, props.article.categoryId],
+            content: props.article.content,
+            charCount: props.count || props.article.charCount,
+            coverImage: null
+        }
+
+        initUrl.value = props.article.coverImage
+    }
+    console.log(formData.value);
+    
+}, { deep: true })
 </script>
 
 <template>
-    <Form v-slot="{ handleSubmit }" as="" keep-values :validation-schema="formSchema">
-        <Dialog v-model:open="dialogOpen">
-            <DialogTrigger as-child>
-                <Button class="submitBtn" size="icon" @click="dialogOpen = true">
-                    <ArrowUp class="w-4 h-4" />
-                </Button>
-            </DialogTrigger>
-            <DialogContent class="sm:max-w-[625px]">
-                <DialogHeader>
-                    <DialogTitle>Article detail</DialogTitle>
-                    <DialogDescription>
-                        Fill in article details here. Click submit when you're done.
-                    </DialogDescription>
-                </DialogHeader>
+    <Dialog v-model:open="dialogOpen">
+        <DialogTrigger as-child>
+            <Button class="submitBtn" size="icon" @click="dialogOpen = true">
+                <ArrowUp class="w-4 h-4" />
+            </Button>
+        </DialogTrigger>
+        <DialogContent class="sm:max-w-[625px]">
+            <DialogHeader>
+                <DialogTitle>Article detail</DialogTitle>
+                <DialogDescription>
+                    Fill in article details here. Click submit when you're done.
+                </DialogDescription>
+            </DialogHeader>
 
-                <form id="dialogForm" @submit="handleSubmit($event, onSubmit)">
-                    <FormField v-slot="{ componentField }" name="title">
-                        <FormItem>
-                            <FormLabel>Title</FormLabel>
-                            <FormControl>
-                                <Input type="text" placeholder="title" v-bind="componentField" />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    </FormField>
-                    <div class="h-4"></div>
-                    <FormField v-slot="{ componentField }" name="keywords">
-                        <FormItem>
-                            <FormLabel>Keywords</FormLabel>
-                            <FormControl>
-                                <Input type="text" placeholder="keywords: aaa,bbb,ccc..." v-bind="componentField" />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    </FormField>
-                    <div class="h-4"></div>
-                    <FormField v-slot="{ componentField }" name="categoryValue">
-                        <FormItem>
-                            <FormLabel>Category</FormLabel>
-                            <FormControl>
-                                <CategorySelect :modelValue="categoryValue" @update:modelValue="handleChange" />
-                            </FormControl>
-                        </FormItem>
-                    </FormField>
-                    <div class="h-4"></div>
-                    <FormField v-slot="{ componentField }" name="description">
-                        <FormItem>
-                            <FormLabel>Description</FormLabel>
-                            <FormControl>
-                                <Textarea v-bind="componentField" placeholder="fill in article description" />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    </FormField>
-                    <div class="h-4"></div>
-                    <FormField v-slot="{ componentField }" name="coverImage">
-                        <FormItem>
-                            <FormLabel>Cover</FormLabel>
-                            <FormControl>
-                                <FileUpload v-model="files" accept="image/*,.pdf,.doc,.docx" :max-size="5"
-                                    :max-files="1" @error="handleError" />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    </FormField>
-                </form>
+            <form @submit.prevent="onSubmit">
+                <div class="space-y-4">
+                    <div>
+                        <Label>Title</Label>
+                        <Input v-model="formData.title" type="text" placeholder="title" />
+                    </div>
 
-                <DialogFooter>
-                    <Button type="submit" form="dialogForm" variant="secondary">
+                    <div>
+                        <Label>Keywords</Label>
+                        <Input v-model="formData.keywords" type="text" placeholder="keywords: aaa,bbb,ccc..." />
+                    </div>
+
+                    <div>
+                        <Label>Category</Label>
+                        <CategorySelect v-model="formData.categoryValue" />
+                    </div>
+
+                    <div>
+                        <Label>Description</Label>
+                        <Textarea v-model="formData.description" placeholder="fill in article description" />
+                    </div>
+
+                    <div>
+                        <Label>Cover</Label>
+                        <FileUpload v-model="files" :init-url="initUrl" accept="image/*,.pdf,.doc,.docx" :max-size="5"
+                            :max-files="1" @error="handleError" />
+                    </div>
+                </div>
+
+                <DialogFooter class="mt-4">
+                    <Button type="button" variant="secondary">
                         Hold on
                     </Button>
-                    <Button type="submit" form="dialogForm" :disabled="loading">
-                        <Loader2 class="w-4 h-4 mr-2 animate-spin" v-if="loading" />
+                    <Button type="submit" :disabled="loading">
+                        <Loader2 v-if="loading" class="w-4 h-4 mr-2 animate-spin" />
                         Submit
                     </Button>
                 </DialogFooter>
-            </DialogContent>
-        </Dialog>
-    </Form>
+            </form>
+        </DialogContent>
+    </Dialog>
 </template>
 
 <style scoped lang="scss">
