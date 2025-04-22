@@ -4,21 +4,26 @@
  * @LastEditTime: 2022-12-13 12:00:17
  * @Description: Do not edit
 -->
-<template>
-  <div class="flex-1 overflow-hidden">
-    <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
-      :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
-  </div>
-  <submit-form :article="articleDetail" :count="editorInst?.getContentTxt().length" />
-</template>
 
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import SubmitForm from "./SubmitForm.vue";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { articleDetailData } from "@/service/article";
 import { BASE_URL } from "@/service/common/axiosInstance";
-import  type PostArticle  from "./type.ts";
+import type PostArticle from "./type.ts";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 const route = useRoute()
 const id = computed(() => route.query.id)
 const editorInst = ref<any>(null)
@@ -28,14 +33,13 @@ const ready = (editorInstance: any) => {
   editorInst.value = editorInstance
 }
 console.log(localStorage.getItem('token'));
-
-onMounted(() => {
-  getArticle()
-});
+const loading = ref(false)
 const getArticle = async () => {
+  loading.value = true
   if (!id.value) return;
   const article = await articleDetailData(id.value)
   articleDetail.value = article
+  loading.value = false
 }
 const articleDetail = ref<PostArticle>({
     id: null,
@@ -83,7 +87,70 @@ let editorConfig = {
   enableContextMenu: false,
   shortcutMenu: false,
 }
+const showDialog = ref(false)
+const pendingId = ref<string | null>(null)
+
+// 修改路由监听逻辑
+watch(() => route.query.id, async (newId, oldId) => {
+  if (newId === oldId) return
+  pendingId.value = newId as string
+  showDialog.value = true
+}, { immediate: true })
+
+const handleIdChange = (newId: string) => {
+  if (newId) {
+    getArticle()
+  } else {
+    articleDetail.value = {
+      id: null,
+      title: '',
+      description: '',
+      keywords: '',
+      categoryId: null,
+      charCount: 0,
+      fatherCategoryId: null,
+      coverImage: '',
+      status: 0,
+      authorId: null,
+      top: 0,
+      content: ''
+    }
+  }
+}
+
+const handleConfirm = () => {
+  handleIdChange(pendingId.value!)
+  showDialog.value = false
+}
+
+const handleCancel = () => {
+  showDialog.value = false
+  pendingId.value = null
+}
 </script>
+
+<template>
+  <div class="flex-1 overflow-hidden" v-loading="loading">
+    <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
+      :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
+  </div>
+  <submit-form :article="articleDetail" :count="editorInst?.getContentTxt().length" />
+
+  <AlertDialog :open="showDialog">
+    <AlertDialogContent>
+      <AlertDialogHeader>
+        <AlertDialogTitle>确认放弃更改？</AlertDialogTitle>
+        <AlertDialogDescription>
+          当前文章未保存，切换将丢失所有更改。
+        </AlertDialogDescription>
+      </AlertDialogHeader>
+      <AlertDialogFooter>
+        <AlertDialogCancel @click="handleCancel">取消</AlertDialogCancel>
+        <AlertDialogAction @click="handleConfirm">确认</AlertDialogAction>
+      </AlertDialogFooter>
+    </AlertDialogContent>
+  </AlertDialog>
+</template>
 
 <style scoped lang="scss">
 :deep(#editor) {
