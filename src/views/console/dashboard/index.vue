@@ -8,7 +8,7 @@ import {
 import { articleStatsData, articleListData, blogStatisticsData, onlineUserCount } from "@/service/article";
 
 import Overview from './components/Overview.vue'
-import RecentSales from './components/RecentSales.vue'
+import RecentUpdate from './components/RecentUpdate.vue'
 import LineChart from './components/LineChart.vue'
 import Category from './components/Category.vue'
 import SignIn from './components/SignIn.vue'
@@ -151,7 +151,7 @@ onBeforeUnmount(() => {
             <CardTitle>Recent Updated</CardTitle>
           </CardHeader>
           <CardContent class="flex-1 overflow-y-scroll">
-            <RecentSales :data="recentUpdate" />
+            <RecentUpdate :data="recentUpdate" />
           </CardContent>
         </Card>
       </div>
