@@ -12,9 +12,11 @@ import RecentSales from './components/RecentSales.vue'
 import LineChart from './components/LineChart.vue'
 import Category from './components/Category.vue'
 import SignIn from './components/SignIn.vue'
-import { onMounted, ref } from 'vue';
+import Release from "./components/Release.vue";
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import dayjs from 'dayjs';
 import { Article, BlogStatistics } from '.';
+let timer;  // 添加定时器变量
 
 let chartData = ref<{ timeRange: Array<string>, articleCount: Array<number>, pageView: Array<number>, charCount: Array<number>, preferNum: Array<number> }>()
 let recentUpdate = ref<Array<Article>>()
@@ -37,6 +39,16 @@ onMounted(() => {
   getRecentUpdata()
   getStatisticsNumber()
   getOnlineNumber()
+  // 添加定时器，每10秒刷新一次在线用户数
+  timer = setInterval(() => {
+    getOnlineNumber()
+  }, 10000)
+})
+// 添加组件卸载时的清理函数
+onBeforeUnmount(() => {
+  if (timer) {
+    clearInterval(timer)
+  }
 })
 </script>
 
@@ -154,7 +166,7 @@ onMounted(() => {
           </CardContent>
         </Card>
         <Category :articleStatisticsData="articleStatisticsData"></Category>
-        <SignIn></SignIn>
+        <Release></Release>
       </div>
     </div>
   </div>

@@ -38,6 +38,7 @@ export type DataType = {
   preferNum: Array<number>
   timeRange: Array<string>
 }
+
 export type BarDataType = {
   charCount: Array<number>
 }

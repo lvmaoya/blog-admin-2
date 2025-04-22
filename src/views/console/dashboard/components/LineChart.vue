@@ -3,7 +3,7 @@ import { LineChart } from '@/components/ui/chart-line'
 import { ref, watch } from 'vue'
 import { DataType } from '..';
 
-const data = ref<Array<{month: String,articleCount: number,pageView: number,charCount: number,preferNum: number}>>([])
+const data = ref<Array<{month: String,articleCount: number,pageView: number,preferNum: number}>>([])
 const props = defineProps<{
   data: DataType
 }>()
@@ -16,7 +16,6 @@ watch(
         month,
         articleCount: newData.articleCount[index],
         pageView: newData.pageView[index],
-        charCount: newData.charCount[index],
         preferNum: newData.preferNum[index]
       }));
       console.log(data.value);
