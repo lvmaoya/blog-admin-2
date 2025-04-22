@@ -116,7 +116,7 @@ watch(() => props.article, (newVal) => {
 <template>
     <Dialog v-model:open="dialogOpen">
         <DialogTrigger as-child>
-            <Button class="submitBtn" size="icon" @click="dialogOpen = true">
+            <Button class="submitBtn opacity-85" size="icon" @click="dialogOpen = true">
                 <ArrowUp class="w-4 h-4" />
             </Button>
         </DialogTrigger>

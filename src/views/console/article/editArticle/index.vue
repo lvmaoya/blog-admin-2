@@ -80,6 +80,8 @@ let editorConfig = {
     // 这样就控制即使在 toolbars 中配置了该功能，也不显示
     "ai": false,
   },
+  enableContextMenu: false,
+  shortcutMenu: false,
 }
 </script>
 
