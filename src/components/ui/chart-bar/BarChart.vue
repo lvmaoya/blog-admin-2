@@ -7,6 +7,7 @@ import { Axis, GroupedBar, StackedBar } from '@unovis/ts'
 import { VisAxis, VisGroupedBar, VisStackedBar, VisXYContainer } from '@unovis/vue'
 import { useMounted } from '@vueuse/core'
 import { type Component, computed, ref } from 'vue'
+import { bar } from '@unovis/ts/components/stacked-bar/style'
 
 const props = withDefaults(defineProps<BaseChartProps<T> & {
   /**
@@ -33,6 +34,7 @@ const props = withDefaults(defineProps<BaseChartProps<T> & {
   showTooltip: true,
   showLegend: true,
   showGridLine: true,
+  
 })
 const emits = defineEmits<{
   legendItemClick: [d: BulletLegendItemInterface, i: number]
@@ -76,6 +78,7 @@ const selectorsBar = computed(() => props.type === 'grouped' ? GroupedBar.select
         :color="colors"
         :rounded-corners="roundedCorners"
         :bar-padding="0.2"
+        :bar-width="16"
         :attributes="{
           [selectorsBar]: {
             opacity: (d: Data, i:number) => {

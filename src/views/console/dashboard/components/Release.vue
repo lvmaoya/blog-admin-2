@@ -33,7 +33,7 @@
                         <a 
                             :href="commit.html_url" 
                             target="_blank"
-                            class="text-xs text-blue-500 hover:underline"
+                            class="text-xs hover:underline"
                         >
                             View commit
                         </a>

@@ -106,7 +106,7 @@ const isActive = (url: string) => {
                             </div>
                             <div class="grid flex-1 text-left text-sm leading-tight">
                                 <span class="truncate font-semibold">Blog Admin</span>
-                                <span class="truncate text-xs">{{ dayjs().format('YYYY-MM-DD HH:mm:ss') }}</span>
+                                <!-- <span class="truncate text-xs">{{ dayjs().format('YYYY-MM-DD HH:mm:ss') }}</span> -->
                             </div>
                         </a>
                     </SidebarMenuButton>
