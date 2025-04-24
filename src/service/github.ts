@@ -19,7 +19,7 @@ export interface CommitInfo {
 const repos = [
     'blog-admin-2',
     'blog-server-java',
-    'blog-web-h5'
+    'nuxt-web'
 ]
 
 export const getGithubCommits = async (): Promise<CommitInfo[]> => {
