@@ -1,7 +1,7 @@
 import { get, post, put, del } from "./common/apiService";
 
 export async function articleListData(data) {
-  return await post("/blog/list", data);
+  return await get("/blog/list", data);
 }
 export async function articleUpdate(data) {
   return await put("/blog", data);
