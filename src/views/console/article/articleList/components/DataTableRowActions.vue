@@ -31,7 +31,7 @@ const router = useRouter()
 
 // 功能实现
 const editArticle = () => {
-  router.push({ name: 'editArticle', query: { id: row.value.id } })
+  router.push({ name: 'EditArticle', query: { id: row.value.id } })
 }
 const topLoading = ref(false)
 const topArticle = async () => {

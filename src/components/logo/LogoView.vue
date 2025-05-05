@@ -9,7 +9,7 @@ const router = useRouter();
 
 const handleLogoClick = () => {
   router.push({
-    name: "home",
+    name: "Home",
   });
 };
 </script>

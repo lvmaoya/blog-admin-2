@@ -29,12 +29,12 @@ const groupList = [{
     items: [
         {
             title: "Dashboard",
-            url: "dashboard",
+            url: "Dashboard",
             icon: Home,
         },
         {
             title: "Writing",
-            url: "editArticle",
+            url: "EditArticle",
             icon: Pencil,
         },
     ],
@@ -44,17 +44,17 @@ const groupList = [{
     items: [
         {
             title: "Article List",
-            url: "articleList",
+            url: "ArticleList",
             icon: LibraryBig,
         },
         {
             title: "Category",
-            url: "articleCategory",
+            url: "ArticleCategory",
             icon: ChartBarStacked,
         },
         {
             title: "Comment",
-            url: "articleComment",
+            url: "ArticleComment",
             icon: MessageSquareText,
         },
     ],
@@ -64,12 +64,12 @@ const groupList = [{
     items: [
         {
             title: "Todo List",
-            url: "todoList",
+            url: "TodoList",
             icon: CalendarCheck,
         },
         {
             title: "Statistic Data",
-            url: "todoStatistic",
+            url: "TodoStatistic",
             icon: AlarmClockCheck,
         }
     ],
@@ -79,7 +79,7 @@ const groupList = [{
     items: [
         {
             title: "File Dashboard",
-            url: "fileList",
+            url: "FileList",
             icon: Paperclip,
         }
     ]
