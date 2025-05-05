@@ -7,6 +7,9 @@ export type Category = {
   updatedTime: Date;
 }
 export function getFatherCategoryName(category): string {
+  if (category === null) {
+    return '根分类';
+  }
   switch (category) {
     case 1:
       return '项目文章';
