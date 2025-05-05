@@ -24,7 +24,7 @@ const props = defineProps({
     },
     placeholder: {
         type: String,
-        default: 'select article category'
+        default: 'Select article category'
     }
 })
 

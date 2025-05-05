@@ -132,12 +132,12 @@ watch(() => props.article, (newVal) => {
                 <div class="space-y-4">
                     <div>
                         <Label>Title</Label>
-                        <Input v-model="formData.title" type="text" placeholder="title" />
+                        <Input v-model="formData.title" type="text" placeholder="Title" />
                     </div>
 
                     <div>
                         <Label>Keywords</Label>
-                        <Input v-model="formData.keywords" type="text" placeholder="keywords: aaa,bbb,ccc..." />
+                        <Input v-model="formData.keywords" type="text" placeholder="Keywords: aaa,bbb,ccc..." />
                     </div>
 
                     <div>
@@ -147,7 +147,7 @@ watch(() => props.article, (newVal) => {
 
                     <div>
                         <Label>Description</Label>
-                        <Textarea v-model="formData.description" placeholder="fill in article description" />
+                        <Textarea v-model="formData.description" placeholder="Fill in article description" />
                     </div>
 
                     <div>
