@@ -22,7 +22,7 @@ export const articleSchema = z.object({
   content: z.string().nullable(), // 可能为 null
   pageView: z.number(),
   preferNum: z.number(),
-  status: z.number(),
+  status: z.string(),
   privacy: z.number(),
   authorId: z.string(),
   top: z.number(),

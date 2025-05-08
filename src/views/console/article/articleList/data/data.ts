@@ -18,13 +18,13 @@ export const labels = [
 
 export const statuses = [
   {
-    value: 0,
-    label: 'DRAFT',
+    value: "0",
+    label: '暂存',
     icon: h(BookDashed),
   },
   {
-    value: 1,
-    label: 'PUBLISHED',
+    value: "1",
+    label: '发布',
     icon: h(CheckCheck),
   }
 ]
@@ -32,17 +32,17 @@ export const statuses = [
 export const categories = [
   {
     value: "1",
-    label: 'PROJECT',
+    label: '项目',
     icon: h(FolderRoot),
   },
   {
     value: "2",
-    label: 'STUDY',
+    label: '学习',
     icon: h(BookOpenText),
   },
   {
     value: "3",
-    label: 'BLOG',
+    label: '随笔',
     icon: h(NotebookPen),
   },
 ]

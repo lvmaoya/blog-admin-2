@@ -70,7 +70,7 @@ const table = useVueTable({
   <div class="space-y-4 relative" v-loading="props.loading">
     <DataTableToolbar :table="table" />
     <div class="rounded-md border">
-      <Table class="min-h-[500px]">
+      <Table>
         <TableHeader>
           <TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
             <TableHead v-for="header in headerGroup.headers" :key="header.id">

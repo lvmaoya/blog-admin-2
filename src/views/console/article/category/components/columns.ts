@@ -11,10 +11,10 @@ import DataTableRowActions from './DataTableRowActions.vue'
 export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: 'id',
-    header: () => h('div', 'ID'),
-    cell: ({ row }) => {      
+    header: () => h('div', { class: 'w-[50px] text-center truncate font-medium' }, 'ID'),
+    cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('id')),
+        h('span', { class: 'w-[50px] text-center truncate font-medium' }, row.getValue('id')),
       ])
     },
   },

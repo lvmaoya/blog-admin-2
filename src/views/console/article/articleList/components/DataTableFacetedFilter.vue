@@ -84,7 +84,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
               :key="option.value"
               :value="option"
               @select="(e) => {
-                console.log(e.detail.value)
+                console.log(e.detail.value)                
                 const isSelected = selectedValues.has(option.value)
                 if (isSelected) {
                   selectedValues.delete(option.value)
@@ -92,8 +92,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
                 else {
                   selectedValues.add(option.value)
                 }
-                const filterValues = Array.from(selectedValues)
-                
+                const filterValues = Array.from(selectedValues)                
                 column?.setFilterValue(
                   filterValues.length ? filterValues : undefined,
                 )

@@ -9,15 +9,15 @@ import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'
 
 export const columns: ColumnDef<CommentInfo>[] = [
-  // {
-  //   accessorKey: 'id',
-  //   header: () => h('div', 'ID'),
-  //   cell: ({ row }) => {      
-  //     return h('div', { class: 'flex space-x-2' }, [
-  //       h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('id')),
-  //     ])
-  //   },
-  // },
+  {
+    accessorKey: 'id',
+    header: () => h('div', { class: 'w-[50px] text-center truncate font-medium' }, 'ID'),
+    cell: ({ row }) => {
+      return h('div', { class: 'flex space-x-2' }, [
+        h('span', { class: 'w-[50px] text-center truncate font-medium' }, row.getValue('id')),
+      ])
+    },
+  },
   {
     accessorKey: 'content',
     header: () => h('div', 'Content'),
@@ -70,7 +70,7 @@ export const columns: ColumnDef<CommentInfo>[] = [
     header: () => h('div', 'status'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('status') ? '正常' : '不可见'),
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('status') ? '不可见' : '正常'),
       ])
     },
   },
