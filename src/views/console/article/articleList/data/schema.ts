@@ -4,7 +4,7 @@ import { z } from 'zod';
 const categorySchema = z.object({
   id: z.string(),
   categoryName: z.string(),
-  fatherCategoryId: z.string(),
+  fatherCategoryId: z.number(),
   deleted: z.number(),
   createdTime: z.string(),
   updatedTime: z.string(),
@@ -17,7 +17,7 @@ export const articleSchema = z.object({
   description: z.string(),
   category: categorySchema.nullable(), // 可能为 null
   categoryId: z.string(),
-  fatherCategoryId: z.string(),
+  fatherCategoryId: z.number(),
   coverImage: z.string(),
   content: z.string().nullable(), // 可能为 null
   pageView: z.number(),

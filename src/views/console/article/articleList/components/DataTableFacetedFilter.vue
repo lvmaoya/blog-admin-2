@@ -23,7 +23,7 @@ interface DataTableFacetedFilter {
   title?: string
   options: {
     label: string
-    value: string
+    value: number
     icon?: Component
   }[]
 }
@@ -32,7 +32,7 @@ const props = defineProps<DataTableFacetedFilter>()
 
 const facets = computed(() => props.column?.getFacetedUniqueValues())
 
-const selectedValues = computed(() => new Set(props.column?.getFilterValue() as string[]))
+const selectedValues = computed(() => new Set(props.column?.getFilterValue() as number[]))
 </script>
 
 <template>

@@ -28,13 +28,7 @@ const articleList = ref<Array<Article>>([]);
 const getArticleList = async () => {
     loading.value = true
     let res = await articleListData({ page: 1, size: 9999 });
-    articleList.value = res.records.map((item) => {
-        return {
-            ...item,
-            fatherCategoryId: item.category?.fatherCategoryId.toString(), //  for table filter
-            status: item.status.toString(),
-        }
-    })
+    articleList.value = res.records
     loading.value = false
 }
 onMounted(() => {

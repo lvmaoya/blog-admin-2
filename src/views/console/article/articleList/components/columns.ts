@@ -50,22 +50,25 @@ export const columns: ColumnDef<Article>[] = [
       ])
     },
   },
-  // {
-  //   accessorKey: 'fatherCategoryId',
-  //   header: () => h('div', '分类'),
-  //   cell: ({ row }) => {      
-  //     const category = categories.find(
-  //       category => category.value == row.getValue('fatherCategoryId'),
-  //     )
+  {
+    accessorKey: 'fatherCategoryId',
+    header: () => h('div', '分类'),
+    cell: ({ row }) => {      
+      const category = categories.find(
+        category => category.value == row.getValue('fatherCategoryId'),
+      )
 
-  //     if (!category)
-  //       return null
+      if (!category)
+        return null
 
-  //     return h('div', { class: 'flex w-[100px] items-center' }, [
-  //       h('span', category.label),
-  //     ])
-  //   },
-  // },
+      return h('div', { class: 'flex w-[100px] items-center' }, [
+        h('span', category.label),
+      ])
+    },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
   {
     accessorKey: 'status',
     header: ({ column }) => h('div', "状态"),
