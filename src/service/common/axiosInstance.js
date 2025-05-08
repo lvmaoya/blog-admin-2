@@ -25,7 +25,7 @@ instance.interceptors.request.use(
         // 可以在这里添加 token 等请求头信息
         const token = getCache('token');
         if (!token) {
-            // router.replace("/login")
+            router.replace("/login")
         }
         if (token && config.headers) {
             config.headers.Authorization = token;
