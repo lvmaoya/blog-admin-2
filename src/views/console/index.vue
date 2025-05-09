@@ -2,7 +2,7 @@
   <SidebarProvider>
     <AppSidebar />
     <SidebarInset class="h-[100vh]">
-      <header class="flex sticky top-0 bg-white h-16 shrink-0 items-center gap-2 border-b px-4 z-[49]">
+      <header class="flex sticky top-0 bg-white h-16 shrink-0 items-center gap-2 border-b px-4 z-[9999]">
         <SidebarTrigger class="-ml-1" />
         <Separator orientation="vertical" class="mr-2 h-4" />
         <AppBreadcrumb />

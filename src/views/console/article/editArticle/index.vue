@@ -59,7 +59,7 @@ let editorConfig = {
   // 图片限制最大3M
   imageMaxSize: 3145728,
   // 富文本输入框高度
-  // initialFrameHeight: 500,
+  initialFrameHeight: 1200,
   // 富文本输入框宽度
   initialFrameWidth: '100%',
   // 初始化样式 编辑区自定义样式，如果自定义，最好给 p 标签如下的行高，要不输入中文时，会有跳动感
@@ -130,7 +130,7 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div class="flex-1 overflow-hidden" v-loading="loading">
+  <div v-loading="loading">
     <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
       :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
   </div>
@@ -154,17 +154,21 @@ const handleCancel = () => {
 
 <style scoped lang="scss">
 :deep(#editor) {
-  height: 100%;
+  // height: 100%;
 
-  .edui-editor {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    z-index: 49 !important;
+  // .edui-editor {
+  //   height: 100%;
+  //   display: flex;
+  //   flex-direction: column;
+  //   z-index: 49 !important;
 
-    #edui1_iframeholder {
-      flex: 1;
-    }
+    // #edui1_iframeholder {
+    //   height: calc();
+    // }
+  // }
+  .edui-editor-toolbarbox{
+    position: sticky;
+    top: 65px;
   }
 }
 </style>
