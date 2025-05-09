@@ -176,7 +176,7 @@ watch(() => props.article, (newVal) => {
     position: fixed;
     right: 20px;
     bottom: 44px;
-    z-index: 49;
+    z-index: 99999;
     padding: 0 4px;
     border-radius: 50px;
 }
