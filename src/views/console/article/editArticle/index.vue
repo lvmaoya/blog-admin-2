@@ -166,9 +166,14 @@ const handleCancel = () => {
     //   height: calc();
     // }
   // }
+  .edui-editor{
+    border: none;
+  }
   .edui-editor-toolbarbox{
     position: sticky;
     top: 65px;
+    z-index: 9999;
+    background-color: white;
   }
 }
 </style>
