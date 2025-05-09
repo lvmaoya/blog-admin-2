@@ -80,15 +80,11 @@ let editorConfig = {
     // 禁止在线管理
     disableOnline: true,
   },
-  toolbarShow: {
-    // 这样就控制即使在 toolbars 中配置了该功能，也不显示
-    "ai": false,
-  },
   enableContextMenu: false,
   shortcutMenu: false,
   toolbars: [
     [
-        "fullscreen",   // 全屏
+        // "fullscreen",   // 全屏
         // "source",       // 源代码
         // "|",
         "undo",         // 撤销
