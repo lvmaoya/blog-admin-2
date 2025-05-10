@@ -17916,34 +17916,34 @@ UE.plugins["lineheight"] = function () {
  * @since 1.2.6.1
  */
 
-UE.plugins["insertcode"] = function () {
+UE.plugins["insertcode"] = function () {    
     var me = this;
     me.setOpt("insertcode", {
-        as3: "ActionScript3",
+        // as3: "ActionScript3",
         bash: "Bash/Shell",
         cpp: "C/C++",
         css: "Css",
         // cf: "CodeFunction",
         "c#": "C#",
-        delphi: "Delphi",
+        // delphi: "Delphi",
         // diff: "Diff",
-        erlang: "Erlang",
-        groovy: "Groovy",
+        // erlang: "Erlang",
+        // groovy: "Groovy",
         html: "Html",
         java: "Java",
         // jfx: "JavaFx",
         js: "Javascript",
-        pl: "Perl",
+        // pl: "Perl",
         php: "PHP",
         plain: "Text",
         ps: "PowerShell",
         python: "Python",
-        ruby: "Ruby",
-        scala: "Scala",
+        // ruby: "Ruby",
+        // scala: "Scala",
         sql: "SQL",
         vb: "VB",
         xml: "XML",
-        mind: "Mind",
+        // mind: "Mind",
     });
 
     /**

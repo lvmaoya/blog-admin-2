@@ -374,6 +374,8 @@
 })();
 
 UE.parse.register("insertcode", function (utils) {
+    console.log("insertcode parse");
+    
     var pres = this.root.getElementsByTagName("pre");
     if (pres.length) {
         if (typeof XRegExp == "undefined") {

@@ -6,6 +6,7 @@
 // including support for additional syntax, flags, and methods
 
 var XRegExp;
+console.log("shCore.js loaded");
 
 if (XRegExp) {
     // Avoid running twice, since that would break references to native globals
