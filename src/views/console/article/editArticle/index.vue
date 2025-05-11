@@ -103,7 +103,7 @@ let editorConfig = {
       "formatmatch",  // 格式刷
       "autotypeset",  // 自动排版
       "blockquote",   // 引用
-      "pasteplain",   // 纯文本粘贴模式
+      // "pasteplain",   // 纯文本粘贴模式
       "|",
       "forecolor",    // 字体颜色
       "backcolor",    // 背景色
@@ -192,6 +192,10 @@ const pendingId = ref<string | null>(null)
 watch(() => route.query.id, async (newId, oldId) => {
   if (!newId) {
     return;
+  }
+  if(!articleDetail.value.content){
+    getArticle()
+    return
   }
   if (newId === oldId) {
     return

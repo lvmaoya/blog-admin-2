@@ -58,9 +58,10 @@ async function onSubmit() {
     submitData.coverImage = res
     await postArticle(submitData)
     loading.value = false
+    
     toast({
         title: '🔔 提示',
-        description: submitData.id ? '文章更新成功！' : '文章发布成功！'
+        description: submitData.id ? '文章更新成功！' : submitData.status === 0 ? '文章暂存成功！' : '文章发布成功！',
     })
     dialogOpen.value = false
 
