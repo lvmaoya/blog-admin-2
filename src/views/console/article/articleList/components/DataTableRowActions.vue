@@ -23,6 +23,7 @@ const bus = useEventBus<string>('refresh-table')
 interface DataTableRowActionsProps {
   row: Row<Article>
 }
+const BASE_URL = import.meta.env.VITE_APP_BASE_URL
 const props = defineProps<DataTableRowActionsProps>()
 
 const row = computed(() => props.row.original)
@@ -58,7 +59,7 @@ const disableArticle = async () => {
 }
 
 const shareArticle = () => {
-  const shareUrl = `https://lvmaoya.cn/detail/${row.value.id}`
+  const shareUrl = `${BASE_URL}/detail/${row.value.id}`
   navigator.clipboard.writeText(shareUrl).then(() => {
     toast({
       title: "🔗 文章链接复制成功！"
@@ -67,7 +68,7 @@ const shareArticle = () => {
 }
 
 const previewArticle = () => {
-  window.open(`https://lvmaoya.cn/detail/${row.value.id}`, '_blank')
+  window.open(`${BASE_URL}/detail/${row.value.id}`, '_blank')
 }
 
 const deleteArticle = async () => {

@@ -2,19 +2,13 @@ import router from '@/router';
 import {deleteCache, getCache} from '@/utils/cache';
 import axios from 'axios';
 
-export let BASE_URL;
-
-if (import.meta.env.MODE === "production") {
-    BASE_URL = "https://lvmaoya.cn:3002";
-} else {
-    BASE_URL = "http://localhost:8080";
-}
+export const BASE_API = import.meta.env.VITE_APP_BASE_API
 
 axios.defaults.withCredentials = true
 
 // 创建 Axios 实例
 const instance = axios.create({
-    baseURL: BASE_URL, // 从环境变量获取 baseURL，如果没有则使用默认值
+    baseURL: BASE_API, // 从环境变量获取 baseURL，如果没有则使用默认值
     timeout: 100000, // 请求超时时间
     withCredentials: true, // 允许携带凭证
 });

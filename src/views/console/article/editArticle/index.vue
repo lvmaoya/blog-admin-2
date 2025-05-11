@@ -10,7 +10,7 @@ import { useRoute, useRouter } from "vue-router";
 import SubmitForm from "./SubmitForm.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import { articleDetailData } from "@/service/article";
-import { BASE_URL } from "@/service/common/axiosInstance";
+import { BASE_API } from "@/service/common/axiosInstance";
 import type PostArticle from "./type.ts";
 import {
   AlertDialog,
@@ -68,9 +68,9 @@ let editorConfig = {
   initialStyle: 'body p{line-height:1.8em; margin: 0 ;} h1,h2,h3,h4,blockquote{margin: 0 ;} body table{margin: 0 ;}',
   autoFloatEnabled: false,
   // 获取上传配置路径
-  configUrl: BASE_URL + '/sys/ueditor',
+  configUrl: BASE_API + '/sys/ueditor',
   // 上传服务路径
-  serverUrl: BASE_URL + '/sys/ueditor',
+  serverUrl: BASE_API + '/sys/ueditor',
   // 必须配置域名,否则发版后获取不到页面资源
   UEDITOR_HOME_URL: location.origin + '/UEditorPlus/',
   // 配置请求头token

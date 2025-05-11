@@ -64,7 +64,7 @@ import { login } from "@/service/login";
 import { onMounted, reactive, ref } from "vue";
 import { getCache, setCache, deleteCache } from '@/utils/cache';
 import { useRouter, useRoute } from "vue-router";
-import { BASE_URL } from "@/service/common/axiosInstance.js";
+import { BASE_API } from "@/service/common/axiosInstance.js";
 import axios from 'axios';
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-vue-next'
@@ -82,7 +82,7 @@ let authCodeUrl = ref("");
 
 // 获取登陆验证码
 const getCodeData = async () => {
-  const response = await axios.get(BASE_URL + "/captcha", {
+  const response = await axios.get(BASE_API + "/captcha", {
     responseType: 'arraybuffer',
     headers: {
       'Content-Type': 'image/png',
