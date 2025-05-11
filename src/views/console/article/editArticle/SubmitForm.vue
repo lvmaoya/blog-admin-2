@@ -25,6 +25,7 @@ import { uploadFile } from '@/service/upload'
 import { postArticle } from "@/service/article"
 import type PostArticle from "./type.ts";
 
+const emit = defineEmits(['resetEditor'])
 
 const files = ref([])
 const initUrl = ref()
@@ -40,6 +41,7 @@ const formData = ref({
     coverImage: null,
     content: '',
     charCount: 0,
+    status: 1,
 })
 
 async function onSubmit() {
@@ -56,18 +58,42 @@ async function onSubmit() {
     submitData.coverImage = res
     await postArticle(submitData)
     loading.value = false
-    toast({ title: submitData.id ? '文章更新成功' : '文章发布成功'  })
+    toast({
+        title: '🔔 提示',
+        description: submitData.id ? '文章更新成功！' : '文章发布成功！'
+    })
     dialogOpen.value = false
-}
 
+    // 重置表单
+    formData.value = {
+        id: null,
+        title: '',
+        keywords: '',
+        description: '',
+        categoryValue: [null, null],
+        coverImage: null,
+        content: '',
+        charCount: 0,
+        status: 1,
+    }
+    files.value = []
+    initUrl.value = undefined
+
+    // 发送重置事件给父组件
+    emit('resetEditor')
+}
+const handleHoldOn = () => {
+    formData.value.status = 0
+    onSubmit()
+}
 const handleError = (error: string) => {
     console.error('上传错误:', error)
 }
 
 // 上传文件的方法
-const uploadFiles = async () => {       
+const uploadFiles = async () => {
     console.log(files.value);
-    
+
     if (files.value.length === 0) {
         return
     }
@@ -79,21 +105,22 @@ const uploadFiles = async () => {
         const response = await uploadFile(formData)
         console.log(response);
         toast({
-            title: '图片上传成功'
-        });
+            title: '🔔 提示',
+            description: '图片上传成功'
+        })
         return response.url
     } catch (error) {
-        console.error('上传出错:', error)
+        console.error('图片上传出错:', error)
         toast({
-            title: '上传出错',
+            title: '🔔 提示',
+            description: '图片上传出错',
             variant: 'destructive',
-        });
+        })
     }
 }
 
 const props = defineProps<{ article: PostArticle, count: number }>()
 watch(() => props.article, (newVal) => {
-    console.log(newVal);
     if (props.article) {
         formData.value = {
             id: props.article.id,
@@ -103,13 +130,12 @@ watch(() => props.article, (newVal) => {
             categoryValue: [props.article.fatherCategoryId, props.article.categoryId],
             content: props.article.content,
             charCount: props.count || props.article.charCount,
-            coverImage: null
+            coverImage: null,
+            status: props.article.status
         }
 
         initUrl.value = props.article.coverImage
     }
-    console.log(formData.value);
-    
 }, { deep: true })
 </script>
 
@@ -158,7 +184,7 @@ watch(() => props.article, (newVal) => {
                 </div>
 
                 <DialogFooter class="mt-4">
-                    <Button type="button" variant="secondary">
+                    <Button type="button" variant="secondary" @click="handleHoldOn">
                         Hold on
                     </Button>
                     <Button type="submit" :disabled="loading">

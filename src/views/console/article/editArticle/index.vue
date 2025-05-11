@@ -6,15 +6,12 @@
 -->
 
 <script setup lang="ts">
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import SubmitForm from "./SubmitForm.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import { articleDetailData } from "@/service/article";
 import { BASE_URL } from "@/service/common/axiosInstance";
 import type PostArticle from "./type.ts";
-
-import Prism from "prismjs"//导入代码高亮插件的core（里面提供了其他官方插件及代码高亮样式主题，你只需要引入即可）
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -27,7 +24,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
+
 const route = useRoute()
+const router = useRouter()
 const id = computed(() => route.query.id)
 const editorInst = ref<any>(null)
 
@@ -53,7 +52,7 @@ const articleDetail = ref<PostArticle>({
   charCount: 0,
   fatherCategoryId: null,
   coverImage: '',
-  status: 0,
+  status: 1,
   authorId: null,
   top: 0,
   content: ''
@@ -191,15 +190,16 @@ const pendingId = ref<string | null>(null)
 
 // 修改路由监听逻辑
 watch(() => route.query.id, async (newId, oldId) => {
-  if (newId === oldId) return
+  if (!newId) {
+    return;
+  }
+  if (newId === oldId) {
+    return
+  }
   pendingId.value = newId as string
   showDialog.value = true
 }, { immediate: true })
-watch(() => articleDetail.value.content, () => {
-  // let l = editorInst.value.queryCommandValue('insertcode')
-  // console.log(l);
-  editorInst.value.execCommand('insertcode', 'javascript')
-})
+
 const handleIdChange = (newId: string) => {
   if (newId) {
     getArticle()
@@ -229,6 +229,29 @@ const handleConfirm = () => {
 const handleCancel = () => {
   showDialog.value = false
   pendingId.value = null
+  router.replace({ name: 'EditArticle' })
+}
+// 在 script setup 中添加 handleReset 函数
+const handleReset = () => {
+  // 重置编辑器内容
+  if (editorInst.value) {
+    editorInst.value.setContent('')
+  }
+  // 重置文章详情
+  articleDetail.value = {
+    id: null,
+    title: '',
+    description: '',
+    keywords: '',
+    categoryId: null,
+    charCount: 0,
+    fatherCategoryId: null,
+    coverImage: '',
+    status: 1,
+    authorId: null,
+    top: 0,
+    content: ''
+  }
 }
 </script>
 
@@ -237,7 +260,7 @@ const handleCancel = () => {
     <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
       :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
   </div>
-  <submit-form :article="articleDetail" :count="editorInst?.getContentTxt().length" />
+  <submit-form :article="articleDetail" :count="editorInst?.getContentTxt().length" @resetEditor="handleReset" />
 
   <AlertDialog :open="showDialog">
     <AlertDialogContent>
@@ -256,44 +279,22 @@ const handleCancel = () => {
 </template>
 
 <style scoped lang="scss">
-
 :deep(#editor) {
   // height: 100%;
 
-  // .edui-editor {
-  //   height: 100%;
-  //   display: flex;
-  //   flex-direction: column;
-  //   z-index: 49 !important;
+  .edui-editor {
+    z-index: 49 !important;
+  }
 
-  // #edui1_iframeholder {
-  //   height: calc();
-  // }
-  // }
   .edui-editor {
     border: none;
   }
 
   .edui-editor-toolbarbox {
     position: sticky;
-    top: 65px;
+    top: 64px;
     z-index: 9999;
     background-color: white;
-  }
-
-  pre {
-    background: #1e1e1e;
-    color: #d4d4d4;
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid #333;
-    font-family: 'Fira Code', monospace;
-    font-size: 14px;
-    line-height: 1.6;
-    tab-size: 4;
-    overflow-x: auto;
-    white-space: pre-wrap;
-    margin: 1.5rem 0;
   }
 }
 </style>
