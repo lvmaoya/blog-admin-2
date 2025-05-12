@@ -84,6 +84,7 @@ let editorConfig = {
   },
   enableContextMenu: false,
   shortcutMenu: false,
+  maxUndoCount: 100,
   toolbars: [
     [
       // "fullscreen",   // 全屏
