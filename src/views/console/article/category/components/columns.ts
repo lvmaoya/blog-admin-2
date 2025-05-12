@@ -20,7 +20,7 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     accessorKey: 'categoryName',
-    header: () => h('div', 'Category Name'),
+    header: () => h('div', '名称'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('categoryName')),
@@ -29,7 +29,7 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     accessorKey: 'fatherCategoryId',
-    header: () => h('div', 'Father Category Name'),
+    header: () => h('div', '类别'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, getFatherCategoryName(row.getValue('fatherCategoryId')) ),
@@ -38,7 +38,7 @@ export const columns: ColumnDef<Category>[] = [
   },
   {
     accessorKey: 'createdTime',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Created Time' }),
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: '创建时间' }),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px]' }, row.getValue('createdTime')),

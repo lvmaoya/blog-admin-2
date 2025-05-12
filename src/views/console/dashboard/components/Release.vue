@@ -2,7 +2,7 @@
     <Card class="col-span-2 h-full overflow-hidden flex flex-col">
         <CardHeader class="flex flex-row justify-between items-center">
             <div class="flex flex-col gap-y-1.5">
-                <CardTitle>Commits History</CardTitle>
+                <CardTitle>提交日志</CardTitle>
                 <CardDescription>
                     Recent {{ commits.length }} commits in repository.
                 </CardDescription>

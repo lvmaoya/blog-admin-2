@@ -58,7 +58,7 @@ onBeforeUnmount(() => {
       <Card>
         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2 text-muted-foreground">
           <CardTitle class="text-sm font-medium">
-            Articles
+            文章
           </CardTitle>
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
       <Card>
         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle class="text-sm font-medium">
-            Views
+            浏览
           </CardTitle>
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
       <Card>
         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle class="text-sm font-medium">
-            Notes
+            字数
           </CardTitle>
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -118,7 +118,7 @@ onBeforeUnmount(() => {
       <Card>
         <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle class="text-sm font-medium">
-            Active Now
+            活跃
           </CardTitle>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" class="h-4 w-4 text-muted-foreground">
@@ -148,7 +148,7 @@ onBeforeUnmount(() => {
         </Card>
         <Card class="col-span-3 h-full overflow-hidden flex flex-col">
           <CardHeader>
-            <CardTitle>Recent Updated</CardTitle>
+            <CardTitle>最近更新</CardTitle>
           </CardHeader>
           <CardContent class="flex-1 overflow-y-scroll">
             <RecentUpdate :data="recentUpdate" />

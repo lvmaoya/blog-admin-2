@@ -20,7 +20,7 @@ export const columns: ColumnDef<CommentInfo>[] = [
   },
   {
     accessorKey: 'content',
-    header: () => h('div', 'Content'),
+    header: () => h('div', '内容'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('content')),
@@ -29,7 +29,7 @@ export const columns: ColumnDef<CommentInfo>[] = [
   },
   {
     accessorKey: 'articleTitle',
-    header: () => h('div', 'Article Title'),
+    header: () => h('div', '文章标题'),
     cell: ({ row }) => {
       return h('div', { class: '' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('articleTitle')),
@@ -38,7 +38,7 @@ export const columns: ColumnDef<CommentInfo>[] = [
   },
   {
     accessorKey: 'type',
-    header: () => h('div', 'Type'),
+    header: () => h('div', '类型'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('type') == 0 ? '评论' : '回复'),
@@ -48,7 +48,7 @@ export const columns: ColumnDef<CommentInfo>[] = [
 
   {
     accessorKey: 'username',
-    header: () => h('div', 'Name'),
+    header: () => h('div', '用户名'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('username')),
@@ -57,7 +57,7 @@ export const columns: ColumnDef<CommentInfo>[] = [
   },
   {
     accessorKey: 'email',
-    header: () => h('div', 'Email'),
+    header: () => h('div', '用户邮箱'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('email')),
@@ -67,7 +67,7 @@ export const columns: ColumnDef<CommentInfo>[] = [
 
   {
     accessorKey: 'status',
-    header: () => h('div', 'status'),
+    header: () => h('div', '评论状态'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('status') ? '不可见' : '正常'),
@@ -76,7 +76,7 @@ export const columns: ColumnDef<CommentInfo>[] = [
   },
   {
     accessorKey: 'createdTime',
-    header: ({ column }) => h(DataTableColumnHeader, { column, title: 'Created Time' }),
+    header: ({ column }) => h(DataTableColumnHeader, { column, title: '创建时间' }),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
         h('span', { class: 'max-w-[500px]' }, row.getValue('createdTime')),

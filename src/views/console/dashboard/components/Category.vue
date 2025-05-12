@@ -1,7 +1,7 @@
 <template>
     <Card class="col-span-2 h-full overflow-hidden flex flex-col">
         <CardHeader class="flex-shrink-0">
-            <CardTitle>Categories</CardTitle>
+            <CardTitle>分类</CardTitle>
             <CardDescription>
                 You wrote {{ props.articleStatisticsData?.totalBlogCount }} blog(s) this month.
             </CardDescription>
