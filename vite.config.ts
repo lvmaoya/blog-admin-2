@@ -6,6 +6,7 @@ import tailwind from 'tailwindcss'
 import path from 'node:path';
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/',
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()],

@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --mode development",
-    "build": "vite build --mode production",
-    "preview": "vite preview --mode production"
+    "build": "vite build --mode prod",
+    "preview": "vite preview --mode prod"
   },
   "dependencies": {
     "@radix-icons/vue": "^1.0.0",

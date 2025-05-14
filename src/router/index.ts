@@ -2,7 +2,7 @@ import { getCache } from "@/utils/cache";
 import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
 
   routes: [
     {
@@ -13,11 +13,6 @@ const router = createRouter({
       path: "/login",
       name: "Login",
       component: () => import("@/views/login/index.vue"),
-    },
-    {
-      path: "/detail",
-      name: "Detail",
-      component: () => import("@/views/detail/index.vue"),
     },
     {
       path: "/console",
