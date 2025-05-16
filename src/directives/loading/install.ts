@@ -18,6 +18,7 @@ export const loadingDirective: Directive = {
     const loadingContainer = document.createElement("div")
     loadingContainer.id = "loading-container"
     el.loadingContainer = loadingContainer
+    el.loadingContainer.style.display = "none"
     el.appendChild(loadingContainer)
     
     // 保存实例以便后续操作

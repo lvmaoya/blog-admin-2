@@ -29,10 +29,10 @@ const route = useRoute()
 const router = useRouter()
 const id = computed(() => route.query.id)
 const editorInst = ref<any>(null)
-
+const editorReady = ref(false)
 const ready = (editorInstance: any) => {
-  //获取编辑器实力
   editorInst.value = editorInstance
+  editorReady.value = true
 }
 console.log(localStorage.getItem('token'));
 const loading = ref(false)
@@ -261,7 +261,7 @@ const handleReset = () => {
 </script>
 
 <template>
-  <div v-loading="loading" :style="{ opacity: !loading ? 1 : 0, transition: 'opacity 0.3s' }">
+  <div v-loading="(!loading) && (!editorReady)" :style="{ opacity: editorReady ? 1 : 0, transition: 'opacity 0.2s' }">
     <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
       :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
   </div>
