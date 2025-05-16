@@ -261,7 +261,7 @@ const handleReset = () => {
 </script>
 
 <template>
-  <div v-loading="loading">
+  <div v-loading="loading" :style="{ opacity: !loading ? 1 : 0, transition: 'opacity 0.3s' }">
     <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
       :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
   </div>

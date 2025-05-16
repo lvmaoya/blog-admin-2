@@ -6,7 +6,6 @@ import tailwind from 'tailwindcss'
 import path from 'node:path';
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/',
   css: {
     postcss: {
       plugins: [tailwind(), autoprefixer()],
@@ -23,17 +22,5 @@ export default defineConfig({
     port: 3001,
     open: true,
     cors: true,
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://localhost:8080',
-    //     changeOrigin: true,
-    //     rewrite: (path) => {
-    //       console.log('Original path:', path);
-    //       const newPath = path.replace(/^\/api/, '');
-    //       console.log('Rewritten path:', newPath);
-    //       return newPath;
-    //     },
-    //   },
-    // },
   }
 })
