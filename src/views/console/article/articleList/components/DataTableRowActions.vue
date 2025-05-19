@@ -19,6 +19,9 @@ import { articleSchema } from '../data/schema'
 import DotsHorizontalIcon from '@radix-icons/vue/DotsHorizontalIcon'
 import { useEventBus } from '@vueuse/core'
 import { toast } from '@/components/ui/toast';
+import { useArticleStore } from '@/stores/article'
+
+const articleStore = useArticleStore()
 const bus = useEventBus<string>('refresh-table')
 interface DataTableRowActionsProps {
   row: Row<Article>
@@ -32,6 +35,7 @@ const router = useRouter()
 
 // 功能实现
 const editArticle = () => {
+  articleStore.setCurrentEditId(row.value.id)
   router.push({ name: 'EditArticle', query: { id: row.value.id } })
 }
 const topLoading = ref(false)

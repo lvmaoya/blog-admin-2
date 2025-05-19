@@ -14,6 +14,9 @@ import {
 } from "@/components/ui/sidebar"
 import NavUser from "./NavUser.vue"
 import { useRouter } from "vue-router";
+import { useArticleStore } from '@/stores/article'
+
+const articleStore = useArticleStore()
 import dayjs from 'dayjs'
 
 const data = {
@@ -87,6 +90,10 @@ const groupList = [{
 ];
 const router = useRouter();
 const navigate = (url: string) => {
+    if (url === 'EditArticle' && articleStore.currentEditId) {
+        router.push({ name: url, query: { id: articleStore.currentEditId } });
+        return;
+    }
     router.push({ name: url });
 }
 const isActive = (url: string) => {
