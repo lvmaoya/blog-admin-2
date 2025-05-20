@@ -6,7 +6,7 @@
 -->
 <template>
     <div class="p-4">
-        <DataTable :data="articleList" :columns="columns" v-model:loading="loading"/>
+        <DataTable :data="articleList" :columns="columns" :loading="loading"/>
     </div>
 </template>
 
@@ -23,7 +23,7 @@ const bus = useEventBus<string>('refresh-table')
 bus.on((payload) => {
     getArticleList()  
 })
-const loading = ref(true)
+const loading = ref(false)
 const articleList = ref<Array<Article>>([]);
 const getArticleList = async () => {
     loading.value = true
