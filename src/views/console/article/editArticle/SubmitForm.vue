@@ -46,8 +46,7 @@ const formData = ref({
 
 async function onSubmit() {
     loading.value = true
-    let submitData = { ...formData.value, fatherCategoryId: null, categoryId: null, charCount: props.count }
-    console.log(formData.value.categoryValue);
+    let submitData = { ...formData.value, fatherCategoryId: null, categoryId: null, charCount: props.editorInst?.getContentTxt().length }
     // 处理分类数据
     if (formData.value.categoryValue) {
         submitData.fatherCategoryId = formData.value.categoryValue[0]
@@ -120,7 +119,7 @@ const uploadFiles = async () => {
     }
 }
 
-const props = defineProps<{ article: PostArticle, count: number }>()
+const props = defineProps<{ article: PostArticle, editorInst: any }>()
 watch(() => props.article, (newVal) => {
     if (props.article) {
         formData.value = {
@@ -130,7 +129,7 @@ watch(() => props.article, (newVal) => {
             description: props.article.description,
             categoryValue: [props.article.fatherCategoryId, props.article.categoryId],
             content: props.article.content,
-            charCount: props.count || props.article.charCount,
+            charCount: props.article.charCount,
             coverImage: null,
             status: props.article.status
         }

@@ -265,7 +265,7 @@ const handleReset = () => {
     <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
       :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
   </div>
-  <submit-form :article="articleDetail" :count="editorInst?.getContentTxt().length" @resetEditor="handleReset" />
+  <submit-form :article="articleDetail" :editorInst="editorInst" @resetEditor="handleReset" />
 
   <AlertDialog :open="showDialog">
     <AlertDialogContent>
