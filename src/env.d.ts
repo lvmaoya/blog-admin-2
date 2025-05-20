@@ -7,3 +7,4 @@ declare module '@/utils/cache' {
     const cache: any;
     export default cache;
 }
+declare const __APP_VERSION__: string

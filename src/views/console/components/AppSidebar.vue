@@ -15,9 +15,13 @@ import {
 import NavUser from "./NavUser.vue"
 import { useRouter } from "vue-router";
 import { useArticleStore } from '@/stores/article'
+//@ts-ignore
+import PackageJson from '../../../../package.json'
 
 const articleStore = useArticleStore()
-import dayjs from 'dayjs'
+
+const version = "v - " + PackageJson.version
+
 
 const data = {
     user: {
@@ -113,7 +117,7 @@ const isActive = (url: string) => {
                             </div>
                             <div class="grid flex-1 text-left text-sm leading-tight">
                                 <span class="truncate font-semibold">Blog Admin</span>
-                                <!-- <span class="truncate text-xs">{{ dayjs().format('YYYY-MM-DD HH:mm:ss') }}</span> -->
+                                <span class="truncate text-xs">{{ version }}</span>
                             </div>
                         </a>
                     </SidebarMenuButton>
