@@ -11,6 +11,7 @@ type PostArticle = {
     authorId: number;
     top: number;
     content: string;
+    keepDesc: boolean;
 };
 
 export default PostArticle;    

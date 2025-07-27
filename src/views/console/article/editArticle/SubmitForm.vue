@@ -24,6 +24,7 @@ import { useField } from 'vee-validate'
 import { uploadFile } from '@/service/upload'
 import { postArticle } from "@/service/article"
 import type PostArticle from "./type.ts";
+import { Checkbox } from '@/components/ui/checkbox'
 
 const emit = defineEmits(['resetEditor'])
 
@@ -42,6 +43,7 @@ const formData = ref({
     content: '',
     charCount: 0,
     status: 1,
+    keepDesc: false
 })
 
 async function onSubmit() {
@@ -57,7 +59,7 @@ async function onSubmit() {
     submitData.coverImage = res
     await postArticle(submitData)
     loading.value = false
-    
+
     toast({
         title: '🔔 提示',
         description: submitData.id ? '文章更新成功！' : submitData.status === 0 ? '文章暂存成功！' : '文章发布成功！',
@@ -75,6 +77,7 @@ async function onSubmit() {
         content: '',
         charCount: 0,
         status: 1,
+        keepDesc: false
     }
     files.value = []
     initUrl.value = undefined
@@ -131,7 +134,8 @@ watch(() => props.article, (newVal) => {
             content: props.article.content,
             charCount: props.article.charCount,
             coverImage: null,
-            status: props.article.status
+            status: props.article.status,
+            keepDesc: props.article.keepDesc
         }
 
         initUrl.value = props.article.coverImage
@@ -183,14 +187,23 @@ watch(() => props.article, (newVal) => {
                     </div>
                 </div>
 
-                <DialogFooter class="mt-4">
-                    <Button type="button" variant="secondary" @click="handleHoldOn">
-                        Hold on
-                    </Button>
-                    <Button type="submit" :disabled="loading">
-                        <Loader2 v-if="loading" class="w-4 h-4 mr-2 animate-spin" />
-                        Submit
-                    </Button>
+                <DialogFooter class="mt-4 !justify-between">
+                    <div class="flex items-center gap-2">
+                        <Checkbox v-model="formData.keepDesc" id="terms"></Checkbox>
+                        <label for="terms"
+                            class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 select-none">
+                            保持描述
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <Button type="button" variant="secondary" @click="handleHoldOn">
+                            Hold on
+                        </Button>
+                        <Button type="submit" :disabled="loading">
+                            <Loader2 v-if="loading" class="w-4 h-4 mr-2 animate-spin" />
+                            Submit
+                        </Button>
+                    </div>
                 </DialogFooter>
             </form>
         </DialogContent>
