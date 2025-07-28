@@ -137,10 +137,20 @@ watch(() => props.article, (newVal) => {
             status: props.article.status,
             keepDesc: props.article.keepDesc
         }
+        if (props.article.fatherCategoryId === 4) {
+            formData.value.keepDesc = true
+        }
 
         initUrl.value = props.article.coverImage
     }
 }, { deep: true })
+
+// 添加监听器，当 fatherCategoryId 为 3 时自动勾选保持描述
+watch(() => formData.value.categoryValue[0], (newFatherCategoryId) => {
+    if (newFatherCategoryId === 4) {
+        formData.value.keepDesc = true
+    }
+}, { immediate: true })
 </script>
 
 <template>
