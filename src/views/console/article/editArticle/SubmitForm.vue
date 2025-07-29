@@ -48,7 +48,7 @@ const formData = ref({
 
 async function onSubmit() {
     loading.value = true
-    let submitData = { ...formData.value, fatherCategoryId: null, categoryId: null, charCount: props.editorInst?.getContentTxt().length }
+    let submitData = { ...formData.value, fatherCategoryId: null, categoryId: null, charCount: props.editorInst?.getContentTxt().length, status:1 }
     // 处理分类数据
     if (formData.value.categoryValue) {
         submitData.fatherCategoryId = formData.value.categoryValue[0]
