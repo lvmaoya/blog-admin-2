@@ -135,7 +135,7 @@ watch(() => props.article, (newVal) => {
             charCount: props.article.charCount,
             coverImage: null,
             status: props.article.status,
-            keepDesc: props.article.keepDesc
+            keepDesc: false
         }
         if (props.article.fatherCategoryId === 4) {
             formData.value.keepDesc = true
