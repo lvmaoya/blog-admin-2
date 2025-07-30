@@ -8,6 +8,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
 import SubmitForm from "./SubmitForm.vue";
+import CKEditor from "@/components/CKEditor/index.vue"
 import { computed, onMounted, ref, watch } from "vue";
 import { articleDetailData } from "@/service/article";
 import { BASE_API } from "@/service/common/axiosInstance";
@@ -236,7 +237,6 @@ const handleCancel = () => {
   pendingId.value = null
   router.replace({ name: 'EditArticle' })
 }
-// 在 script setup 中添加 handleReset 函数
 const handleReset = () => {
   // 重置编辑器内容
   if (editorInst.value) {
@@ -262,8 +262,10 @@ const handleReset = () => {
 
 <template>
   <div v-loading="(!loading) && (!editorReady)" :style="{ opacity: editorReady ? 1 : 0, transition: 'opacity 0.2s' }">
-    <vue-ueditor-wrap v-model="articleDetail.content" editor-id="editor" :config="editorConfig"
-      :editorDependencies="['ueditor.config.js', 'ueditor.all.js']" style="height:100%" @ready="ready" />
+    <CKEditor 
+      v-model="articleDetail.content" 
+      @ready="ready" 
+    />
   </div>
   <submit-form :article="articleDetail" :editorInst="editorInst" @resetEditor="handleReset" />
 
