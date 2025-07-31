@@ -31,7 +31,8 @@ import {
     ImageInsert,
     // 代码相关插件
     CodeBlock,
-    // 移除 Base64UploadAdapter，使用自定义上传
+    // 视频相关插件
+    MediaEmbed,
     // 列表插件
     List,
     ListProperties
@@ -131,6 +132,8 @@ const editorConfig = computed(() => {
             ImageInsert,
             // 代码插件
             CodeBlock,
+            // 视频插件
+            MediaEmbed,
             // 自定义上传适配器插件
             CustomUploadAdapterPlugin,
             // 列表插件
@@ -146,7 +149,8 @@ const editorConfig = computed(() => {
                 'outdent', 'indent',
                 'blockQuote',
                 'insertTable',
-                'insertImage', // 确保图片插入按钮在这里
+                'insertImage',
+                'mediaEmbed', // 添加视频插入按钮
                 'codeBlock'
             ],
             shouldNotGroupWhenFull: true
@@ -263,6 +267,72 @@ const editorConfig = computed(() => {
                     view: 'h4',
                     title: 'Heading 4',
                     class: 'ck-heading_heading4'
+                }
+            ]
+        },
+        // 视频配置
+        mediaEmbed: {
+            previewsInData: true,
+            providers: [
+                {
+                    name: 'youtube',
+                    url: /^(?:m\.)?youtube\.com\/watch\?v=([\w-]+)/,
+                    html: match => {
+                        const id = match[1];
+                        return (
+                            '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
+                                `<iframe src="https://www.youtube.com/embed/${id}" ` +
+                                    'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
+                                    'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
+                                '</iframe>' +
+                            '</div>'
+                        );
+                    }
+                },
+                {
+                    name: 'youtu.be',
+                    url: /^youtu\.be\/([\w-]+)/,
+                    html: match => {
+                        const id = match[1];
+                        return (
+                            '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
+                                `<iframe src="https://www.youtube.com/embed/${id}" ` +
+                                    'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
+                                    'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
+                                '</iframe>' +
+                            '</div>'
+                        );
+                    }
+                },
+                {
+                    name: 'bilibili',
+                    url: /^(?:https?:\/\/)?(?:www\.)?bilibili\.com\/video\/(BV[\w]+)/,
+                    html: match => {
+                        const bvid = match[1];
+                        return (
+                            '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
+                                `<iframe src="https://player.bilibili.com/player.html?bvid=${bvid}&page=1" ` +
+                                    'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
+                                    'frameborder="0" allowfullscreen>' +
+                                '</iframe>' +
+                            '</div>'
+                        );
+                    }
+                },
+                {
+                    name: 'vimeo',
+                    url: /^vimeo\.com\/(\d+)/,
+                    html: match => {
+                        const id = match[1];
+                        return (
+                            '<div style="position: relative; padding-bottom: 100%; height: 0; padding-bottom: 56.2493%;">' +
+                                `<iframe src="https://player.vimeo.com/video/${id}" ` +
+                                    'style="position: absolute; width: 100%; height: 100%; top: 0; left: 0;" ' +
+                                    'frameborder="0" allowfullscreen>' +
+                                '</iframe>' +
+                            '</div>'
+                        );
+                    }
                 }
             ]
         }
