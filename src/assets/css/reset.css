@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
     font-family: "oppo-sans";
     src: url(../fonts/oppo-sans-4.0.ttf);
 }
@@ -6,7 +6,7 @@
 @font-face {
     font-family: "josefin-sans";
     src: url(../fonts/JosefinSans-Regular.ttf);
-}
+} */
 
 * {
     box-sizing: border-box;
@@ -16,7 +16,7 @@ body {
     margin: 0;
     padding: 0;
     font-size: 14px;
-    font-family: 'oppo-sans', sans-serif;
+    /* font-family: 'oppo-sans', sans-serif; */
 }
 main{
     overflow-x: hidden;
