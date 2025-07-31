@@ -1,5 +1,5 @@
 <template>
-    <div class="ck-editor-wrapper editor-content ">
+    <div class="ck-editor-wrapper editor-content markdown-body">
         <ckeditor v-model="content" :editor="BalloonEditor" :config="editorConfig" @ready="onReady" @focus="onFocus"
             @blur="onBlur" />
     </div>
@@ -42,6 +42,7 @@ import axios from 'axios'
 
 // 导入 CSS
 import 'ckeditor5/ckeditor5.css'
+import '@/assets/css/md.css'
 
 // 自定义上传适配器
 class CustomUploadAdapter {
