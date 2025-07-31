@@ -92,24 +92,14 @@ const editorConfig = computed(() => {
     ],
     toolbar: {
       items: [
-        'undo', 'redo',
-        '|',
         'heading',
-        '|',
         'bold', 'italic', 'underline',
-        '|',
         'link',
-        '|',
         'bulletedList', 'numberedList',
-        '|',
         'outdent', 'indent',
-        '|',
         'blockQuote',
-        '|',
         'insertTable',
-        '|',
         'insertImage', // 确保图片插入按钮在这里
-        '|',
         'codeBlock'
       ],
       shouldNotGroupWhenFull: true
@@ -280,13 +270,19 @@ defineExpose({
 
 <style>
 
-.ck-editor-wrapper {
-  --ck-icon-font-size: 0.54rem !important;
+.ck-editor-wrapper {  
   display: flex;
   justify-content: center;
   margin-top: 20px !important;
 }
-
+.ck.ck-balloon-panel{
+  --ck-drop-shadow: 0 2px 8px 0 rgba(68, 73, 77, 0.16) !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+.ck.ck-icon {
+  font-size: 0.54rem !important;
+}
 .ck-content {
   min-height: calc(100vh - 104px);
   max-width: 1080px;
@@ -295,8 +291,8 @@ defineExpose({
   border: none !important;
   padding: 60px !important;
   font-size: 14px;
-  color: #333;
-  line-height: normal;
+  color: var(--fgColor-default);
+  line-height: 2;
   word-break: break-word;
 }
 </style>
