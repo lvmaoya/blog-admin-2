@@ -111,13 +111,13 @@ const isActive = (url: string) => {
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <a href="#">
+                        <a href="https://lvmaoya.cn" target="_blank">
                             <div class="flex aspect-square size-6 items-center justify-center rounded-lg">
                                 <img src="https://lvmaoya.cn/favicon.ico" alt="logo" />
                             </div>
                             <div class="grid flex-1 text-left text-sm leading-tight">
                                 <span class="truncate font-semibold">Blog Admin</span>
-                                <span class="truncate text-xs">{{ version }}</span>
+                                <!-- <span class="truncate text-xs">{{ version }}</span> -->
                             </div>
                         </a>
                     </SidebarMenuButton>
@@ -154,5 +154,8 @@ const isActive = (url: string) => {
 .active {
     background-color: hsl(var(--sidebar-accent));
     color: #000000;
+}
+a:hover {
+    background-color: transparent;
 }
 </style>
