@@ -337,7 +337,7 @@ defineExpose({
   border: none !important;
   padding: 60px !important;
   font-size: 14px;
-  color: var(--fgColor-default);
+  color: #1f2328;
   line-height: 2;
   word-break: break-word;
 }
