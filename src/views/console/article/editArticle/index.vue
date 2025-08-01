@@ -11,7 +11,6 @@ import SubmitForm from "./SubmitForm.vue";
 import CKEditor from "@/components/CKEditor/index.vue"
 import { computed, onMounted, ref, watch } from "vue";
 import { articleDetailData } from "@/service/article";
-import { BASE_API } from "@/service/common/axiosInstance";
 import type PostArticle from "./type.ts";
 import {
   AlertDialog,
@@ -29,12 +28,7 @@ import {
 const route = useRoute()
 const router = useRouter()
 const id = computed(() => route.query.id)
-const editorInst = ref<any>(null)
-const editorReady = ref(false)
-const ready = (editorInstance: any) => {
-  editorInst.value = editorInstance
-  editorReady.value = true
-}
+
 const loading = ref(false)
 const getArticle = async () => {
   loading.value = true
@@ -111,10 +105,6 @@ const handleCancel = () => {
   router.replace({ name: 'EditArticle' })
 }
 const handleReset = () => {
-  // 重置编辑器内容
-  if (editorInst.value) {
-    editorInst.value.setContent('')
-  }
   // 重置文章详情
   articleDetail.value = {
     id: null,
@@ -135,13 +125,12 @@ const handleReset = () => {
 </script>
 
 <template>
-  <div v-loading="(!loading) && (!editorReady)" :style="{ opacity: editorReady ? 1 : 0, transition: 'opacity 0.2s' }">
+  <div v-loading="loading">
     <CKEditor 
-      v-model="articleDetail.content" 
-      @ready="ready" 
+      v-model="articleDetail.content"
     />
   </div>
-  <submit-form :article="articleDetail" :editorInst="editorInst" @resetEditor="handleReset" />
+  <submit-form :article="articleDetail" @resetEditor="handleReset" />
 
   <AlertDialog :open="showDialog">
     <AlertDialogContent>

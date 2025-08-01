@@ -411,8 +411,10 @@ defineExpose({
   color: #1f2328;
   line-height: 2;
   word-break: break-word;
+  --ck-content-font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 .ck-powered-by-balloon{
   display: none !important;
 }
+
 </style>

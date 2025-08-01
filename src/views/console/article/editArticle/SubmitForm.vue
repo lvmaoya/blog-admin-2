@@ -20,7 +20,6 @@ import { toast } from '@/components/ui/toast'
 import { onMounted, ref, watch } from 'vue'
 import FileUpload from '@/components/upload/index.vue'
 import CategorySelect from '@/components/category-select/index.vue'
-import { useField } from 'vee-validate'
 import { uploadFile } from '@/service/upload'
 import { postArticle } from "@/service/article"
 import type PostArticle from "./type.ts";
@@ -48,7 +47,7 @@ const formData = ref({
 
 async function onSubmit() {
     loading.value = true
-    let submitData = { ...formData.value, fatherCategoryId: null, categoryId: null, charCount: props.editorInst?.getContentTxt().length, status:1 }
+    let submitData = { ...formData.value, fatherCategoryId: null, categoryId: null, status:1, charCount: formData.value.content.length }
     // 处理分类数据
     if (formData.value.categoryValue) {
         submitData.fatherCategoryId = formData.value.categoryValue[0]
@@ -122,7 +121,7 @@ const uploadFiles = async () => {
     }
 }
 
-const props = defineProps<{ article: PostArticle, editorInst: any }>()
+const props = defineProps<{ article: PostArticle }>()
 watch(() => props.article, (newVal) => {
     if (props.article) {
         formData.value = {
