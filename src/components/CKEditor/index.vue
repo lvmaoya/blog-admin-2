@@ -215,8 +215,8 @@ const editorConfig = computed(() => {
         // 代码块配置
         codeBlock: {
             languages: [
-                { language: 'plaintext', label: 'Plain text' },
                 { language: 'javascript', label: 'JavaScript' },
+                { language: 'plaintext', label: 'Plain text' },
                 { language: 'typescript', label: 'TypeScript' },
                 { language: 'html', label: 'HTML' },
                 { language: 'css', label: 'CSS' },
