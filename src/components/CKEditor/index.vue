@@ -58,8 +58,21 @@ class CustomUploadAdapter {
     upload() {
         return this.loader.file.then((file: File) => {
             return new Promise((resolve, reject) => {
+                // 获取原文件名和扩展名
+                const originalName = file.name
+                const lastDotIndex = originalName.lastIndexOf('.')
+                const nameWithoutExt = lastDotIndex > 0 ? originalName.substring(0, lastDotIndex) : originalName
+                const extension = lastDotIndex > 0 ? originalName.substring(lastDotIndex) : ''
+                
+                // 生成带时间戳的新文件名
+                const timestamp = Date.now()
+                const newFileName = `${nameWithoutExt}_${timestamp}${extension}`
+                
+                // 创建新的文件对象
+                const newFile = new File([file], newFileName, { type: file.type })
+                
                 const formData = new FormData()
-                formData.append('file', file)
+                formData.append('file', newFile)
                 
                 axios.post(`${BASE_API}/qiniu/upload`, formData, {
                     headers: {
