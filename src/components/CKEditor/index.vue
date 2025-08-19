@@ -35,7 +35,9 @@ import {
     MediaEmbed,
     // 列表插件
     List,
-    ListProperties
+    ListProperties,
+    // 自动格式化插件
+    Autoformat
 } from 'ckeditor5'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
 import { BASE_API } from '@/service/common/axiosInstance'
@@ -138,7 +140,8 @@ const editorConfig = computed(() => {
             CustomUploadAdapterPlugin,
             // 列表插件
             List,
-            ListProperties
+            ListProperties,
+            Autoformat
         ],
         toolbar: {
             items: [
