@@ -85,9 +85,9 @@ const getCodeData = async () => {
   const response = await axios.get(BASE_API + "/captcha", {
     responseType: 'arraybuffer',
     headers: {
-      'Content-Type': 'image/png',
-      'access-control-allow-credentials': true
-    }
+      'Content-Type': 'image/png'
+    },
+    withCredentials: true,
   });
   const base64 = btoa(
     new Uint8Array(response.data)
@@ -118,9 +118,10 @@ const submitForm = async () => {
   } catch (error) {    
     toast({
       title: 'Uh oh! Something went wrong.',
-      description: error.response.data,
+      description: error.response.data?.message ?? error.response.data,
       variant: 'destructive',
     });
+    getCodeData(); // 刷新验证码
     console.error(error);
   } finally {
     loading.value = false;
