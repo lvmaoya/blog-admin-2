@@ -1,47 +1,47 @@
-name: Deploy Blog Admin
+# name: Deploy Blog Admin
 
-on:
-  push:
-    branches: ["main"]
+# on:
+#   push:
+#     branches: ["main"]
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
 
-      # - name: Install Node.js
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 20
+#       - name: Install Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 20
 
-      # - name: Install dependencies
-      #   run: npm install
+#       - name: Install dependencies
+#         run: npm install
 
-      # - name: Build project
-      #   run: npm run build
+#       - name: Build project
+#         run: npm run build
 
-      # - name: Upload dist to server
-      #   uses: appleboy/scp-action@v0.1.4
-      #   with:
-      #     host: ${{ secrets.SERVER_HOST }}
-      #     username: ${{ secrets.SERVER_USER }}
-      #     key: ${{ secrets.SERVER_SSH_KEY }}
-      #     port: ${{ secrets.SERVER_PORT }}
-      #     source: "dist/*"
-      #     target: "/www/wwwroot/personal_web/docker-deploy/blog-admin/current"
+#       - name: Upload dist to server
+#         uses: appleboy/scp-action@v0.1.4
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           key: ${{ secrets.SERVER_SSH_KEY }}
+#           port: ${{ secrets.SERVER_PORT }}
+#           source: "dist/*"
+#           target: "/www/wwwroot/personal_web/docker-deploy/blog-admin/current"
 
-      - name: Restart service over SSH
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_PORT }}
-          script: |
-            cd /www/wwwroot/personal_web/docker-deploy/blog-admin
-            docker compose down || true
-            docker build -t blog-admin:latest .
-            docker compose up -d
+#       - name: Restart service over SSH
+#         uses: appleboy/ssh-action@v0.1.10
+#         with:
+#           host: ${{ secrets.SERVER_HOST }}
+#           username: ${{ secrets.SERVER_USER }}
+#           key: ${{ secrets.SERVER_SSH_KEY }}
+#           port: ${{ secrets.SERVER_PORT }}
+#           script: |
+#             cd /www/wwwroot/personal_web/docker-deploy/blog-admin
+#             docker compose down || true
+#             docker build -t blog-admin:latest .
+#             docker compose up -d
