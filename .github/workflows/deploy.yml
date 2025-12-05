@@ -33,19 +33,14 @@ jobs:
           script: |
             set -e
 
-            DEPLOY_DIR="/www/wwwroot/personal_web/docker-deploy/projects/blog-admin"
-            BACKUP_DIR="$DEPLOY_DIR/backups"
+            PROJECT_DIR="/www/wwwroot/personal_web/docker-deploy/projects/blog-admin"
+            BACKUP_DIR="$PROJECT_DIR/backups"
 
             mkdir -p "$BACKUP_DIR"
 
-            # 检查 deploy 目录是否有内容（有内容才备份）
-            if [ "$(ls -A "$DEPLOY_DIR" 2>/dev/null)" ]; then
-              echo "🔄 dist 已存在，正在创建备份..."
+            if [ -d "$PROJECT_DIR/dist" ]; then
               TS=$(date +%Y%m%d%H%M%S)
-              tar -czf "$BACKUP_DIR/dist-$TS.tar.gz" -C "$DEPLOY_DIR" .
-              echo "✅ 备份完成：$BACKUP_DIR/dist-$TS.tar.gz"
-            else
-              echo "ℹ️ 没有发现 dist，跳过备份。"
+              tar -czf "$BACKUP_DIR/dist-$TS.tar.gz" -C "$PROJECT_DIR" dist
             fi
 
 
