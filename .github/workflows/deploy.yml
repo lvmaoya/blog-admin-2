@@ -23,6 +23,32 @@ jobs:
       - name: Build project
         run: npm run build
 
+      # ⭐ 部署前检查是否已有 dist，并自动备份
+      - name: Backup dist if exists
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          script: |
+            set -e
+            DeployDir=/www/wwwroot/personal_web/docker-deploy/projects/blog-admin
+            DistDir="$DeployDir"
+            BackupDir="$DeployDir/backups"
+            
+            mkdir -p "$BackupDir"
+
+            if [ "$(ls -A $DistDir 2>/dev/null)" ]; then
+              echo "⚠️ dist 已存在，开始备份..."
+              TS=$(date +%Y%m%d%H%M%S)
+              tar -czf "$BackupDir/dist-$TS.tar.gz" -C "$DistDir" .
+              echo "✅ dist 备份完成：$BackupDir/dist-$TS.tar.gz"
+            else
+              echo "ℹ️ dist 不存在，跳过备份"
+            fi
+
+      # ⭐ 执行覆盖上传
       - name: Upload dist to server
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -32,20 +58,3 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: "dist/*"
           target: "/www/wwwroot/personal_web/docker-deploy/projects/blog-admin"
-
-      - name: Backup project over SSH
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          port: ${{ secrets.SERVER_PORT }}
-          script: |
-            set -e
-            TS=$(date +%Y%m%d%H%M%S)
-            PROJECT_DIR=/www/wwwroot/personal_web/docker-deploy/projects/blog-admin
-            BACKUP_DIR="$PROJECT_DIR/backups"
-            mkdir -p "$BACKUP_DIR"
-            if [ -d "$PROJECT_DIR" ]; then
-              tar -czf "$BACKUP_DIR/blog-admin-$TS.tar.gz" -C /www/wwwroot/personal_web/docker-deploy/projects blog-admin
-            fi
