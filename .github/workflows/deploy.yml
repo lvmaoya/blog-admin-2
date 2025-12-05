@@ -23,7 +23,6 @@ jobs:
       - name: Build project
         run: npm run build
 
-      # ⭐ 部署前检查是否已有 dist，并自动备份
       - name: Backup dist if exists
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -33,20 +32,22 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           script: |
             set -e
-            DeployDir=/www/wwwroot/personal_web/docker-deploy/projects/blog-admin
-            DistDir="$DeployDir"
-            BackupDir="$DeployDir/backups"
-            
-            mkdir -p "$BackupDir"
 
-            if [ "$(ls -A $DistDir 2>/dev/null)" ]; then
-              echo "⚠️ dist 已存在，开始备份..."
+            DEPLOY_DIR="/www/wwwroot/personal_web/docker-deploy/projects/blog-admin"
+            BACKUP_DIR="$DEPLOY_DIR/backups"
+
+            mkdir -p "$BACKUP_DIR"
+
+            # 检查 deploy 目录是否有内容（有内容才备份）
+            if [ "$(ls -A "$DEPLOY_DIR" 2>/dev/null)" ]; then
+              echo "🔄 dist 已存在，正在创建备份..."
               TS=$(date +%Y%m%d%H%M%S)
-              tar -czf "$BackupDir/dist-$TS.tar.gz" -C "$DistDir" .
-              echo "✅ dist 备份完成：$BackupDir/dist-$TS.tar.gz"
+              tar -czf "$BACKUP_DIR/dist-$TS.tar.gz" -C "$DEPLOY_DIR" .
+              echo "✅ 备份完成：$BACKUP_DIR/dist-$TS.tar.gz"
             else
-              echo "ℹ️ dist 不存在，跳过备份"
+              echo "ℹ️ 没有发现 dist，跳过备份。"
             fi
+
 
       # ⭐ 执行覆盖上传
       - name: Upload dist to server
