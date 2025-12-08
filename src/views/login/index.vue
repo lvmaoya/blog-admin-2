@@ -6,7 +6,7 @@
       </div>
       <div class="form">
         <div class="login-form">
-          <h3 class="title">Welcome back! Please login</h3>
+          <h3 class="title">Welcome back!</h3>
           <span class="sub-title">Please enter your details</span>
           <form>
             <div>
