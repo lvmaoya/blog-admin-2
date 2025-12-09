@@ -20,3 +20,9 @@ app.use(VueUeditorWrap);
 // 注册全局loading指令
 app.directive("loading", loadingDirective)
 app.mount('#app');
+const bt = import.meta.env.VITE_BUILD_TIME
+const ct = import.meta.env.VITE_LAST_COMMIT_TIME
+if (bt || ct) {
+  const t = ct || bt
+  console.log('最后修改时间:', t)
+}
