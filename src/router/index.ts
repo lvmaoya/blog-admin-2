@@ -107,13 +107,11 @@ router.beforeEach((to, from, next) => {
   if (to.path !== "/login") {
     const token = getCache("token");
     if (!token) {
-      // next({
-      //   path: "/login",
-      //   replace: true
-      // });
-      next();
-
-      // 游客登录
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath },
+        replace: true
+      });
     } else {
       if (to.path === "/console" || to.path === "/console/") {
         next({
