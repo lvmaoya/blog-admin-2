@@ -24,11 +24,5 @@ import { cn } from '@/lib/utils'
     >
       Products
     </a>
-    <a
-      href="/examples/dashboard"
-      class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-    >
-      Settings
-    </a>
   </nav>
 </template>

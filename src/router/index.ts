@@ -28,26 +28,6 @@ const router = createRouter({
           component: () => import("@/views/console/dashboard/index.vue"),
         },
         {
-          path: "todo",
-          name: "Todo",
-          children:[
-            {
-              path: "list",
-              name: "TodoList",
-              meta: { name: "待办" },
-    
-              component: () => import("@/views/console/todo/index.vue"),
-            },
-            {
-              path: "statistic",
-              name: "TodoStatistic",
-              meta: { name: "待办统计" },
-    
-              component: () => import("@/views/console/todo/index.vue"),
-            },
-          ]
-        },
-        {
           path: "article",
           name: "Article",
           children: [
@@ -79,18 +59,6 @@ const router = createRouter({
               component: () =>
                 import("@/views/console/article/category/index.vue"),
             }
-          ]
-        },
-        {
-          path: "file",
-          name: "File",
-          children: [
-            {
-              path: "list",
-              name: "FileList",
-              meta: { name: "文件" },
-              component: () => import("@/views/console/file/index.vue"),
-            },
           ]
         },
 

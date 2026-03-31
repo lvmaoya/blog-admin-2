@@ -7,7 +7,6 @@ import {
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
@@ -20,38 +19,30 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar'
 import {
-    BadgeCheck,
-    Bell,
     ChevronsUpDown,
-    CreditCard,
     LogOut,
-    Settings,
-    Sparkles,
-    User,
 } from 'lucide-vue-next'
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { logout } from '@/service/login'
 import { ref } from 'vue'
 import { Button } from '@/components/ui/button'
 import { Loader2 } from 'lucide-vue-next'
 import { useToast } from '@/components/ui/toast/use-toast'
-import { useRouter, useRoute } from "vue-router";
-import {deleteCache} from '@/utils/cache';
+import { useRouter } from "vue-router";
+import { deleteCache } from '@/utils/cache';
 
 const { toast } = useToast()
 const router = useRouter();
 
-const props = defineProps<{
+defineProps<{
     user: {
         name: string
         email: string
@@ -59,8 +50,6 @@ const props = defineProps<{
     }
 }>()
 const { isMobile } = useSidebar()
-const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
-const open = ref(false)
 const handleAction = async () => {
     try {
         loading.value = true
@@ -99,7 +88,7 @@ const logoutDialogVisible = ref(false)
                             <Avatar class="h-8 w-8 rounded-lg">
                                 <AvatarImage :src="user.avatar" :alt="user.name" />
                                 <AvatarFallback class="rounded-lg">
-                                    CN
+                                    LV
                                 </AvatarFallback>
                             </Avatar>
                             <div class="grid flex-1 text-left text-sm leading-tight">
@@ -125,22 +114,6 @@ const logoutDialogVisible = ref(false)
                                 </div>
                             </div>
                         </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <CreditCard />
-                                Profile
-                            </DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Bell />
-                                Notifications
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <Settings />
-                            Setting
-                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem @click="logoutDialogVisible = true">
                             <LogOut />

@@ -35,13 +35,9 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import homeIcon from "@/assets/icon/tab/home.svg";
-import todoIcon from "@/assets/icon/tab/todo.svg";
 import articleIcon from "@/assets/icon/tab/article.svg";
-import fileIcon from "@/assets/icon/tab/file.svg";
 import activeHomeIcon from "@/assets/icon/tab-active/home.svg";
-import activeTodoIcon from "@/assets/icon/tab-active/todo.svg";
 import activeArticleIcon from "@/assets/icon/tab-active/article.svg";
-import activeFileIcon from "@/assets/icon/tab-active/file.svg";
 import { Button } from '@/components/ui/button'
 import { LogOut } from 'lucide-vue-next'
 
@@ -66,20 +62,6 @@ const menuList = ref([
     activeIconPath: activeArticleIcon,
     index: 1,
     url: '/console/article/list',
-    active: false
-  },
-  {
-    iconPath: todoIcon,
-    activeIconPath: activeTodoIcon,
-    index: 2,
-    url: '/console/todo',
-    active: false
-  },
-  {
-    iconPath: fileIcon,
-    activeIconPath: activeFileIcon,
-    index: 3,
-    url: '/console/file',
     active: false
   },
 ])
