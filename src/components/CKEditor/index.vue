@@ -417,4 +417,15 @@ defineExpose({
   display: none !important;
 }
 
+@media (max-width: 768px) {
+  .ck-editor-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .ck-content {
+    padding: 20px !important;
+  }
+}
+
 </style>

@@ -222,8 +222,8 @@ watch(() => formData.value.categoryValue[0], (newFatherCategoryId) => {
 <style scoped lang="scss">
 .submitBtn {
     position: fixed;
-    right: 20px;
-    bottom: 44px;
+    right: 40px;
+    bottom: 40px;
     z-index: 99999;
     padding: 0 4px;
     border-radius: 50px;
