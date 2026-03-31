@@ -26,6 +26,7 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
+import { useMediaQuery } from '@vueuse/core'
 import { useRouter } from "vue-router";
 import { useArticleStore } from '@/stores/article'
 import { useToast } from '@/components/ui/toast/use-toast'
@@ -40,6 +41,7 @@ const articleStore = useArticleStore()
 const { toast } = useToast()
 const loading = ref(false)
 const logoutDialogVisible = ref(false)
+const isSmallDevice = useMediaQuery('(max-width: 1024px)')
 
 const version = "v - " + PackageJson.version
 
@@ -127,7 +129,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-    <Sidebar>
+    <Sidebar :variant="isSmallDevice ? 'floating' : 'sidebar'">
         <SidebarHeader class="px-3 py-2">
             <SidebarMenu>
                 <SidebarMenuItem>

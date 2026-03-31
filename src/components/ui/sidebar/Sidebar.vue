@@ -31,7 +31,13 @@ const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
       data-sidebar="sidebar"
       data-mobile="true"
       :side="side"
-      class="w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden"
+      :class="cn(
+        'w-[--sidebar-width] bg-sidebar p-0 text-sidebar-foreground [&>button]:hidden',
+        (variant === 'floating' || variant === 'inset')
+          && 'overflow-hidden !top-3 !bottom-auto !h-[min(82svh,40rem)] !w-[min(78vw,15rem)] rounded-xl border border-sidebar-border shadow-xl',
+        (variant === 'floating' || variant === 'inset')
+          && (side === 'left' ? '!left-3' : '!right-3'),
+      )"
       :style="{
         '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
       }"
