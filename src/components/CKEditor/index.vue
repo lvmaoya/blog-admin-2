@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, computed } from 'vue'
+import { onBeforeUnmount, ref, watch, computed } from 'vue'
 // 基础插件
 import {
     BalloonEditor,
@@ -103,6 +103,35 @@ const emit = defineEmits<{
 
 const content = ref(props.modelValue)
 const editorInstance = ref<any>(null)
+let editableElement: HTMLElement | null = null
+
+const handleEditableDblClick = () => {
+    const editor = editorInstance.value
+    if (!editor) {
+        return
+    }
+    const balloonToolbar = editor.plugins.get('BalloonToolbar')
+    balloonToolbar?.show(true)
+}
+
+const handleDocumentPointerDown = (event: PointerEvent) => {
+    const editor = editorInstance.value
+    const target = event.target as Node | null
+    if (!editor || !target) {
+        return
+    }
+
+    const clickedInEditable = editableElement?.contains(target) ?? false
+    const targetElement = target instanceof Element ? target : target.parentElement
+    const clickedInBalloon = Boolean(targetElement?.closest('.ck.ck-balloon-panel'))
+
+    if (clickedInEditable || clickedInBalloon) {
+        return
+    }
+
+    const balloonToolbar = editor.plugins.get('BalloonToolbar')
+    balloonToolbar?.hide()
+}
 
 // 编辑器配置
 const editorConfig = computed(() => {
@@ -353,6 +382,9 @@ watch(() => props.modelValue, (newValue) => {
 
 const onReady = (editor: any) => {
     editorInstance.value = editor
+    editableElement = editor.ui.getEditableElement?.() || editor.editing.view.getDomRoot()
+    editableElement?.addEventListener('dblclick', handleEditableDblClick)
+    document.addEventListener('pointerdown', handleDocumentPointerDown)
     emit('ready', editor)
 }
 
@@ -363,6 +395,12 @@ const onFocus = () => {
 const onBlur = () => {
     // 失焦事件
 }
+
+onBeforeUnmount(() => {
+    editableElement?.removeEventListener('dblclick', handleEditableDblClick)
+    document.removeEventListener('pointerdown', handleDocumentPointerDown)
+    editableElement = null
+})
 
 // 暴露编辑器实例方法
 defineExpose({
@@ -393,9 +431,9 @@ defineExpose({
   margin-top: 20px !important;
 }
 .ck.ck-balloon-panel{
-  --ck-drop-shadow: 0 2px 8px 0 rgba(68, 73, 77, 0.16) !important;
-  border: none !important;
-  border-radius: 4px !important;
+  --ck-drop-shadow: none !important;
+  border: 1px solid #f3f3f3;
+  --ck-color-panel-border: #f3f3f3;
 }
 .ck.ck-icon {
   font-size: 0.54rem !important;
