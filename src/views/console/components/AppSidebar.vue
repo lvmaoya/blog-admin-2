@@ -156,7 +156,7 @@ const handleLogout = async () => {
                     <SidebarMenu>
                         <SidebarMenuItem v-for="item in group.items" :key="item.title">
                             <SidebarMenuButton asChild @click="navigate(item.url)"
-                                class="cursor-pointer user-select-none h-9 px-4" :class="{'active': isActive(item.url)}">
+                                class="nav-item-btn cursor-pointer user-select-none h-9 px-4" :class="{'active': isActive(item.url)}">
                                 <a>
                                     <component :is="item.icon" class="mr-1 " />
                                     <span class="text-[#09090B]">{{ item.title }}</span>
@@ -217,7 +217,9 @@ const handleLogout = async () => {
     background-color: hsl(var(--sidebar-accent));
     color: #000000;
 }
-a:hover {
+
+.nav-item-btn:hover:not(.active) {
     background-color: transparent;
+    color: inherit;
 }
 </style>
