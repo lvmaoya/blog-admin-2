@@ -80,7 +80,7 @@ const table = useVueTable({
 </script>
 
 <template>
-  <div class="space-y-4 relative" v-loading="true">
+  <div class="space-y-4 relative" v-loading="props.loading">
     <DataTableToolbar :table="table" />
     <div class="rounded-md border">
       <Table>
