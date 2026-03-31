@@ -11,7 +11,7 @@ export const loadingDirective: Directive = {
     // 创建Loading组件实例
     const loadingApp = createApp(Loading, {
       class: binding.value?.class || "",
-      text: binding.value?.text || "Loading..."
+      text: binding.value?.text || "加载中..."
     })
     
     // 创建容器div并挂载

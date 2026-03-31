@@ -86,33 +86,33 @@ const deleteArticle = async () => {
     <DropdownMenuTrigger as-child>
       <Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
         <DotsHorizontalIcon class="h-4 w-4" />
-        <span class="sr-only">Open menu</span>
+        <span class="sr-only">打开菜单</span>
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" class="w-[160px]">
       <!-- 编辑功能 -->
-      <DropdownMenuItem @click="editArticle">Edit</DropdownMenuItem>
+      <DropdownMenuItem @click="editArticle">编辑</DropdownMenuItem>
       <!-- 置顶功能 -->
       <DropdownMenuItem @click.stop="topArticle">
-        {{ row.top ? 'Cancel Top' : 'Top' }}
-        <DropdownMenuShortcut v-if="topLoading">Ing</DropdownMenuShortcut>
+        {{ row.top ? '取消置顶' : '置顶' }}
+        <DropdownMenuShortcut v-if="topLoading">处理中</DropdownMenuShortcut>
         <DropdownMenuShortcut v-else>🔝</DropdownMenuShortcut>
       </DropdownMenuItem>
       <DropdownMenuSeparator />
       <!-- 分享功能 -->
       <DropdownMenuItem @click="shareArticle">
-        Share
+        分享
         <DropdownMenuShortcut>❤️</DropdownMenuShortcut>
       </DropdownMenuItem>
       <!-- 预览功能 -->
-      <DropdownMenuItem @click="previewArticle">Preview</DropdownMenuItem>
+      <DropdownMenuItem @click="previewArticle">预览</DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuItem @click="disableArticle">
-        {{ !row.status ? 'Enable' : 'Disable' }}
+        {{ !row.status ? '启用' : '禁用' }}
       </DropdownMenuItem>
       <!-- 删除功能 -->
       <DropdownMenuItem @click="deleteArticle">
-        Delete
+        删除
         <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
       </DropdownMenuItem>
     </DropdownMenuContent>

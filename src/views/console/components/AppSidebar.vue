@@ -55,35 +55,35 @@ const data = {
 }
 // Menu items.
 const groupList = [{
-    group: "Getting Started",
+    group: "开始",
     items: [
         {
-            title: "Dashboard",
+            title: "仪表盘",
             url: "Dashboard",
             icon: Home,
         },
         {
-            title: "Writing",
+            title: "写文章",
             url: "EditArticle",
             icon: Pencil,
         },
     ],
 },
 {
-    group: "Article",
+    group: "文章管理",
     items: [
         {
-            title: "Article List",
+            title: "文章列表",
             url: "ArticleList",
             icon: LibraryBig,
         },
         {
-            title: "Category",
+            title: "分类管理",
             url: "ArticleCategory",
             icon: ChartBarStacked,
         },
         {
-            title: "Comment",
+            title: "评论管理",
             url: "ArticleComment",
             icon: MessageSquareText,
         },
@@ -108,16 +108,16 @@ const handleLogout = async () => {
         await logout()
         deleteCache('token')
         toast({
-            title: 'Uh! Logout Success!',
-            description: 'You have successfully logged out.',
+            title: '退出成功',
+            description: '你已成功退出登录。',
         })
         router.replace({
             path: "/login",
         })
     } catch (error: any) {
         toast({
-            title: 'Uh oh! Something went wrong.',
-            description: error?.response?.data || 'Logout failed. Please try again.',
+            title: '退出失败',
+            description: error?.response?.data || '退出失败，请稍后重试。',
             variant: 'destructive',
         })
         console.error(error)
@@ -139,7 +139,7 @@ const handleLogout = async () => {
                                 <img src="https://lvmaoya.cn/favicon.ico" alt="logo" />
                             </div>
                             <div class="grid flex-1 text-left text-sm leading-tight">
-                                <span class="truncate font-semibold">Blog Admin</span>
+                                <span class="truncate font-semibold">博客管理后台</span>
                                 <!-- <span class="truncate text-xs">{{ version }}</span> -->
                             </div>
                         </a>
@@ -194,16 +194,16 @@ const handleLogout = async () => {
                 </SidebarMenu>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogTitle>确认退出登录？</AlertDialogTitle>
                         <AlertDialogDescription>
-                            This action will log you out of your account.
+                            退出后需要重新登录才能继续操作。
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel @click="logoutDialogVisible = false">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel @click="logoutDialogVisible = false">取消</AlertDialogCancel>
                         <Button @click="handleLogout" :disabled="loading">
                             <Loader2 v-if="loading" class="w-4 h-4 mr-2 animate-spin" />
-                            Confirm
+                            确认
                         </Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>

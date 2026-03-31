@@ -4,15 +4,15 @@ import { h } from 'vue'
 export const labels = [
   {
     value: 'bug',
-    label: 'Bug',
+    label: '问题',
   },
   {
     value: 'feature',
-    label: 'Feature',
+    label: '功能',
   },
   {
     value: 'documentation',
-    label: 'Documentation',
+    label: '文档',
   },
 ]
 

@@ -54,8 +54,8 @@ const openEditDialog = () => {
 const handleEdit = async () => {
   if (!editName.value.trim()) {
     toast({
-      title: 'Error',
-      description: 'Category name cannot be empty',
+      title: '错误',
+      description: '分类名称不能为空',
       variant: 'destructive'
     })
     return
@@ -63,8 +63,8 @@ const handleEdit = async () => {
 
   if (editName.value.length > 50) {
     toast({
-      title: 'Error',
-      description: 'Category name must be less than 50 characters',
+      title: '错误',
+      description: '分类名称不能超过 50 个字符',
       variant: 'destructive'
     })
     return
@@ -75,15 +75,15 @@ const handleEdit = async () => {
     await addOrUpdateCategory({ id: row.value.id, categoryName: editName.value.trim(), fatherCategoryId: row.value.fatherCategoryId })
     isEditDialogOpen.value = false
     toast({
-      title: 'Success',
-      description: 'Category updated successfully'
+      title: '成功',
+      description: '分类更新成功'
     })
     bus.emit("refresh-table")
 
   } catch (error) {
     toast({
-      title: 'Error',
-      description: error.message || 'Failed to update category',
+      title: '错误',
+      description: error.message || '分类更新失败',
       variant: 'destructive'
     })
   } finally {
@@ -98,15 +98,15 @@ const handleDelete = async () => {
     await deleteCategory(row.value.id)
     isDeleteDialogOpen.value = false
     toast({
-      title: 'Success',
-      description: 'Category deleted successfully'
+      title: '成功',
+      description: '分类删除成功'
     })
     bus.emit("refresh-table")
 
   } catch (error) {
     toast({
-      title: 'Error',
-      description: error.message || 'Failed to delete category',
+      title: '错误',
+      description: error.message || '分类删除失败',
       variant: 'destructive'
     })
   } finally {
@@ -123,19 +123,19 @@ const handleDelete = async () => {
         <DropdownMenuTrigger as-child>
           <Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
             <DotsHorizontalIcon class="h-4 w-4" />
-            <span class="sr-only">Open menu</span>
+            <span class="sr-only">打开菜单</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" class="w-[160px]">
           <DropdownMenuItem @click="openEditDialog">
             <Pencil1Icon class="mr-2 h-3.5 w-3.5" />
-            Edit
+            编辑
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem class="text-red-600 focus:text-red-600 dark:text-red-400 dark:focus:text-red-400"
             @click="isDeleteDialogOpen = true">
             <TrashIcon class="mr-2 h-3.5 w-3.5" />
-            Delete
+            删除
             <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
@@ -143,22 +143,22 @@ const handleDelete = async () => {
 
       <DialogContent class="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit Category</DialogTitle>
+          <DialogTitle>编辑分类</DialogTitle>
           <DialogDescription>
-            Update the category name. Click save when you're done.
+            修改分类名称，完成后点击保存。
           </DialogDescription>
         </DialogHeader>
         <div class="grid gap-4 py-4">
           <div class="grid grid-cols-4 items-center gap-4">
             <Label for="name" class="text-right">
-              Name
+              名称
             </Label>
             <Input id="name" v-model="editName" class="col-span-3" :disabled="isEditing" @keyup.enter="handleEdit" />
           </div>
         </div>
         <DialogFooter>
           <Button variant="outline" @click="isEditDialogOpen = false" :disabled="isEditing">
-            Cancel
+            取消
           </Button>
           <Button type="submit" @click="handleEdit" :disabled="isEditing || !editName.trim()">
             <span v-if="isEditing" class="flex items-center">
@@ -169,9 +169,9 @@ const handleDelete = async () => {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                 </path>
               </svg>
-              Saving...
+              保存中...
             </span>
-            <span v-else>Save changes</span>
+            <span v-else>保存修改</span>
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -181,15 +181,15 @@ const handleDelete = async () => {
     <Dialog v-model:open="isDeleteDialogOpen">
       <DialogContent class="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Confirm Deletion</DialogTitle>
+          <DialogTitle>确认删除</DialogTitle>
           <DialogDescription>
-            Are you sure you want to delete "{{ row.categoryName }}"?
-            This action cannot be undone.
+            确认删除“{{ row.categoryName }}”吗？
+            删除后将无法恢复。
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button variant="outline" @click="isDeleteDialogOpen = false" :disabled="isDeleting">
-            Cancel
+            取消
           </Button>
           <Button variant="destructive" @click="handleDelete" :disabled="isDeleting">
             <span v-if="isDeleting" class="flex items-center">
@@ -200,9 +200,9 @@ const handleDelete = async () => {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                 </path>
               </svg>
-              Deleting...
+              删除中...
             </span>
-            <span v-else>Delete</span>
+            <span v-else>删除</span>
           </Button>
         </DialogFooter>
       </DialogContent>

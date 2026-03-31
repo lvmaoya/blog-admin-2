@@ -55,7 +55,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
               variant="secondary"
               class="rounded-sm px-1 font-normal"
             >
-              {{ selectedValues.size }} selected
+              已选 {{ selectedValues.size }} 项
             </Badge>
 
             <template v-else>
@@ -77,7 +77,7 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
       <Command>
         <CommandInput :placeholder="title" />
         <CommandList>
-          <CommandEmpty>No results found.</CommandEmpty>
+          <CommandEmpty>未找到结果</CommandEmpty>
           <CommandGroup>
             <CommandItem
               v-for="option in options"
@@ -120,11 +120,11 @@ const selectedValues = computed(() => new Set(props.column?.getFilterValue() as 
             <CommandSeparator />
             <CommandGroup>
               <CommandItem
-                :value="{ label: 'Clear filters' }"
+                :value="{ label: '清除筛选' }"
                 class="justify-center text-center"
                 @select="column?.setFilterValue(undefined)"
               >
-                Clear filters
+                清除筛选
               </CommandItem>
             </CommandGroup>
           </template>

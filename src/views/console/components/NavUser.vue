@@ -59,12 +59,12 @@ const handleAction = async () => {
         });
         deleteCache('token');
         toast({
-            title: 'Uh! Logout Success!',
-            description: 'Welcome back! You have successfully logged into your account.',
+            title: '退出成功',
+            description: '你已成功退出登录。',
         });
     } catch (error) {
         toast({
-            title: 'Uh oh! Something went wrong.',
+            title: '退出失败',
             description: error.response.data,
             variant: 'destructive',
         });
@@ -117,22 +117,22 @@ const logoutDialogVisible = ref(false)
                         <DropdownMenuSeparator />
                         <DropdownMenuItem @click="logoutDialogVisible = true">
                             <LogOut />
-                            Log out
+                            退出登录
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
                 <AlertDialogContent>
                     <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogTitle>确认退出登录？</AlertDialogTitle>
                         <AlertDialogDescription>
-                            This action will log you out of your account.
+                            退出后需要重新登录才能继续操作。
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel @click="logoutDialogVisible = false">Cancel</AlertDialogCancel>
+                        <AlertDialogCancel @click="logoutDialogVisible = false">取消</AlertDialogCancel>
                         <Button @click="handleAction" :disabled="loading">
                             <Loader2 v-if="loading" class="w-4 h-4 mr-2 animate-spin" />
-                            Confirm
+                            确认
                         </Button>
                     </AlertDialogFooter>
                 </AlertDialogContent>

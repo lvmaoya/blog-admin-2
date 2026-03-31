@@ -47,16 +47,16 @@ export default {
       <DropdownMenuContent align="start">
         <DropdownMenuItem @click="column.toggleSorting(false)">
           <ArrowUpIcon class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Asc
+          升序
         </DropdownMenuItem>
         <DropdownMenuItem @click="column.toggleSorting(true)">
           <ArrowDownIcon class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Desc
+          降序
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem @click="column.toggleVisibility(false)">
           <EyeNoneIcon class="mr-2 h-3.5 w-3.5 text-muted-foreground/70" />
-          Hide
+          隐藏列
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

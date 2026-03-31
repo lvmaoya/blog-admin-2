@@ -26,7 +26,7 @@ const isSomeRowsSelected = computed(() => props.table.getIsSomeRowsSelected())
   <div class="flex items-center justify-between">
     <div class="flex flex-1 items-center space-x-2">
       <Input
-        placeholder="Filter tasks..."
+        placeholder="筛选评论..."
         :model-value="(table.getColumn('content')?.getFilterValue() as string) ?? ''"
         class="h-8 w-[150px] lg:w-[250px]"
         @input="table.getColumn('content')?.setFilterValue($event.target.value)"

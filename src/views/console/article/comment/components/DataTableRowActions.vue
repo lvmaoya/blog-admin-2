@@ -37,15 +37,15 @@ const handleDisable = async () => {
   try {
     await disableComment(form)
     toast({
-      title: 'Success',
-      description: 'Comment disabled successfully'
+      title: '成功',
+      description: '评论状态更新成功'
     })
     bus.emit("refresh-table")
 
   } catch (error) {
     toast({
-      title: 'Error',
-      description: error.message || 'Failed to disable comment',
+      title: '错误',
+      description: error.message || '评论状态更新失败',
       variant: 'destructive'
     })
   }
@@ -57,7 +57,7 @@ const handleDisable = async () => {
     <DropdownMenuTrigger as-child>
       <Button variant="ghost" class="flex h-8 w-8 p-0 data-[state=open]:bg-muted">
         <DotsHorizontalIcon class="h-4 w-4" />
-        <span class="sr-only">Open menu</span>
+        <span class="sr-only">打开菜单</span>
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" class="w-[160px]">
@@ -66,7 +66,7 @@ const handleDisable = async () => {
       </DropdownMenuItem>
       <!-- <DropdownMenuSeparator />
       <DropdownMenuItem>
-        Delete
+        删除
         <DropdownMenuShortcut>⌫</DropdownMenuShortcut>
       </DropdownMenuItem> -->
     </DropdownMenuContent>

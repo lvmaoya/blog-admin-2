@@ -8,13 +8,21 @@ import { labels, categories, statuses } from '../data/data'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'
 
+const displayValue = (value: unknown) => {
+  if (value === null || value === undefined)
+    return '--'
+  if (typeof value === 'string' && value.trim() === '')
+    return '--'
+  return value
+}
+
 export const columns: ColumnDef<Article>[] = [
   {
     accessorKey: 'id',
     header: () => h('div', { class: 'w-[50px] text-center truncate font-medium' }, 'ID'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'w-[50px] text-center truncate font-medium' }, row.getValue('id')),
+        h('span', { class: 'w-[50px] text-center truncate font-medium' }, displayValue(row.getValue('id'))),
       ])
     },
   },
@@ -46,7 +54,7 @@ export const columns: ColumnDef<Article>[] = [
 
       return h('div', { class: 'flex space-x-2' }, [
         category ? h(Badge, { variant: 'outline' }, () => category.label) : null,
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('title')),
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, displayValue(row.getValue('title'))),
       ])
     },
   },
@@ -58,8 +66,11 @@ export const columns: ColumnDef<Article>[] = [
         category => category.value == row.getValue('fatherCategoryId'),
       )
 
-      if (!category)
-        return null
+      if (!category) {
+        return h('div', { class: 'flex w-[100px] items-center' }, [
+          h('span', '--'),
+        ])
+      }
 
       return h('div', { class: 'flex w-[100px] items-center' }, [
         h('span', category.label),
@@ -78,8 +89,11 @@ export const columns: ColumnDef<Article>[] = [
         status => status.value == row.getValue('status'),
       )
 
-      if (!status)
-        return null
+      if (!status) {
+        return h('div', { class: 'flex w-[100px] items-center' }, [
+          h('span', '--'),
+        ])
+      }
 
       return h('div', { class: 'flex w-[100px] items-center' }, [
         status.icon && h(status.icon, { class: 'mr-2 h-4 w-4 text-muted-foreground' }),
@@ -95,7 +109,7 @@ export const columns: ColumnDef<Article>[] = [
     header: ({ column }) => h(DataTableColumnHeader, { column, title: '浏览量' }),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px]' }, row.getValue('pageView')),
+        h('span', { class: 'max-w-[500px]' }, displayValue(row.getValue('pageView'))),
       ])
     },
   },
@@ -104,7 +118,7 @@ export const columns: ColumnDef<Article>[] = [
     header: () => h('div', '描述'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('description')),
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, displayValue(row.getValue('description'))),
       ])
     },
   },
@@ -113,7 +127,7 @@ export const columns: ColumnDef<Article>[] = [
     header: ({ column }) => h(DataTableColumnHeader, { column, title: '发布日期' }),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px]' }, row.getValue('publishedTime')),
+        h('span', { class: 'max-w-[500px]' }, displayValue(row.getValue('publishedTime'))),
       ])
     },
   },

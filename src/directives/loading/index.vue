@@ -8,7 +8,7 @@ const props = defineProps({
   },
   text: {
     type: String,
-    default: "Loading..."
+    default: "加载中..."
   }
 })
 </script>

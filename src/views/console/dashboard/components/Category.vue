@@ -3,7 +3,7 @@
         <CardHeader class="flex-shrink-0">
             <CardTitle>分类</CardTitle>
             <CardDescription>
-                You wrote {{ props.articleStatisticsData?.totalBlogCount }} blog(s) this month.
+                本月共发布 {{ props.articleStatisticsData?.totalBlogCount }} 篇文章。
             </CardDescription>
         </CardHeader>
         <CardContent class="flex-1 min-h-0 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-md scrollbar-track-rounded-md scrollbar-thumb-gray-300 scrollbar-track-gray-100">
@@ -18,7 +18,7 @@
                                 target="_blank"
                                 class="text-xs hover:underline"
                             >
-                                View all
+                                查看全部
                             </a>
                         </div>
                     </div>
@@ -48,16 +48,16 @@ const props = defineProps<{ articleStatisticsData: BlogStatistics }>()
 
 const categories = [
     {
-        name: "Project Articles",
+        name: "项目文章",
         value: 1
     }, {
-        name: "Study Articles",
+        name: "学习文章",
         value: 2
     }, {
-        name: "Blog Articles",
+        name: "随笔文章",
         value: 3
     }, {
-        name: "Pictures",
+        name: "图片",
         value: 4
     }
 ]

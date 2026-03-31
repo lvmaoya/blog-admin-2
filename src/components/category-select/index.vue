@@ -24,7 +24,7 @@ const props = defineProps({
     },
     placeholder: {
         type: String,
-        default: 'Select article category'
+        default: '请选择文章分类'
     }
 })
 

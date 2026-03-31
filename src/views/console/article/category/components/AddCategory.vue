@@ -27,8 +27,8 @@ const isOpen = ref(false)
 const submitCategory = async () => {
     if (!categoryName.value.trim()) {
         toast({
-            title: 'Error',
-            description: 'Category name cannot be empty',
+            title: '错误',
+            description: '分类名称不能为空',
             variant: 'destructive'
         })
         return
@@ -36,8 +36,8 @@ const submitCategory = async () => {
 
     if (categoryName.value.length > 50) {
         toast({
-            title: 'Error',
-            description: 'Category name must be less than 50 characters',
+            title: '错误',
+            description: '分类名称不能超过 50 个字符',
             variant: 'destructive'
         })
         return
@@ -50,8 +50,8 @@ const submitCategory = async () => {
         await addOrUpdateCategory({ categoryName: categoryName.value.trim() })
         bus.emit("refresh-table")
         toast({
-            title: 'Success',
-            description: 'Category added successfully'
+            title: '成功',
+            description: '分类新增成功'
         })
 
         // 重置表单并关闭对话框
@@ -59,8 +59,8 @@ const submitCategory = async () => {
         isOpen.value = false
     } catch (error) {
         toast({
-            title: 'Error',
-            description: 'Failed to add category',
+            title: '错误',
+            description: '分类新增失败',
             variant: 'destructive'
         })
     } finally {
@@ -74,29 +74,29 @@ const submitCategory = async () => {
         <DialogTrigger as-child>
             <Button size="sm" class="ml-auto h-8 lg:flex ml-2">
                 <Plus class="mr-2 h-4 w-4" />
-                Add Category
+                新增分类
             </Button>
         </DialogTrigger>
         <DialogContent class="sm:max-w-[425px]">
             <DialogHeader>
-                <DialogTitle>Add New Category</DialogTitle>
+                <DialogTitle>新增分类</DialogTitle>
                 <DialogDescription>
-                    Currently, only the article categories for learning records can be added.
+                    当前仅支持新增学习记录类文章分类。
                 </DialogDescription>
             </DialogHeader>
             <div class="grid gap-4 py-4">
                 <div class="grid grid-cols-4 items-center gap-4">
                     <Label for="categoryName" class="text-right">
-                        Name
+                        名称
                     </Label>
-                    <Input id="categoryName" v-model="categoryName" placeholder="Enter category name" class="col-span-3"
+                    <Input id="categoryName" v-model="categoryName" placeholder="请输入分类名称" class="col-span-3"
                         :disabled="isLoading" @keyup.enter="submitCategory" />
                 </div>
             </div>
             <DialogFooter>
                 <DialogClose as-child>
                     <Button variant="outline" :disabled="isLoading">
-                        Cancel
+                        取消
                     </Button>
                 </DialogClose>
                 <Button type="submit" @click="submitCategory" :disabled="isLoading || !categoryName.trim()">
@@ -109,9 +109,9 @@ const submitCategory = async () => {
                                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
                             </path>
                         </svg>
-                        Saving...
+                        保存中...
                     </span>
-                    <span v-else>Save Category</span>
+                    <span v-else>保存分类</span>
                 </Button>
             </DialogFooter>
         </DialogContent>

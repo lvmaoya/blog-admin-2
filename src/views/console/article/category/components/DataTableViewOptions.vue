@@ -25,6 +25,14 @@ const columns = computed(() => props.table.getAllColumns()
     column =>
       typeof column.accessorFn !== 'undefined' && column.getCanHide(),
   ))
+
+const columnLabelMap: Record<string, string> = {
+  id: 'ID',
+  categoryName: '名称',
+  fatherCategoryId: '类别',
+  createdTime: '创建时间',
+  actions: '操作',
+}
 </script>
 
 <template>
@@ -36,21 +44,20 @@ const columns = computed(() => props.table.getAllColumns()
         class="ml-auto hidden h-8 lg:flex"
       >
         <MixerHorizontalIcon class="mr-2 h-4 w-4" />
-        View
+        视图
       </Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end" class="w-[150px]">
-      <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+      <DropdownMenuLabel>列显示</DropdownMenuLabel>
       <DropdownMenuSeparator />
 
       <DropdownMenuCheckboxItem
         v-for="column in columns"
         :key="column.id"
-        class="capitalize"
         :model-value="column.getIsVisible()"
         @update:model-value="(value) => column.toggleVisibility(!!value)"
       >
-        {{ column.id }}
+        {{ columnLabelMap[column.id] || column.id }}
       </DropdownMenuCheckboxItem>
     </DropdownMenuContent>
   </DropdownMenu>

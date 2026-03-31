@@ -2,14 +2,14 @@
     <Card class="col-span-2 h-full overflow-hidden flex flex-col">
         <CardHeader class="flex flex-row justify-between items-center">
             <div class="flex flex-col gap-y-1.5">
-                <CardTitle>Status</CardTitle>
+                <CardTitle>状态</CardTitle>
                 <CardDescription>
-                    121 contributions in 2025.
+                    2025 年 121 次贡献。
                 </CardDescription>
             </div>
             <div>
                 <Button>
-                    Sign In Today
+                    今日签到
                 </Button>
             </div>
         </CardHeader>
@@ -24,8 +24,7 @@
                                 </div>
                             </TooltipTrigger>
                             <TooltipContent>
-                                <p>{{ item.value }} {{ item.value > 1 ? 'contributions' : 'contribution' }} on {{
-                                    item.formattedDate }}</p>
+                                <p>{{ item.formattedDate }}：{{ item.value }} 次贡献</p>
                             </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
@@ -37,7 +36,7 @@
 
 <script setup>
 import dayjs from "dayjs";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import {
     Card,
     CardContent,
@@ -66,28 +65,13 @@ for (let month = 1; month <= 12; month++) {
     // 遍历该月的每一天
     for (let day = 1; day <= daysInMonth; day++) {
         const date = dayjs(`${currentYear}-${month}-${day}`);
-        const ordinalSuffix = (num) => {
-            const j = num % 10;
-            const k = num % 100;
-            if (j === 1 && k !== 11) {
-                return 'st';
-            }
-            if (j === 2 && k !== 12) {
-                return 'nd';
-            }
-            if (j === 3 && k !== 13) {
-                return 'rd';
-            }
-            return 'th';
-        };
-
         const item = {
             id: date.format('YYYY-MM-DD'),
             value: Math.floor(Math.random() * 3), // 生成 0 到 2 之间的随机数
             year: currentYear,
-            month: date.format('MMMM'), // 获取英文月份全称
+            month: date.format('MM月'),
             day: day,
-            formattedDate: `${date.format('MMMM')} ${day}${ordinalSuffix(day)}.`
+            formattedDate: date.format('MM月DD日')
         };
         dateArray.value.push(item);
     }

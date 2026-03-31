@@ -39,7 +39,7 @@ import PlusCircledIcon from '@radix-icons/vue/PlusCircledIcon'
 
 const groups = [
   {
-    label: 'Personal Account',
+    label: '个人账号',
     teams: [
       {
         label: 'Alicia Koch',
@@ -48,7 +48,7 @@ const groups = [
     ],
   },
   {
-    label: 'Teams',
+    label: '团队',
     teams: [
       {
         label: 'Acme Inc.',
@@ -77,7 +77,7 @@ const selectedTeam = ref<Team>(groups[0].teams[0])
           variant="outline"
           role="combobox"
           aria-expanded="open"
-          aria-label="Select a team"
+          aria-label="选择团队"
           :class="cn('w-[200px] justify-between', $attrs.class ?? '')"
         >
           <Avatar class="mr-2 h-5 w-5">
@@ -94,8 +94,8 @@ const selectedTeam = ref<Team>(groups[0].teams[0])
       <PopoverContent class="w-[200px] p-0">
         <Command>
           <CommandList>
-            <CommandInput placeholder="Search team..." />
-            <CommandEmpty>No team found.</CommandEmpty>
+            <CommandInput placeholder="搜索团队..." />
+            <CommandEmpty>未找到团队。</CommandEmpty>
             <CommandGroup v-for="group in groups" :key="group.label" :heading="group.label">
               <CommandItem
                 v-for="team in group.teams"
@@ -138,7 +138,7 @@ const selectedTeam = ref<Team>(groups[0].teams[0])
                   }"
                 >
                   <PlusCircledIcon class="mr-2 h-5 w-5" />
-                  Create Team
+                  创建团队
                 </CommandItem>
               </DialogTrigger>
             </CommandGroup>
@@ -148,34 +148,34 @@ const selectedTeam = ref<Team>(groups[0].teams[0])
     </Popover>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Create team</DialogTitle>
+        <DialogTitle>创建团队</DialogTitle>
         <DialogDescription>
-          Add a new team to manage products and customers.
+          新建一个团队来管理产品和客户。
         </DialogDescription>
       </DialogHeader>
       <div>
         <div class="space-y-4 py-2 pb-4">
           <div class="space-y-2">
-            <Label for="name">Team name</Label>
-            <Input id="name" placeholder="Acme Inc." />
+            <Label for="name">团队名称</Label>
+            <Input id="name" placeholder="请输入团队名称" />
           </div>
           <div class="space-y-2">
-            <Label for="plan">Subscription plan</Label>
+            <Label for="plan">订阅方案</Label>
             <Select>
               <SelectTrigger>
-                <SelectValue placeholder="Select a plan" />
+                <SelectValue placeholder="请选择方案" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="free">
-                  <span class="font-medium">Free</span> -
+                  <span class="font-medium">免费版</span> -
                   <span class="text-muted-foreground">
-                    Trial for two weeks
+                    试用两周
                   </span>
                 </SelectItem>
                 <SelectItem value="pro">
-                  <span class="font-medium">Pro</span> -
+                  <span class="font-medium">专业版</span> -
                   <span class="text-muted-foreground">
-                    $9/month per user
+                    每位用户每月 $9
                   </span>
                 </SelectItem>
               </SelectContent>
@@ -185,10 +185,10 @@ const selectedTeam = ref<Team>(groups[0].teams[0])
       </div>
       <DialogFooter>
         <Button variant="outline" @click="showNewTeamDialog = false">
-          Cancel
+          取消
         </Button>
         <Button type="submit">
-          Continue
+          继续
         </Button>
       </DialogFooter>
     </DialogContent>

@@ -29,13 +29,12 @@ onMounted(()=>{
 <template>
   <div class="flex flex-col gap-3 px-2 sm:flex-row sm:items-center sm:justify-between">
     <div class="flex-1 text-sm text-muted-foreground">
-      {{ table.getFilteredSelectedRowModel().rows.length }} of
-      {{ table.getFilteredRowModel().rows.length }} row(s) selected.
+      已选择 {{ table.getFilteredSelectedRowModel().rows.length }} / {{ table.getFilteredRowModel().rows.length }} 条
     </div>
     <div class="flex items-center space-x-6 lg:space-x-8">
       <div class="flex items-center space-x-2">
         <p class="text-sm font-medium">
-          Rows per page
+          每页条数
         </p>
         <Select
           :model-value="`${table.getState().pagination.pageSize}`"
@@ -52,7 +51,7 @@ onMounted(()=>{
         </Select>
       </div>
       <div class="flex w-[100px] items-center justify-center text-sm font-medium">
-        Page {{ table.getState().pagination.pageIndex + 1 }} of
+        第 {{ table.getState().pagination.pageIndex + 1 }} / 
         {{ table.getPageCount() }}
       </div>
       <div class="flex items-center space-x-2">
@@ -62,7 +61,7 @@ onMounted(()=>{
           :disabled="!table.getCanPreviousPage()"
           @click="table.setPageIndex(0)"
         >
-          <span class="sr-only">Go to first page</span>
+          <span class="sr-only">跳转到第一页</span>
           <DoubleArrowLeftIcon class="h-4 w-4" />
         </Button>
         <Button
@@ -71,7 +70,7 @@ onMounted(()=>{
           :disabled="!table.getCanPreviousPage()"
           @click="table.previousPage()"
         >
-          <span class="sr-only">Go to previous page</span>
+          <span class="sr-only">上一页</span>
           <ChevronLeftIcon class="h-4 w-4" />
         </Button>
         <Button
@@ -80,7 +79,7 @@ onMounted(()=>{
           :disabled="!table.getCanNextPage()"
           @click="table.nextPage()"
         >
-          <span class="sr-only">Go to next page</span>
+          <span class="sr-only">下一页</span>
           <ChevronRightIcon class="h-4 w-4" />
         </Button>
         <Button
@@ -89,7 +88,7 @@ onMounted(()=>{
           :disabled="!table.getCanNextPage()"
           @click="table.setPageIndex(table.getPageCount() - 1)"
         >
-          <span class="sr-only">Go to last page</span>
+          <span class="sr-only">跳转到最后一页</span>
           <DoubleArrowRightIcon class="h-4 w-4" />
         </Button>
       </div>

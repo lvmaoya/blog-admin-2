@@ -2,7 +2,7 @@
   <button
     type="button"
     class="password-visibility-toggle"
-    :aria-label="visible ? 'Hide password' : 'Show password'"
+    :aria-label="visible ? '隐藏密码' : '显示密码'"
     @click="emit('toggle')"
   >
     <svg

@@ -30,11 +30,27 @@ import {
 
 const route = useRoute();
 
+const routeNameMap = {
+    Console: '控制台',
+    Dashboard: '首页',
+    Article: '文章管理',
+    ArticleList: '文章列表',
+    EditArticle: '文章编辑',
+    ArticleComment: '文章评论',
+    ArticleCategory: '文章分类',
+    Login: '登录',
+    ErrorPage: '页面不存在',
+};
+
 const breadcrumbs = computed(() => {
     const crumbs = [];
     route.matched.forEach((match) => {
+        const name = match.meta?.name || routeNameMap[match.name] || match.name;
+        if (!name) {
+            return;
+        }
         crumbs.push({
-            name: match.name,
+            name,
             path: match.path,
         });
     });

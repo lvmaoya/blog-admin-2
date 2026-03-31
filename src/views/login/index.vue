@@ -2,16 +2,16 @@
   <div class="container">
     <div class="login-content">
       <div class="picture">
-        <img src="@/assets/img/work.png" alt="login" />
+        <img src="@/assets/img/work.png" alt="登录插图" />
       </div>
       <div class="form">
         <div class="login-form">
-          <h3 class="title">Welcome back!</h3>
-          <span class="sub-title">Please enter your details</span>
+          <h3 class="title">欢迎回来！</h3>
+          <span class="sub-title">请输入账号信息</span>
           <form>
             <div class="field">
               <input type="text" placeholder="" v-model="formData.username" />
-              <div class="placeholder" data-placeholder="Email"></div>
+              <div class="placeholder" data-placeholder="邮箱"></div>
             </div>
             <div class="field password-field">
               <input
@@ -19,7 +19,7 @@
                 placeholder=""
                 v-model="formData.password"
               />
-              <div class="placeholder" data-placeholder="Password">
+              <div class="placeholder" data-placeholder="密码">
                 <PasswordVisibilityToggle
                   class="password-toggle-icon"
                   :visible="isPasswordVisible"
@@ -36,7 +36,7 @@
                   v-model="formData.captcha"
                   @keypress.enter="submitForm"
                 />
-                <div class="placeholder" data-placeholder="Captcha"></div>
+                <div class="placeholder" data-placeholder="验证码"></div>
               </div>
               <div class="captcha-image">
                 <img
@@ -51,7 +51,7 @@
           <div class="w-full">
             <Button class="w-full" @click="submitForm" :disabled="loading">
               <Loader2 v-if="loading" class="w-4 h-4 mr-2 animate-spin" />
-              Log in
+              登录
             </Button>
           </div>
         </div>
@@ -111,9 +111,8 @@ const submitForm = async () => {
     setCache("token", token);
     setCache("user", loginRes.user);
     toast({
-      title: "Uh! Login Success!",
-      description:
-        "Welcome back! You have successfully logged into your account.",
+      title: "登录成功",
+      description: "欢迎回来，你已成功登录账号。",
     });
     let loginSuccessUrl = route.query.redirect || "/console/dashboard";
     router.replace({
@@ -121,7 +120,7 @@ const submitForm = async () => {
     });
   } catch (error) {
     toast({
-      title: "Uh oh! Something went wrong.",
+      title: "登录失败",
       description: error.response.data,
       variant: "destructive",
     });

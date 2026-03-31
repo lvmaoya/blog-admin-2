@@ -71,7 +71,7 @@ onBeforeUnmount(() => {
             {{ articleStatisticsData?.totalBlogCount }}
           </div>
           <p class="text-xs text-muted-foreground">
-            +{{ articleStatisticsData?.lastMonthBlogCount }} from last month
+            较上月 +{{ articleStatisticsData?.lastMonthBlogCount }}
           </p>
         </CardContent>
       </Card>
@@ -87,7 +87,7 @@ onBeforeUnmount(() => {
             {{ articleStatisticsData?.totalPageView }}
           </div>
           <p class="text-xs text-muted-foreground">
-            +{{ articleStatisticsData?.lastMonthPageView }} from last month
+            较上月 +{{ articleStatisticsData?.lastMonthPageView }}
           </p>
         </CardContent>
       </Card>
@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
             {{ articleStatisticsData?.totalCharCount }}
           </div>
           <p class="text-xs text-muted-foreground">
-            +{{ articleStatisticsData?.lastMonthCharCount }} from last month
+            较上月 +{{ articleStatisticsData?.lastMonthCharCount }}
           </p>
         </CardContent>
       </Card>

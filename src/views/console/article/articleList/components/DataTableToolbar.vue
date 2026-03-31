@@ -26,7 +26,7 @@ const isSomeRowsSelected = computed(() => props.table.getIsSomeRowsSelected())
   <div class="flex items-center justify-between">
     <div class="flex flex-1 items-center space-x-2">
       <Input
-        placeholder="Filter tasks..."
+        placeholder="筛选文章..."
         :model-value="(table.getColumn('title')?.getFilterValue() as string) ?? ''"
         class="h-8 w-[150px] lg:w-[250px]"
         @input="table.getColumn('title')?.setFilterValue($event.target.value)"
@@ -34,12 +34,12 @@ const isSomeRowsSelected = computed(() => props.table.getIsSomeRowsSelected())
       <DataTableFacetedFilter
         v-if="table.getColumn('status')"
         :column="table.getColumn('status')"
-        title="Status"
+        title="状态"
         :options="statuses"
       />
       <DataTableFacetedFilter
         :column="table.getColumn('fatherCategoryId')"
-        title="Category"
+        title="分类"
         :options="categories"
       />
 
@@ -49,7 +49,7 @@ const isSomeRowsSelected = computed(() => props.table.getIsSomeRowsSelected())
         class="h-8 px-2 lg:px-3"
         @click="table.resetColumnFilters()"
       >
-        Reset
+        重置
         <Cross2Icon class="ml-2 h-4 w-4" />
       </Button>
       <Button
@@ -58,7 +58,7 @@ const isSomeRowsSelected = computed(() => props.table.getIsSomeRowsSelected())
         class="h-8 px-2 lg:px-3"
         @click=""
       >
-        Delete
+        删除
         <Trash2 class="ml-2 h-4 w-4" />
       </Button>
     </div>

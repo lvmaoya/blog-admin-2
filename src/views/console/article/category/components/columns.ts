@@ -8,13 +8,21 @@ import { labels, categories, statuses } from '../data/data'
 import DataTableColumnHeader from './DataTableColumnHeader.vue'
 import DataTableRowActions from './DataTableRowActions.vue'
 
+const displayValue = (value: unknown) => {
+  if (value === null || value === undefined)
+    return '--'
+  if (typeof value === 'string' && value.trim() === '')
+    return '--'
+  return value
+}
+
 export const columns: ColumnDef<Category>[] = [
   {
     accessorKey: 'id',
     header: () => h('div', { class: 'w-[50px] text-center truncate font-medium' }, 'ID'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'w-[50px] text-center truncate font-medium' }, row.getValue('id')),
+        h('span', { class: 'w-[50px] text-center truncate font-medium' }, displayValue(row.getValue('id'))),
       ])
     },
   },
@@ -23,7 +31,7 @@ export const columns: ColumnDef<Category>[] = [
     header: () => h('div', '名称'),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, row.getValue('categoryName')),
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, displayValue(row.getValue('categoryName'))),
       ])
     },
   },
@@ -31,8 +39,9 @@ export const columns: ColumnDef<Category>[] = [
     accessorKey: 'fatherCategoryId',
     header: () => h('div', '类别'),
     cell: ({ row }) => {
+      const categoryName = getFatherCategoryName(row.getValue('fatherCategoryId'))
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px] truncate font-medium' }, getFatherCategoryName(row.getValue('fatherCategoryId')) ),
+        h('span', { class: 'max-w-[500px] truncate font-medium' }, displayValue(categoryName)),
       ])
     },
   },
@@ -41,7 +50,7 @@ export const columns: ColumnDef<Category>[] = [
     header: ({ column }) => h(DataTableColumnHeader, { column, title: '创建时间' }),
     cell: ({ row }) => {
       return h('div', { class: 'flex space-x-2' }, [
-        h('span', { class: 'max-w-[500px]' }, row.getValue('createdTime')),
+        h('span', { class: 'max-w-[500px]' }, displayValue(row.getValue('createdTime'))),
       ])
     },
   },

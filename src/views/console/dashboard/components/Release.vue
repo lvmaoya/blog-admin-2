@@ -4,7 +4,7 @@
             <div class="flex flex-col gap-y-1.5">
                 <CardTitle>提交日志</CardTitle>
                 <CardDescription>
-                    Recent {{ commits.length }} commits in repository.
+                    仓库最近 {{ commits.length }} 条提交记录。
                 </CardDescription>
             </div>
         </CardHeader>
@@ -35,7 +35,7 @@
                             target="_blank"
                             class="text-xs hover:underline"
                         >
-                            View commit
+                            查看提交
                         </a>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ const fetchCommits = async () => {
     try {
         commits.value = await getGithubCommits()
     } catch (error) {
-        console.error('Failed to fetch commits:', error)
+        console.error('获取提交日志失败:', error)
     }
 }
 

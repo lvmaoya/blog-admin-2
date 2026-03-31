@@ -4,37 +4,37 @@ import { h } from 'vue'
 export const labels = [
   {
     value: 'bug',
-    label: 'Bug',
+    label: '问题',
   },
   {
     value: 'feature',
-    label: 'Feature',
+    label: '功能',
   },
   {
     value: 'documentation',
-    label: 'Documentation',
+    label: '文档',
   },
 ]
 
 export const statuses = [
   {
     value: "0",
-    label: 'TODO',
+    label: '待处理',
     icon: h(AlarmClockCheck),
   },
   {
     value: "1",
-    label: 'DRAFT',
+    label: '草稿',
     icon: h(BookDashed),
   },
   {
     value: "2",
-    label: 'PUBLISHED',
+    label: '已发布',
     icon: h(CheckCheck),
   },
   {
     value: "3",
-    label: 'DELETED',
+    label: '已删除',
     icon: h(X),
   },
 ]
@@ -42,17 +42,17 @@ export const statuses = [
 export const categories = [
   {
     value: "1",
-    label: 'PROJECT',
+    label: '项目',
     icon: h(FolderRoot),
   },
   {
     value: "2",
-    label: 'STUDY',
+    label: '学习',
     icon: h(BookOpenText),
   },
   {
     value: "3",
-    label: 'BLOG',
+    label: '随笔',
     icon: h(NotebookPen),
   },
 ]
