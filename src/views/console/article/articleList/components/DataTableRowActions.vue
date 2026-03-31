@@ -108,7 +108,7 @@ const deleteArticle = async () => {
       <DropdownMenuItem @click="previewArticle">预览</DropdownMenuItem>
       <DropdownMenuSeparator />
       <DropdownMenuItem @click="disableArticle">
-        {{ !row.status ? '启用' : '禁用' }}
+        {{ !row.status ? '发布' : '暂存' }}
       </DropdownMenuItem>
       <!-- 删除功能 -->
       <DropdownMenuItem @click="deleteArticle">

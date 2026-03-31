@@ -17,7 +17,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/toast";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import FileUpload from "@/components/upload/index.vue";
 import CategorySelect from "@/components/category-select/index.vue";
 import { uploadFile } from "@/service/upload";
@@ -42,9 +42,17 @@ const formData = ref({
   coverImage: null,
   content: "",
   charCount: 0,
-  status: 1,
+  status: 0,
   keepDesc: false,
 });
+
+const isEditing = computed(
+  () => formData.value.id !== null && formData.value.id !== undefined,
+);
+
+const currentStatusLabel = computed(() =>
+  formData.value.status === 1 ? "已发布" : "暂存中",
+);
 
 async function onSubmit() {
   loading.value = true;
@@ -53,7 +61,7 @@ async function onSubmit() {
       ...formData.value,
       fatherCategoryId: null,
       categoryId: null,
-      status: 1,
+      status: formData.value.status,
       charCount: formData.value.content.length,
     };
     // 处理分类数据
@@ -86,7 +94,7 @@ async function onSubmit() {
       coverImage: null,
       content: "",
       charCount: 0,
-      status: 1,
+      status: 0,
       keepDesc: false,
     };
     files.value = [];
@@ -248,10 +256,7 @@ watch(
     </DialogTrigger>
     <DialogContent class="sm:max-w-[625px]">
       <DialogHeader>
-        <DialogTitle>文章信息</DialogTitle>
-        <DialogDescription>
-          请完善文章信息，确认无误后发布。
-        </DialogDescription>
+        <DialogTitle>{{ isEditing ? '编辑文章（' + currentStatusLabel + '）' : '发布文章' }}</DialogTitle>
       </DialogHeader>
 
       <form @submit.prevent="handleSubmit">
