@@ -9,11 +9,11 @@
           <h3 class="title">Welcome back!</h3>
           <span class="sub-title">Please enter your details</span>
           <form>
-            <div>
+            <div class="field">
               <input type="text" placeholder="" v-model="formData.username" />
               <div class="placeholder" data-placeholder="Email"></div>
             </div>
-            <div>
+            <div class="field password-field">
               <input
                 :type="isPasswordVisible ? 'text' : 'password'"
                 placeholder=""
@@ -28,15 +28,17 @@
               </div>
             </div>
             <div class="captcha">
-              <input
-                type="text"
-                placeholder=""
-                maxlength="4"
-                v-model="formData.captcha"
-                @keypress.enter="submitForm"
-              />
-              <div class="placeholder" data-placeholder="Captcha"></div>
-              <div>
+              <div class="field captcha-input">
+                <input
+                  type="text"
+                  placeholder=""
+                  maxlength="4"
+                  v-model="formData.captcha"
+                  @keypress.enter="submitForm"
+                />
+                <div class="placeholder" data-placeholder="Captcha"></div>
+              </div>
+              <div class="captcha-image">
                 <img
                   v-if="authCodeUrl"
                   :src="authCodeUrl"
@@ -137,19 +139,21 @@ onMounted(() => {
 <style scoped lang="scss">
 .container {
   width: 100%;
-  height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px;
+  box-sizing: border-box;
   background-color: #f8f6f7;
 
   .login-content {
-    width: 900px;
-    height: 580px;
+    width: min(900px, 100%);
+    min-height: 580px;
     display: flex;
-    background-color: rgb(255, 255, 255);
+    background-color: #fff;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     border-radius: 10px;
     box-shadow: 0 6px 10px #cfd4de;
     overflow: hidden;
@@ -158,35 +162,36 @@ onMounted(() => {
 
     .picture {
       width: 50%;
-      height: 100%;
+      min-height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
 
       img {
-        width: 300px;
-        height: 300px;
+        width: min(300px, 80%);
+        height: auto;
+        aspect-ratio: 1 / 1;
       }
 
       &::after {
         content: "";
         position: absolute;
-        top: 100px;
+        top: 96px;
         right: 0;
         width: 1px;
-        bottom: 100px;
+        bottom: 96px;
         background-color: #ececec;
       }
     }
 
     .form {
       width: 50%;
-      height: 100%;
+      min-height: 100%;
 
       .login-form {
-        width: 340px;
-        height: 100%;
+        width: min(360px, 100%);
+        min-height: 100%;
         margin: 0 auto;
         user-select: none;
         display: flex;
@@ -210,34 +215,25 @@ onMounted(() => {
         }
 
         form {
-          margin: 60px 0;
+          margin: 50px 0;
           width: 100%;
           display: flex;
           flex-direction: column;
-          gap: 40px;
+          gap: 28px;
 
-          & > div {
+          .field {
             position: relative;
-
-            &:nth-child(2n) {
-              .placeholder .password-toggle-icon {
-                width: 35px;
-                height: 100%;
-                position: absolute;
-                right: 0;
-                pointer-events: all;
-                z-index: 2;
-              }
-            }
 
             input {
               width: 100%;
-              height: 30px;
+              height: 36px;
               border: none;
               box-sizing: border-box;
               border-bottom: 1px solid #333;
-              padding: 0px 35px 0px 0px;
+              padding: 0 35px 0 0;
               fill: none;
+              font-size: 14px;
+              background: transparent;
 
               &:focus {
                 border: none;
@@ -280,27 +276,149 @@ onMounted(() => {
             }
           }
 
+          .password-field {
+            .password-toggle-icon {
+              width: 35px;
+              height: 100%;
+              position: absolute;
+              right: 0;
+              pointer-events: all;
+              z-index: 2;
+            }
+          }
+
           .captcha {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
+            display: grid;
+            grid-template-columns: minmax(110px, 42%) 1fr;
+            align-items: end;
+            gap: 12px;
             width: 100%;
 
-            input {
-              width: 40%;
+            .captcha-input {
+              min-width: 0;
+
+              input {
+                padding-right: 0;
+              }
             }
 
-            & > div {
-              width: 60%;
+            .captcha-image {
+              width: 100%;
 
               img {
                 width: 100%;
                 height: 30px;
                 display: block;
+                border-radius: 4px;
+                object-fit: cover;
+                cursor: pointer;
               }
             }
           }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 980px) {
+  .container {
+    padding: 16px;
+
+    .login-content {
+      min-height: 520px;
+
+      .picture {
+        img {
+          width: min(240px, 78%);
+        }
+      }
+
+      .form .login-form {
+        width: min(340px, 100%);
+        padding: 40px 24px 24px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    align-items: stretch;
+    padding: 12px;
+
+    .login-content {
+      min-height: 100%;
+      flex-direction: column;
+      padding: 0;
+      border-radius: 14px;
+
+      .picture {
+        width: 100%;
+        min-height: 180px;
+        padding: 20px 0 6px;
+
+        img {
+          width: min(220px, 56%);
+        }
+
+        &::after {
+          display: none;
+        }
+      }
+
+      .form {
+        width: 100%;
+        min-height: auto;
+
+        .login-form {
+          width: 100%;
+          min-height: auto;
+          padding: 24px 20px 30px;
+
+          .title {
+            font-size: 20px;
+          }
+
+          form {
+            margin: 26px 0;
+            gap: 22px;
+
+            .field input {
+              height: 40px;
+              font-size: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0;
+    background-color: #fff;
+
+    .login-content {
+      min-height: 100dvh;
+      border-radius: 0;
+      box-shadow: none;
+
+      .picture {
+        min-height: 140px;
+        padding-top: 16px;
+
+        img {
+          width: min(170px, 46%);
+        }
+      }
+
+      .form .login-form {
+        padding: 32px;
+
+        form {
+          margin: 0px 0 60px;
         }
       }
     }
